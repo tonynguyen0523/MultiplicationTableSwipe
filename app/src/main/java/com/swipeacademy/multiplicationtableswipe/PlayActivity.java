@@ -36,7 +36,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void updateNumbers(int currentScore, int remainingQuestions){
-        mCurrentScoreTV.setText(getString(R.string.current_score,currentScore,10));
+        mCurrentScoreTV.setText(getString(R.string.current_score,currentScore,12));
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions,remainingQuestions));
     }
 }

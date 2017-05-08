@@ -19,6 +19,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void letsPlay(View view){
+
+        Utility.setCurrentScore(this,0);
+        Utility.setRemainingQuestions(this,12);
+
         Intent playIntent = new Intent(this, PlayActivity.class);
         startActivity(playIntent);
         Toast.makeText(this,"LETS PLAY!", Toast.LENGTH_SHORT).show();

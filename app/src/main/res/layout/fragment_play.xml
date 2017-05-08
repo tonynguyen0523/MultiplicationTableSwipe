@@ -5,42 +5,17 @@
     android:orientation="vertical"
     tools:context="com.swipeacademy.multiplicationtableswipe.PlayFragment">
 
-    <!--<GridLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:columnCount="2">-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/current_score"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/current_score"/>-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/current_time"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="end"-->
-            <!--android:text="Time: 3:12" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/remaining_questions"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="end"-->
-            <!--android:text="@string/remaining_questions" />-->
-    <!--</GridLayout>-->
-
     <FrameLayout
         android:id="@+id/swipe_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/play_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="SWIPE!"/>
+        android:text="1 x 12 ="/>
 
     </FrameLayout>
 </LinearLayout>

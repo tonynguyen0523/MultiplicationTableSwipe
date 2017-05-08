@@ -1,61 +1,61 @@
 [
   {
-    "question": "1 x 1 =",
+    "name": "1 x 1 =",
     "id": 0,
     "answer": 1
   },
   {
-    "question": "1 x 2 =",
+    "name": "1 x 2 =",
     "id": 1,
     "answer": 2
   },
   {
-    "question": "1 x 3 =",
+    "name": "1 x 3 =",
     "id": 2,
     "answer": 3
   },
   {
-    "question": "1 x 4 =",
+    "name": "1 x 4 =",
     "id": 3,
     "answer": 4
   },
   {
-    "question": "1 x 5 =",
+    "name": "1 x 5 =",
     "id": 4,
     "answer": 5
   },
   {
-    "question": "1 x 6 =",
+    "name": "1 x 6 =",
     "id": 5,
     "answer": 6
   },
   {
-    "question": "1 x 7 =",
+    "name": "1 x 7 =",
     "id": 6,
     "answer": 7
   },
   {
-    "question": "1 x 8 =",
+    "name": "1 x 8 =",
     "id": 7,
     "answer": 8
   },
   {
-    "question": "1 x 9 =",
+    "name": "1 x 9 =",
     "id": 8,
     "answer": 9
   },
   {
-    "question": "1 x 10 =",
+    "name": "1 x 10 =",
     "id": 9,
     "answer": 10
   },
   {
-    "question": "1 x 11 =",
+    "name": "1 x 11 =",
     "id": 10,
     "answer": 11
   },
   {
-    "question": "1 x 12 =",
+    "name": "1 x 12 =",
     "id": 11,
     "answer": 12
   }
