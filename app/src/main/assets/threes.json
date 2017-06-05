@@ -1,0 +1,146 @@
+[
+  {
+    "name": "3 x 1 =",
+    "id": 48,
+    "choices":[6, 3, 1, 9],
+    "answer": 3
+  },
+  {
+    "name": "3 x 2 =",
+    "id": 49,
+    "choices":[12, 6, 8, 9],
+    "answer":6
+  },
+  {
+    "name": "3 x 3 =",
+    "id": 50,
+    "choices":[6, 3, 9, 18],
+    "answer": 9
+  },
+  {
+    "name": "3 x 4 =",
+    "id": 51,
+    "choices": [12, 18, 14, 16],
+    "answer": 12
+  },
+  {
+    "name": "3 x 5 =",
+    "id": 52,
+    "choices":[15, 12, 18, 10],
+    "answer": 15
+  },
+  {
+    "name": "3 x 6 =",
+    "id": 53,
+    "choices":[12,24,18,16],
+    "answer": 18
+  },
+  {
+    "name": "3 x 7 =",
+    "id": 54,
+    "choices":[21,24,14,27],
+    "answer": 21
+  },
+  {
+    "name": "3 x 8 =",
+    "id": 55,
+    "choices":[24,22,16,18],
+    "answer": 24
+  },
+  {
+    "name": "3 x 9 =",
+    "id": 56,
+    "choices":[36,27,18,21],
+    "answer": 27
+  },
+  {
+    "name": "3 x 10 =",
+    "id": 57,
+    "choices":[33,35,15,30],
+    "answer": 30
+  },
+  {
+    "name": "3 x 11 =",
+    "id": 58,
+    "choices":[33,24,35,30],
+    "answer": 33
+  },
+  {
+    "name": "3 x 12 =",
+    "id": 59,
+    "choices":[36,24,38,48],
+    "answer": 36
+  },
+  {
+    "name": "12 x 3 =",
+    "id": 60,
+    "choices":[36,24,38,48],
+    "answer": 36
+  },
+  {
+    "name": "11 x 3 =",
+    "id": 61,
+    "choices":[33,24,35,30],
+    "answer": 33
+  },
+  {
+    "name": "10 x 3 =",
+    "id": 62,
+    "choices":[33,35,15,30],
+    "answer": 30
+  },
+  {
+    "name": "9 x 3 =",
+    "id": 63,
+    "choices":[27,28,18,19],
+    "answer": 27
+  },
+  {
+    "name": "8 x 3 =",
+    "id": 64,
+    "choices":[24,28,16,32],
+    "answer":24
+  },
+  {
+    "name": "7 x 3 =",
+    "id": 65,
+    "choices":[21,26,28,17],
+    "answer": 21
+  },
+  {
+    "name": "6 x 3 =",
+    "id": 66,
+    "choices":[18,16,6,12],
+    "answer": 18
+  },
+  {
+    "name": "5 x 3 =",
+    "id": 67,
+    "choices":[10,5,15,3],
+    "answer": 15
+  },
+  {
+    "name": "4 x 3 =",
+    "id": 68,
+    "choices":[12,21,14,8],
+    "answer": 12
+  },
+  {
+    "name": "3 x 3 =",
+    "id": 69,
+    "choices":[ 12,3,1,9],
+    "answer": 9
+  },
+  {
+    "name": "2 x 3 =",
+    "id": 70,
+    "choices":[2,4,6,8],
+    "answer": 6
+  },
+  {
+    "name": "1 x 3 =",
+    "id": 72,
+    "choices":[3,1,13,11],
+    "answer": 3
+  }
+]

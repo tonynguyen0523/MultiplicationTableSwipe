@@ -2,44 +2,43 @@ package com.swipeacademy.multiplicationtableswipe;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.net.Uri;
 import android.util.JsonReader;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
- * Created by tonyn on 5/5/2017.
+ * Created by tonyn on 5/17/2017.
  */
 
-public class Question {
+public class QuestionSample {
 
     private int mQuestionID;
     private String mQuestion;
+    private ArrayList<Integer> mChoices;
     private int mAnswer;
 
-    private Question(int questionId, String question, int answer){
+    private QuestionSample(int questionId, String question, ArrayList<Integer> choices, int answer) {
         mQuestionID = questionId;
         mQuestion = question;
+        mChoices = choices;
         mAnswer = answer;
     }
 
-
-
-    static Question getQuestionByID(Context context, int questionID){
+    static QuestionSample getQuestionByID(Context context, int questionID) {
         JsonReader reader;
         try {
             reader = readJsonFile(context);
             reader.beginArray();
-            while (reader.hasNext()){
-                Question currentQuestion = readEntry(reader);
-                if(currentQuestion.getQuestionID() == questionID){
+            while (reader.hasNext()) {
+                QuestionSample currentQuestion = readEntry(reader);
+                if (currentQuestion.getQuestionID() == questionID) {
                     reader.close();
-                    return  currentQuestion;
+                    return currentQuestion;
                 }
             }
         } catch (IOException e) {
@@ -49,39 +48,55 @@ public class Question {
         return null;
     }
 
-    static ArrayList<Integer> getAllQuestionsIDs(Context context){
+    static ArrayList<Integer> getAllQuestionsIDs(Context context, int questionAmount) {
         JsonReader reader;
         ArrayList<Integer> questionIDs = new ArrayList<>();
         try {
             reader = readJsonFile(context);
             reader.beginArray();
-            while (reader.hasNext() && questionIDs.size() <= 15){
-                questionIDs.add(readEntry(reader).getQuestionID());
-            }
+                while (reader.hasNext() && questionIDs.size() < questionAmount) {
+                    questionIDs.add(readEntry(reader).getQuestionID());
+                }
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.d("LOGGYTAGGY", Integer.toString(questionIDs.size()));
 
+        Collections.shuffle(questionIDs);
         return questionIDs;
     }
 
-    private static Question readEntry(JsonReader reader){
+    static ArrayList<Integer> getAllCorrectionsIDs(ArrayList<String> correctionIDs){
+        ArrayList<Integer> correctionsIDs = new ArrayList<>();
+
+        for(int i = 0; i < correctionIDs.size(); i++){
+            int id = Integer.parseInt(correctionIDs.get(i));
+            correctionsIDs.add(id);
+        }
+        return correctionsIDs;
+    }
+
+    private static QuestionSample readEntry(JsonReader reader) {
 
         String question = null;
+        ArrayList<Integer> choices = null;
         int id = -1;
         int answer = -1;
 
-        try{
+        try {
             reader.beginObject();
-            while (reader.hasNext()){
+            while (reader.hasNext()) {
                 String name = reader.nextName();
-                switch (name){
+                switch (name) {
                     case "name":
                         question = reader.nextString();
                         break;
                     case "id":
                         id = reader.nextInt();
+                        break;
+                    case "choices":
+                        choices = readChoices(reader);
                         break;
                     case "answer":
                         answer = reader.nextInt();
@@ -95,26 +110,25 @@ public class Question {
             e.printStackTrace();
         }
 
-        return new Question(id,question,answer);
+        return new QuestionSample(id, question, choices, answer);
+    }
+
+    private static ArrayList<Integer> readChoices(JsonReader reader) throws IOException {
+
+        ArrayList<Integer> choices = new ArrayList<>();
+
+        reader.beginArray();
+        while (reader.hasNext()) {
+            choices.add(reader.nextInt());
+        }
+        reader.endArray();
+        return choices;
     }
 
     private static JsonReader readJsonFile(Context context) throws IOException {
         AssetManager assetManager = context.getAssets();
-//        String uri = null;
-//
-//        try{
-//            for(String asset : assetManager.list("")){
-//                if(asset.endsWith("mix.json")){
-//                    uri = "asset:///" + asset;
-//                }
-//            }
-//
-//        } catch (IOException e) {
-//            Toast.makeText(context, "Error reading json file!", Toast.LENGTH_LONG)
-//                    .show();
-//        }
 
-        InputStream inputStream = assetManager.open("mix.json");
+        InputStream inputStream = assetManager.open("letsplay.json");
 
         JsonReader reader;
         reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
@@ -133,9 +147,14 @@ public class Question {
         mAnswer = answer;
     }
 
+    public ArrayList<Integer> getChoices() {
+        return mChoices;
+    }
+
     public String getQuestion() {
 
         return mQuestion;
+
     }
 
     public void setQuestion(String question) {
@@ -151,7 +170,8 @@ public class Question {
     }
 
 
-
 }
+
+
 
 

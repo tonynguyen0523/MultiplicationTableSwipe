@@ -15,20 +15,24 @@
             android:id="@+id/current_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="end"
             android:text="@string/current_score"/>
 
-        <TextView
+        <Chronometer
             android:id="@+id/current_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:text="Time: 3:12" />
+            android:textSize="18sp"
+            android:layout_gravity="end" />
+
 
         <TextView
             android:id="@+id/remaining_questions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:textSize="18sp"
             android:text="@string/remaining_questions" />
     </GridLayout>
 
@@ -39,9 +43,5 @@
         android:layout_height="match_parent"
         tools:context="com.swipeacademy.multiplicationtableswipe.PlayFragment"
         tools:layout="@layout/fragment_play"/>
-
-
-
-
 
 </LinearLayout>

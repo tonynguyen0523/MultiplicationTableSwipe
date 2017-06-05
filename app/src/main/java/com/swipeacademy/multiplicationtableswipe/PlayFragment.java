@@ -8,12 +8,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 import com.swipeacademy.multiplicationtableswipe.Util.OnSwipeTouchListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,14 +24,21 @@ import butterknife.Unbinder;
 
 public class PlayFragment extends Fragment {
 
-    @BindView(R.id.swipe_view)
-    View mSwipeView;
+    @BindView(R.id.play_answer_choices_area)
+    View mChoiceArea;
     @BindView(R.id.play_question)TextView mQuestionTV;
+    @BindView(R.id.choice1)TextView mChoice1;
+    @BindView(R.id.choice2)TextView mChoice2;
+    @BindView(R.id.choice3)TextView mChoice3;
+    @BindView(R.id.choice4)TextView mChoice4;
 
-    private static final String REMAINING_QUESTIONS_KEY = "remaining_questions";
+
     private ArrayList<Integer> mRemainingQuestionsIDs;
-    private ArrayList<Integer> mQuestionIDs;
+    private ArrayList<String> mCorrections;
     private int mAnswerQuestionID;
+    private int mCorrectAnswer;
+    private boolean isCorrections;
+    private int mQuestionSize;
     private Unbinder unbinder;
 
     public PlayFragment() {
@@ -43,47 +53,48 @@ public class PlayFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_play, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        boolean isNewGame = !getActivity().getIntent().hasExtra(REMAINING_QUESTIONS_KEY);
+        isCorrections = !CorrectionsUtil.getCorrections(getContext()).isEmpty();
 
-        if(isNewGame){
-            // Load all questions
-            mRemainingQuestionsIDs = Question.getAllQuestionsIDs(getContext());
+        int questionAmount = Utility.getSelectedAmount(getContext());
+
+        // Retrieve available questions
+        if (!isCorrections) {
+            mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(), questionAmount);
+            mCorrections = new ArrayList<>();
         } else {
-            mRemainingQuestionsIDs = getActivity().getIntent().getIntegerArrayListExtra(REMAINING_QUESTIONS_KEY);
+            mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
+            mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
         }
 
-        generateQuestion(mRemainingQuestionsIDs);
+        mQuestionSize = mRemainingQuestionsIDs.size();
 
+        final TextView[] mChoicesIDs = {mChoice1,mChoice2,mChoice3,mChoice4};
+        generateQuestion(mRemainingQuestionsIDs, mChoicesIDs);
 
-
-        mSwipeView.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+        mChoiceArea.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
 
             @Override
             public void onSwipeTop() {
                 super.onSwipeTop();
-                nextQuestion();
-                Toast.makeText(getContext(), "top", Toast.LENGTH_SHORT).show();
+                nextQuestion(mChoicesIDs, Integer.valueOf(mChoice2.getText().toString()));
             }
 
             @Override
             public void onSwipeRight() {
                 super.onSwipeRight();
-                nextQuestion();
-                Toast.makeText(getContext(), "right", Toast.LENGTH_SHORT).show();
+                nextQuestion(mChoicesIDs, Integer.valueOf(mChoice3.getText().toString()));
             }
 
             @Override
             public void onSwipeLeft() {
                 super.onSwipeLeft();
-                nextQuestion();
-                Toast.makeText(getContext(), "left", Toast.LENGTH_SHORT).show();
+                nextQuestion(mChoicesIDs, Integer.valueOf(mChoice1.getText().toString()));
             }
 
             @Override
             public void onSwipeBottom() {
                 super.onSwipeBottom();
-                nextQuestion();
-                Toast.makeText(getContext(), "bottom", Toast.LENGTH_SHORT).show();
+                nextQuestion(mChoicesIDs, Integer.valueOf(mChoice4.getText().toString()));
             }
         });
 
@@ -96,39 +107,63 @@ public class PlayFragment extends Fragment {
         unbinder.unbind();
     }
 
-    private void nextQuestion() {
+    private void nextQuestion(TextView[] choicesTV, int userAnswer) {
 
         int mCurrentScore = Utility.getCurrentScore(getContext());
         int mRemainingQuestions = Utility.getRemainingQuestions(getContext());
+        boolean correct = Utility.userCorrect(mCorrectAnswer,userAnswer);
 
-        mCurrentScore++;
+        //If user chose correct answer, increase score by 1,
+        //else add questionId to correctionsList
+        if(correct){
+            mCurrentScore++;
+        } else{
+            mCorrections.add(Integer.toString(mAnswerQuestionID));
+        }
+
         mRemainingQuestions--;
 
         Utility.setCurrentScore(getContext(), mCurrentScore);
         Utility.setRemainingQuestions(getContext(), mRemainingQuestions);
 
+        // Remove question so no repeat
         mRemainingQuestionsIDs.remove(Integer.valueOf(mAnswerQuestionID));
 
-        if (mRemainingQuestions < 0) {
-            Intent intent = new Intent(getActivity(), HomeActivity.class);
+        // Check if there is any questions left, if not end game
+        if (mRemainingQuestions == 0) {
+            Intent intent = new Intent(getActivity(), PlayResultActivity.class);
+            ((PlayActivity) getActivity()).stopTimer();
+            CorrectionsUtil.editCorrectionsList(getContext(),mCorrections);
             startActivity(intent);
         } else {
-            generateQuestion(mRemainingQuestionsIDs);
-
+            // Generate new question
+            generateQuestion(mRemainingQuestionsIDs, choicesTV);
+            // Update numbers
             ((PlayActivity) getActivity()).updateNumbers(mCurrentScore, mRemainingQuestions);
         }
     }
 
-    private void generateQuestion(ArrayList<Integer> remainingQuestions){
-        // Generate question and get the correct answer
-        mQuestionIDs = Utility.generateQuestion(remainingQuestions);
-        mAnswerQuestionID = Utility.getCorrectAnswerID(mQuestionIDs);
+    private void generateQuestion(ArrayList<Integer> remainingQuestions, TextView[] choicesTV){
 
-        // Get current question and set to text view
-        Question question = Question.getQuestionByID(getContext(),mAnswerQuestionID);
-        assert question != null;
-        mQuestionTV.setText(question.getQuestion());
+        int questionID = Utility.chooseQuestionID(remainingQuestions);
+        QuestionSample qs = QuestionSample.getQuestionByID(getContext(),questionID);
+        mQuestionTV.setText(qs != null ? qs.getQuestion() : null);
+
+        mCorrectAnswer = qs != null ? qs.getAnswer() : 0;
+        mAnswerQuestionID = questionID;
+
+        initializeChoices(qs != null ? qs.getChoices() : null, choicesTV);
     }
 
+    private void initializeChoices(ArrayList<Integer> choicesList, TextView[] choicesTV){
 
+        Collections.shuffle(choicesList);
+
+        TextView[] choices = new TextView[choicesTV.length];
+        for(int i = 0; i < choicesList.size(); i++){
+            TextView currentChoice = choicesTV[i];
+            choices[i] = currentChoice;
+            currentChoice.setText(Integer.toString(choicesList.get(i)));
+        }
+    }
 }

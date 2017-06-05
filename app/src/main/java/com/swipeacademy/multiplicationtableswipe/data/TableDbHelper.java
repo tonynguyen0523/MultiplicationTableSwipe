@@ -12,7 +12,7 @@ import static com.swipeacademy.multiplicationtableswipe.data.TableContract.*;
 
 public class TableDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 6;
 
     public static final String DATABASE_NAME = "samts.db";
 
@@ -30,8 +30,8 @@ public class TableDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_RESULTS_TABLE = "CREATE TABLE " + ResultsEntry.TABLE_NAME + " ("
                 + ResultsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + ResultsEntry.COLUMN_TABLES_KEY + " TEXT NOT NULL, "
-                + ResultsEntry.COLUMN_DATE + " INTEGER NOT NULL, "
+                + ResultsEntry.COLUMN_TABLES_KEY + " INTEGER NOT NULL, "
+                + ResultsEntry.COLUMN_DATE + " TEXT NOT NULL, "
                 + ResultsEntry.COLUMN_TOTAL_RIGHT + " INTEGER NOT NULL, "
                 + ResultsEntry.COLUMN_TIME + " INTEGER NOT NULL, "
                 + " FOREIGN KEY (" + ResultsEntry.COLUMN_TABLES_KEY + ") REFERENCES "
@@ -44,6 +44,9 @@ public class TableDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        db.execSQL("DROP TABLE IF EXISTS " + TableEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ResultsEntry.TABLE_NAME);
         onCreate(db);
     }
 }

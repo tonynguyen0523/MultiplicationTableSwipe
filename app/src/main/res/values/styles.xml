@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="PlayTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
+
+    <style name="Theme_Result" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
 </resources>

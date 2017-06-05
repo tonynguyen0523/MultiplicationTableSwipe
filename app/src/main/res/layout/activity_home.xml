@@ -24,8 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Practice"
-            android:onClick="practice"/>
+            android:text="Practice"/>
 
         <Button
             android:id="@+id/history_button"

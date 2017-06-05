@@ -16,7 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlayActivity"></activity>
+        <activity android:name=".PlayActivity"
+            android:theme="@style/PlayTheme"/>
+        <activity android:name=".PlayResultActivity" />
+        <activity android:name=".HistoryActivity"></activity>
+        <provider
+            android:authorities="com.swipeacademy.multiplicationtableswipe"
+            android:name=".data.TableProvider"
+            android:exported="false" />
     </application>
 
 </manifest>

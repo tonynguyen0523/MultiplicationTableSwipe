@@ -3,9 +3,19 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    
+
+    <!-- Play pref keys -->
     <string name="current_score">Current score: %1$d / %2$d</string>
+    <string name="final_score">Score: %1$d / %2$d</string>
+    <string name="final_time">Time: %1$d : %2$d</string>
     <string name="remaining_questions">Remaining: %1$d</string>
     <string name="preference_file_key">Score Preferences</string>
     <string name="preference_remaining_questions_key">Remaining Questions Preferences</string>
+
+    <!-- Correction's key -->
+    <string name="pref_corrections_key">corrections_key</string>
+    <string name="pref_corrections_initialized_key">correction_initialized_key</string>
+
+    <!-- Selected amount key -->
+    <string name="pref_amount_key">amount_key</string>
 </resources>
