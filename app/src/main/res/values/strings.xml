@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Multiplication Table Swipe</string>
 
+    <!--Testing ad banner-->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -8,7 +11,7 @@
     <string name="current_score">Current score: %1$d / %2$d</string>
     <string name="final_score">Score: %1$d / %2$d</string>
     <string name="final_time">Time: %1$d : %2$d</string>
-    <string name="remaining_questions">Remaining: %1$d</string>
+    <string name="remaining_questions">%1$d</string>
     <string name="preference_file_key">Score Preferences</string>
     <string name="preference_remaining_questions_key">Remaining Questions Preferences</string>
 

@@ -18,13 +18,14 @@ import java.util.Collections;
 public class QuestionSample {
 
     private int mQuestionID;
-    private String mQuestion;
+//    private String mQuestion;
+    private ArrayList<Integer> mQuestions;
     private ArrayList<Integer> mChoices;
     private int mAnswer;
 
-    private QuestionSample(int questionId, String question, ArrayList<Integer> choices, int answer) {
+    private QuestionSample(int questionId, ArrayList<Integer> question, ArrayList<Integer> choices, int answer) {
         mQuestionID = questionId;
-        mQuestion = question;
+        mQuestions = question;
         mChoices = choices;
         mAnswer = answer;
     }
@@ -79,7 +80,7 @@ public class QuestionSample {
 
     private static QuestionSample readEntry(JsonReader reader) {
 
-        String question = null;
+        ArrayList<Integer> questions = null;
         ArrayList<Integer> choices = null;
         int id = -1;
         int answer = -1;
@@ -89,11 +90,11 @@ public class QuestionSample {
             while (reader.hasNext()) {
                 String name = reader.nextName();
                 switch (name) {
-                    case "name":
-                        question = reader.nextString();
-                        break;
                     case "id":
                         id = reader.nextInt();
+                        break;
+                    case "question":
+                        questions = readChoices(reader);
                         break;
                     case "choices":
                         choices = readChoices(reader);
@@ -110,7 +111,7 @@ public class QuestionSample {
             e.printStackTrace();
         }
 
-        return new QuestionSample(id, question, choices, answer);
+        return new QuestionSample(id, questions, choices, answer);
     }
 
     private static ArrayList<Integer> readChoices(JsonReader reader) throws IOException {
@@ -128,18 +129,16 @@ public class QuestionSample {
     private static JsonReader readJsonFile(Context context) throws IOException {
         AssetManager assetManager = context.getAssets();
 
-        InputStream inputStream = assetManager.open("letsplay.json");
+        InputStream inputStream = assetManager.open("fives.json");
 
         JsonReader reader;
         reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
-
 
         return reader;
     }
 
     // Getters and Setters
     public int getAnswer() {
-
         return mAnswer;
     }
 
@@ -151,15 +150,7 @@ public class QuestionSample {
         return mChoices;
     }
 
-    public String getQuestion() {
-
-        return mQuestion;
-
-    }
-
-    public void setQuestion(String question) {
-        mQuestion = question;
-    }
+    public ArrayList<Integer> getQuestions() {return mQuestions;}
 
     public int getQuestionID() {
         return mQuestionID;

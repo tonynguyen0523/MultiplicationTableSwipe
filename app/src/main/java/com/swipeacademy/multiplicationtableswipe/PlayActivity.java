@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 import com.swipeacademy.multiplicationtableswipe.dialog.PlayBackPressDialogFragment;
 
@@ -19,9 +21,10 @@ import butterknife.ButterKnife;
 
 public class PlayActivity extends AppCompatActivity {
 
-    @BindView(R.id.current_score)TextView mCurrentScoreTV;
+//    @BindView(R.id.current_score)TextView mCurrentScoreTV;
     @BindView(R.id.remaining_questions)TextView mRemainingQuestionTV;
     @BindView(R.id.current_time)Chronometer mChronometer;
+    @BindView(R.id.adView)AdView mAdView;
 
     private long mTime = 0;
     private int correct = 0;
@@ -42,8 +45,11 @@ public class PlayActivity extends AppCompatActivity {
 
         startTimer();
 
-        mCurrentScoreTV.setText(getString(R.string.current_score, mCurrentScore,mSelectedAmount));
+//        mCurrentScoreTV.setText(getString(R.string.current_score, mCurrentScore,mSelectedAmount));
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions, mRemainingQuestion));
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override
@@ -53,7 +59,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void updateNumbers(int currentScore, int remainingQuestions){
-        mCurrentScoreTV.setText(getString(R.string.current_score,currentScore,mSelectedAmount));
+//        mCurrentScoreTV.setText(getString(R.string.current_score,currentScore,mSelectedAmount));
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions,remainingQuestions));
     }
 

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 
 import butterknife.BindView;
@@ -15,6 +17,7 @@ import butterknife.ButterKnife;
 public class HomeActivity extends AppCompatActivity {
 
     @BindView(R.id.practice_button)Button mPracticeButton;
+    @BindView(R.id.home_adView)AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,9 @@ public class HomeActivity extends AppCompatActivity {
 
         CorrectionsUtil.clearCorrections(this);
         Utility.setCurrentScore(this,0);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
 

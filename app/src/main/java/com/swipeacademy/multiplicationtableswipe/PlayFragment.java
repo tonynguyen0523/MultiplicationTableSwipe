@@ -26,7 +26,8 @@ public class PlayFragment extends Fragment {
 
     @BindView(R.id.play_answer_choices_area)
     View mChoiceArea;
-    @BindView(R.id.play_question)TextView mQuestionTV;
+    @BindView(R.id.play_question1)TextView mQuestion1;
+    @BindView(R.id.play_question2)TextView mQuestion2;
     @BindView(R.id.choice1)TextView mChoice1;
     @BindView(R.id.choice2)TextView mChoice2;
     @BindView(R.id.choice3)TextView mChoice3;
@@ -147,12 +148,24 @@ public class PlayFragment extends Fragment {
 
         int questionID = Utility.chooseQuestionID(remainingQuestions);
         QuestionSample qs = QuestionSample.getQuestionByID(getContext(),questionID);
-        mQuestionTV.setText(qs != null ? qs.getQuestion() : null);
 
+        setUpQuestion(qs);
         mCorrectAnswer = qs != null ? qs.getAnswer() : 0;
         mAnswerQuestionID = questionID;
 
+        Log.d("REMAINING", Integer.toString(remainingQuestions.size()));
+
         initializeChoices(qs != null ? qs.getChoices() : null, choicesTV);
+    }
+
+    private void setUpQuestion(QuestionSample qs){
+
+        ArrayList<Integer> questions = qs.getQuestions();
+        Collections.shuffle(questions);
+
+        mQuestion1.setText(Integer.toString(questions.get(0)));
+        mQuestion2.setText(Integer.toString(questions.get(1)));
+
     }
 
     private void initializeChoices(ArrayList<Integer> choicesList, TextView[] choicesTV){
