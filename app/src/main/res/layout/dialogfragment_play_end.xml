@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/card_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
+        android:orientation="vertical">
 
     <TextView
         android:id="@+id/results_header"
         style="@style/Base.TextAppearance.AppCompat.Display2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryDark"
         android:gravity="center"
-        android:text="Results!"/>
+        android:text="Complete!"/>
 
     <TextView
         android:id="@+id/play_final_score"
@@ -33,20 +42,24 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/results_replay_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Replay"/>
+            android:background="@color/colorAccent"
+            android:src="@drawable/ic_replay_white_48dp"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/results_home_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Home"/>
+            android:background="@color/colorAccent"
+            android:src="@drawable/ic_home_white_48dp"/>
 
     </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

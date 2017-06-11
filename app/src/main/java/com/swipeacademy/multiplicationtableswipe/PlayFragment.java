@@ -1,7 +1,10 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -132,10 +135,11 @@ public class PlayFragment extends Fragment {
 
         // Check if there is any questions left, if not end game
         if (mRemainingQuestions == 0) {
-            Intent intent = new Intent(getActivity(), PlayResultActivity.class);
+//            Intent intent = new Intent(getActivity(), PlayResultActivity.class);
             ((PlayActivity) getActivity()).stopTimer();
             CorrectionsUtil.editCorrectionsList(getContext(),mCorrections);
-            startActivity(intent);
+            resultsDialog();
+//            startActivity(intent);
         } else {
             // Generate new question
             generateQuestion(mRemainingQuestionsIDs, choicesTV);
@@ -178,5 +182,10 @@ public class PlayFragment extends Fragment {
             choices[i] = currentChoice;
             currentChoice.setText(Integer.toString(choicesList.get(i)));
         }
+    }
+
+    private void resultsDialog(){
+        DialogFragment dialogFragment = new ResultsDialog();
+        dialogFragment.show(getFragmentManager(),"resultsdialog");
     }
 }

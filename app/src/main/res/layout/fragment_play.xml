@@ -137,6 +137,49 @@
                 android:layout_margin="10dp"
                 android:text="4" />
 
+            <View
+                android:id="@+id/swipe_circle_background"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_margin="40dp"
+                android:background="@drawable/swipe_circle"
+                android:layout_centerInParent="true"/>
+
+            <ImageView
+                android:id="@+id/swipe_arrow_1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/swipe_arrow"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/swipe_circle_background"/>
+
+            <ImageView
+                android:id="@+id/swipe_arrow_2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/swipe_arrow"
+                android:layout_centerInParent="true"
+                android:layout_below="@id/swipe_circle_background"
+                android:rotation="90"/>
+
+            <ImageView
+                android:id="@+id/swipe_arrow_3"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/swipe_arrow"
+                android:rotation="180"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@id/swipe_circle_background"/>
+
+            <ImageView
+                android:id="@+id/swipe_arrow_4"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/swipe_arrow"
+                android:rotation="270"
+                android:layout_centerInParent="true"
+                android:layout_above="@id/swipe_circle_background"/>
+
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "425719615541",
+    "firebase_url": "https://multiplicationtableswipe.firebaseio.com",
+    "project_id": "multiplicationtableswipe",
+    "storage_bucket": "multiplicationtableswipe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425719615541:android:54c2b9b6f0bfba07",
+        "android_client_info": {
+          "package_name": "com.swipeacademy.multiplicationtableswipe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425719615541-gc1oluhnki4iork4vtg4vvo6boe0hofb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swipeacademy.multiplicationtableswipe",
+            "certificate_hash": "f486a4173a91730ebbcb53d51a5073f6b69388fe"
+          }
+        },
+        {
+          "client_id": "425719615541-vcelnfkh01qj0nitismvs08dppekn4g1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfoc92iouW8ol9qmg3V42FaIy1Pv-lOjo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425719615541-vcelnfkh01qj0nitismvs08dppekn4g1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

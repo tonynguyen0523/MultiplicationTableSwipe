@@ -1,11 +1,13 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
@@ -20,12 +22,12 @@ import butterknife.ButterKnife;
  * Created by tonyn on 5/17/2017.
  */
 
-public class PlayResultActivity extends AppCompatActivity {
+public class PlayResultActivity extends Activity {
 
     @BindView(R.id.play_final_score)TextView mFinalScore;
     @BindView(R.id.play_final_time)TextView mFinalTime;
-    @BindView(R.id.results_home_button)Button mHomeButton;
-    @BindView(R.id.results_replay_button)Button mReplayButton;
+    @BindView(R.id.results_home_button)ImageButton mHomeButton;
+    @BindView(R.id.results_replay_button)ImageButton mReplayButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,5 +61,18 @@ public class PlayResultActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onVisibleBehindCanceled() {
+        super.onVisibleBehindCanceled();
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 }

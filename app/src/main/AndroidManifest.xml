@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".PlayActivity"
             android:theme="@style/PlayTheme"/>
-        <activity android:name=".PlayResultActivity" />
+        <activity android:name=".PlayResultActivity"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"/>
         <activity android:name=".HistoryActivity"></activity>
         <provider
             android:authorities="com.swipeacademy.multiplicationtableswipe"
