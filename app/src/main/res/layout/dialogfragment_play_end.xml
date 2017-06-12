@@ -10,18 +10,21 @@
         android:id="@+id/card_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
     <TextView
         android:id="@+id/results_header"
-        style="@style/Base.TextAppearance.AppCompat.Display2"
+        style="@style/Base.TextAppearance.AppCompat.Display3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="#000"
+        android:fontFamily="cursive"
         android:textStyle="bold"
         android:gravity="center"
-        android:text="RESULTS"/>
+        android:background="@color/colorAccent"
+        android:paddingTop="10dp"
+        android:text="Awesome Job!"/>
 
     <TextView
         android:id="@+id/play_final_score"
@@ -29,8 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:textSize="20dp"
+        android:textSize="30sp"
         android:textStyle="bold"
+        android:textColor="#000"
+        android:fontFamily="cursive"
         android:text="@string/final_score"/>
 
     <TextView
@@ -38,14 +43,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="20dp"
+        android:textSize="30sp"
         android:textStyle="bold"
+        android:textColor="#000"
+        android:fontFamily="cursive"
         android:text="@string/final_time"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:elevation="4dp"
         android:orientation="horizontal">
 
         <ImageButton
@@ -53,16 +61,18 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:src="@drawable/ic_replay_white_48dp"/>
+            android:padding="6dp"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/ic_replay_white_36dp"/>
 
         <ImageButton
             android:id="@+id/results_home_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:src="@drawable/ic_home_white_48dp"/>
+            android:padding="6dp"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/ic_home_white_36dp"/>
 
     </LinearLayout>
 

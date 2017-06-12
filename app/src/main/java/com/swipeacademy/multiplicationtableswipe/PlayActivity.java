@@ -1,11 +1,14 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Chronometer;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -21,13 +24,12 @@ import butterknife.ButterKnife;
 
 public class PlayActivity extends AppCompatActivity {
 
-//    @BindView(R.id.current_score)TextView mCurrentScoreTV;
     @BindView(R.id.remaining_questions)TextView mRemainingQuestionTV;
     @BindView(R.id.current_time)Chronometer mChronometer;
     @BindView(R.id.adView)AdView mAdView;
+    @BindView(R.id.play_home_button)ImageButton mHomeButtom;
 
     private long mTime = 0;
-    private int correct = 0;
     private int mSelectedAmount = 0;
     private String date;
 
@@ -49,6 +51,13 @@ public class PlayActivity extends AppCompatActivity {
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
+        mHomeButtom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialog();
+            }
+        });
     }
 
     @Override
@@ -84,8 +93,9 @@ public class PlayActivity extends AppCompatActivity {
         mTime = SystemClock.elapsedRealtime();
         Utility.setFinishedTime(this,mTime);
 
-        correct = Utility.getCurrentScore(this);
-        Utility.saveResults(this,"letsplay",date,correct,mTime);
+        int correct = Utility.getCurrentScore(this);
+        String selectedTable = Utility.getSelectedTable(this);
+        Utility.saveResults(this,selectedTable,date, correct,mTime);
     }
 
     private void showAlertDialog(){

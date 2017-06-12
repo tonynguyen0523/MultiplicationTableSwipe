@@ -29,6 +29,7 @@ public class Utility {
     private static final String REMAINING_QUESTIONS = "remaining_questions";
     private static final String FINISHED_TIME = "finished_time";
     private static final String AMOUNT_SELECTED = "amount_selected";
+    private static final String TABLE_SELECTED = "table_selected";
 //    private static final int NUM_ANSWERS = 4;
 
 //    static ArrayList<Integer> generateQuestion(ArrayList<Integer> remainingQuestionIDs){
@@ -115,6 +116,21 @@ public class Utility {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.pref_amount_key), Context.MODE_PRIVATE);
         return sharedPreferences.getInt(AMOUNT_SELECTED, 0);
+    }
+
+    static void setSelectedTable(Context context, String table){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_selected_table_key),Context.MODE_PRIVATE);
+        SharedPreferences.Editor spe = sharedPreferences.edit();
+        spe.putString(TABLE_SELECTED,table);
+        spe.apply();
+    }
+
+    static String getSelectedTable(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_selected_table_key),Context.MODE_PRIVATE);
+        return sharedPreferences.getString(TABLE_SELECTED,"table");
+
     }
 
     static void saveResults(Context context, String table, String date, int correct, long time){

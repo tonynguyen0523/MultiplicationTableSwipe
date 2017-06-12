@@ -1,5 +1,6 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -62,7 +63,10 @@ public class HistoryListFragment extends Fragment implements LoaderManager.Loade
         mDeleteHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),HistoryActivity.class);
                 getActivity().getContentResolver().delete(TableEntry.CONTENT_URI,null,null);
+                startActivity(intent);
+
             }
         });
 
