@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -53,11 +54,12 @@ public class ResultsDialog extends DialogFragment {
 
         int mCurrentScore = Utility.getCurrentScore(getContext());
         long mFinishedTime = Utility.getFinishedTime(getContext());
+        final int selectedAmount = Utility.getSelectedAmount(getContext());
 
         long minutes = TimeUnit.MILLISECONDS.toMinutes(mFinishedTime);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(mFinishedTime);
 
-        mFinalScore.setText(getString(R.string.final_score,mCurrentScore,12));
+        mFinalScore.setText(getString(R.string.final_score,mCurrentScore,selectedAmount));
         mFinalTime.setText(getString(R.string.final_time,minutes,seconds));
 
         mHomeButton.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +75,8 @@ public class ResultsDialog extends DialogFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PlayActivity.class);
                 Utility.setCurrentScore(getActivity(),0);
+                Utility.setRemainingQuestions(getActivity(), selectedAmount);
+                Log.d("REPLAY", Integer.toString(Utility.getSelectedAmount(getContext())));
                 CorrectionsUtil.clearCorrections(getActivity());
                 startActivity(intent);
             }

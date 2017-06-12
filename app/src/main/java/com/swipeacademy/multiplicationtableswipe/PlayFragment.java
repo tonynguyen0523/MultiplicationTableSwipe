@@ -27,8 +27,7 @@ import butterknife.Unbinder;
 
 public class PlayFragment extends Fragment {
 
-    @BindView(R.id.play_answer_choices_area)
-    View mChoiceArea;
+    @BindView(R.id.play_answer_choices_area)View mChoiceArea;
     @BindView(R.id.play_question1)TextView mQuestion1;
     @BindView(R.id.play_question2)TextView mQuestion2;
     @BindView(R.id.choice1)TextView mChoice1;
@@ -36,19 +35,16 @@ public class PlayFragment extends Fragment {
     @BindView(R.id.choice3)TextView mChoice3;
     @BindView(R.id.choice4)TextView mChoice4;
 
-
     private ArrayList<Integer> mRemainingQuestionsIDs;
     private ArrayList<String> mCorrections;
     private int mAnswerQuestionID;
     private int mCorrectAnswer;
     private boolean isCorrections;
-    private int mQuestionSize;
     private Unbinder unbinder;
 
     public PlayFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,8 +53,9 @@ public class PlayFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_play, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        // Check if corrections mode
         isCorrections = !CorrectionsUtil.getCorrections(getContext()).isEmpty();
-
+        // Get amount of questions selected
         int questionAmount = Utility.getSelectedAmount(getContext());
 
         // Retrieve available questions
@@ -70,8 +67,7 @@ public class PlayFragment extends Fragment {
             mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
         }
 
-        mQuestionSize = mRemainingQuestionsIDs.size();
-
+        // Create array with choicesTV and generate quesions and answers
         final TextView[] mChoicesIDs = {mChoice1,mChoice2,mChoice3,mChoice4};
         generateQuestion(mRemainingQuestionsIDs, mChoicesIDs);
 
@@ -111,10 +107,15 @@ public class PlayFragment extends Fragment {
         unbinder.unbind();
     }
 
+    /**
+     * Get next question method
+     */
     private void nextQuestion(TextView[] choicesTV, int userAnswer) {
 
+        // Get current score and remaining question
         int mCurrentScore = Utility.getCurrentScore(getContext());
         int mRemainingQuestions = Utility.getRemainingQuestions(getContext());
+
         boolean correct = Utility.userCorrect(mCorrectAnswer,userAnswer);
 
         //If user chose correct answer, increase score by 1,
@@ -125,8 +126,10 @@ public class PlayFragment extends Fragment {
             mCorrections.add(Integer.toString(mAnswerQuestionID));
         }
 
+        // Reduce remaining question by 1
         mRemainingQuestions--;
 
+        // Update preferences
         Utility.setCurrentScore(getContext(), mCurrentScore);
         Utility.setRemainingQuestions(getContext(), mRemainingQuestions);
 
@@ -135,19 +138,20 @@ public class PlayFragment extends Fragment {
 
         // Check if there is any questions left, if not end game
         if (mRemainingQuestions == 0) {
-//            Intent intent = new Intent(getActivity(), PlayResultActivity.class);
             ((PlayActivity) getActivity()).stopTimer();
             CorrectionsUtil.editCorrectionsList(getContext(),mCorrections);
             resultsDialog();
-//            startActivity(intent);
         } else {
             // Generate new question
             generateQuestion(mRemainingQuestionsIDs, choicesTV);
             // Update numbers
-            ((PlayActivity) getActivity()).updateNumbers(mCurrentScore, mRemainingQuestions);
+            ((PlayActivity) getActivity()).updateNumbers(mRemainingQuestions);
         }
     }
 
+    /**
+     * Generate new questions method
+     */
     private void generateQuestion(ArrayList<Integer> remainingQuestions, TextView[] choicesTV){
 
         int questionID = Utility.chooseQuestionID(remainingQuestions);
@@ -162,6 +166,9 @@ public class PlayFragment extends Fragment {
         initializeChoices(qs != null ? qs.getChoices() : null, choicesTV);
     }
 
+    /**
+     * Shuffle the two question numbers and random arrange them
+     */
     private void setUpQuestion(QuestionSample qs){
 
         ArrayList<Integer> questions = qs.getQuestions();
@@ -172,6 +179,9 @@ public class PlayFragment extends Fragment {
 
     }
 
+    /**
+     * Shuffle choices and set to text view
+     */
     private void initializeChoices(ArrayList<Integer> choicesList, TextView[] choicesTV){
 
         Collections.shuffle(choicesList);
@@ -184,8 +194,12 @@ public class PlayFragment extends Fragment {
         }
     }
 
+    /**
+     * Show results dialog
+     */
     private void resultsDialog(){
         DialogFragment dialogFragment = new ResultsDialog();
+        dialogFragment.setCancelable(false);
         dialogFragment.show(getFragmentManager(),"resultsdialog");
     }
 }

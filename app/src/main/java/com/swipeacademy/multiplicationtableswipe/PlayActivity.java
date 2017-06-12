@@ -37,15 +37,14 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
         ButterKnife.bind(this);
 
-        int mCurrentScore = Utility.getCurrentScore(this);
+        // Get remaining questions
         int mRemainingQuestion = Utility.getRemainingQuestions(this);
-
+        // Get selected amount and format date
         mSelectedAmount = Utility.getSelectedAmount(this);
         date = DateFormat.getDateTimeInstance().format(new Date());
 
         startTimer();
 
-//        mCurrentScoreTV.setText(getString(R.string.current_score, mCurrentScore,mSelectedAmount));
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions, mRemainingQuestion));
 
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -58,8 +57,7 @@ public class PlayActivity extends AppCompatActivity {
         showAlertDialog();
     }
 
-    public void updateNumbers(int currentScore, int remainingQuestions){
-//        mCurrentScoreTV.setText(getString(R.string.current_score,currentScore,mSelectedAmount));
+    public void updateNumbers(int remainingQuestions){
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions,remainingQuestions));
     }
 
@@ -82,6 +80,7 @@ public class PlayActivity extends AppCompatActivity {
     public void stopTimer(){
 
         mChronometer.stop();
+        mRemainingQuestionTV.setText(getString(R.string.remaining_questions,0));
         mTime = SystemClock.elapsedRealtime();
         Utility.setFinishedTime(this,mTime);
 

@@ -57,6 +57,7 @@ public class PlayResultActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(PlayResultActivity.this, PlayActivity.class);
                 Utility.setCurrentScore(PlayResultActivity.this,0);
+                Utility.setRemainingQuestions(PlayResultActivity.this, Utility.getSelectedAmount(getApplicationContext()));
                 CorrectionsUtil.clearCorrections(PlayResultActivity.this);
                 startActivity(intent);
             }
@@ -69,10 +70,4 @@ public class PlayResultActivity extends Activity {
         startActivity(intent);
     }
 
-    @Override
-    public void onVisibleBehindCanceled() {
-        super.onVisibleBehindCanceled();
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-    }
 }
