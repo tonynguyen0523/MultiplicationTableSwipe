@@ -48,8 +48,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
         cursor.moveToPosition(position);
 
-        int correct = cursor.getInt(HistoryListFragment.COL_ROW_TOTAL_RIGHT);
-        int time = cursor.getInt(HistoryListFragment.COL_ROW_TIME);
+        int correct = cursor.getInt(HistoryFragment.COL_ROW_TOTAL_RIGHT);
+        int time = cursor.getInt(HistoryFragment.COL_ROW_TIME);
 
         holder.historyCorrect.setText(Integer.toString(correct));
         holder.historyTime.setText(Integer.toString(time));
