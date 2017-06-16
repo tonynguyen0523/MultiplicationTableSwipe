@@ -6,6 +6,7 @@ import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
@@ -31,6 +32,7 @@ public class PlayActivity extends AppCompatActivity {
 
     private long mTime = 0;
     private int mSelectedAmount = 0;
+    private boolean mIsCorrections;
     private String date;
 
     @Override

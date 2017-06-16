@@ -11,8 +11,10 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.swipeacademy.multiplicationtableswipe.HomeActivity;
 import com.swipeacademy.multiplicationtableswipe.PlayActivity;
@@ -37,6 +39,7 @@ public class ResultsDialog extends DialogFragment {
     @BindView(R.id.play_final_time)TextView mFinalTime;
     @BindView(R.id.results_home_button)ImageButton mHomeButton;
     @BindView(R.id.results_replay_button)ImageButton mReplayButton;
+    @BindView(R.id.correction_button)Button mCorrectionButton;
 
     private Unbinder unbinder;
 
@@ -62,6 +65,12 @@ public class ResultsDialog extends DialogFragment {
         mFinalScore.setText(getString(R.string.final_score,mCurrentScore,selectedAmount));
         mFinalTime.setText(getString(R.string.final_time,minutes,seconds));
 
+        if(!CorrectionsUtil.getCorrections(getContext()).isEmpty()){
+            mCorrectionButton.setVisibility(View.VISIBLE);
+        } else {
+            mCorrectionButton.setVisibility(View.GONE);
+        }
+
         mHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,13 +79,26 @@ public class ResultsDialog extends DialogFragment {
             }
         });
 
+        mCorrectionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), PlayActivity.class);
+//                Utility.setIsCorrections(getContext(),true);
+//                Utility.setCurrentScore(getActivity(),0);
+//                Utility.setRemainingQuestions(getActivity(), CorrectionsUtil.getCorrections(getContext()).size());
+//                startActivity(intent);
+                Log.d("Corrections List", CorrectionsUtil.getCorrections(getContext()).toString());
+                Toast.makeText(getContext(),Integer.toString(CorrectionsUtil.getCorrections(getContext()).size()),Toast.LENGTH_SHORT).show();
+            }
+        });
+
         mReplayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PlayActivity.class);
+                Utility.setIsCorrections(getContext(),false);
                 Utility.setCurrentScore(getActivity(),0);
                 Utility.setRemainingQuestions(getActivity(), selectedAmount);
-                Log.d("REPLAY", Integer.toString(Utility.getSelectedAmount(getContext())));
                 CorrectionsUtil.clearCorrections(getActivity());
                 startActivity(intent);
             }
@@ -87,6 +109,8 @@ public class ResultsDialog extends DialogFragment {
 
 
     }
+
+
 
     @Override
     public void onCancel(DialogInterface dialog) {

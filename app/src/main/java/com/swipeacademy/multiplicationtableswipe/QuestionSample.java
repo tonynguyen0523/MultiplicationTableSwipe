@@ -71,10 +71,15 @@ public class QuestionSample {
     static ArrayList<Integer> getAllCorrectionsIDs(ArrayList<String> correctionIDs){
         ArrayList<Integer> correctionsIDs = new ArrayList<>();
 
-        for(int i = 0; i < correctionIDs.size(); i++){
-            int id = Integer.parseInt(correctionIDs.get(i));
-            correctionsIDs.add(id);
+//        for(int i = 0; i < correctionIDs.size(); i++){
+//            int id = Integer.parseInt(correctionIDs.get(i));
+//            correctionsIDs.add(id);
+//        }
+
+        for(String stringValue : correctionIDs){
+            correctionsIDs.add(Integer.parseInt(stringValue.trim()));
         }
+
         return correctionsIDs;
     }
 

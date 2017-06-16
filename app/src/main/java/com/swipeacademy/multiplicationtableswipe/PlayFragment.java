@@ -54,17 +54,19 @@ public class PlayFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         // Check if corrections mode
-        isCorrections = !CorrectionsUtil.getCorrections(getContext()).isEmpty();
+        isCorrections = Utility.getIsCorrections(getContext());
         // Get amount of questions selected
         int questionAmount = Utility.getSelectedAmount(getContext());
 
         // Retrieve available questions
-        if (!isCorrections) {
+        if (isCorrections) {
+            mCorrections = new ArrayList<>(CorrectionsUtil.getCorrectionsArrayList(getContext()));
+            mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
+            Log.d("Check boolean","true");
+        } else {
             mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(), questionAmount);
             mCorrections = new ArrayList<>();
-        } else {
-            mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
-            mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
+            Log.d("Check boolean","false");
         }
 
         // Create array with choicesTV and generate quesions and answers

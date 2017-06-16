@@ -35,6 +35,7 @@ public class QuestionAmountDialog extends DialogFragment {
                         Utility.setSelectedAmount(getContext(),intAmount);
                         Utility.setRemainingQuestions(getContext(),intAmount);
                         Utility.setSelectedTable(getContext(),amountSelected);
+
                         Intent intent = new Intent(getActivity(), PlayActivity.class);
                         startActivity(intent);
                         Log.d("AMOUNT", getResources().getStringArray(R.array.questions_amount)[which]);

@@ -30,6 +30,7 @@ public class Utility {
     private static final String FINISHED_TIME = "finished_time";
     private static final String AMOUNT_SELECTED = "amount_selected";
     private static final String TABLE_SELECTED = "table_selected";
+    private static final String ISCORRECTIONS = "is_corrections";
 //    private static final int NUM_ANSWERS = 4;
 
 //    static ArrayList<Integer> generateQuestion(ArrayList<Integer> remainingQuestionIDs){
@@ -131,6 +132,20 @@ public class Utility {
                 context.getString(R.string.pref_selected_table_key),Context.MODE_PRIVATE);
         return sharedPreferences.getString(TABLE_SELECTED,"table");
 
+    }
+
+    static void setIsCorrections(Context context, boolean bool){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_is_corrections), Context.MODE_PRIVATE);
+        SharedPreferences.Editor spe = sharedPreferences.edit();
+        spe.putBoolean(ISCORRECTIONS, bool);
+        spe.apply();
+    }
+
+    static boolean getIsCorrections(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_is_corrections), Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(ISCORRECTIONS, false);
     }
 
     static void saveResults(Context context, String table, String date, int correct, long time){

@@ -10,6 +10,7 @@ import com.swipeacademy.multiplicationtableswipe.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -41,6 +42,17 @@ public final class CorrectionsUtil {
         return preferences.getStringSet(correctionsKey, new HashSet<String>());
     }
 
+    public static ArrayList<String> getCorrectionsArrayList(Context context){
+        ArrayList<String> list = new ArrayList<>();
+        String[] correctionsList = context.getResources().getStringArray(R.array.correctionsID);
+
+        for (String correctionsID : correctionsList) {
+            list.add(correctionsID);
+        }
+
+        return list;
+    }
+
     public static void editCorrectionsList(Context context, ArrayList<String> correctionsList){
         String key = context.getString(R.string.pref_corrections_key);
         Set<String> corrections = getCorrections(context);
@@ -52,7 +64,7 @@ public final class CorrectionsUtil {
         editor.putStringSet(key, corrections);
         editor.apply();
 
-        Log.d("CORRECTIONS", Integer.toString(corrections.size()));
+//        Log.d("CORRECTIONS", Integer.toString(corrections.size()));
     }
 
     public static void clearCorrections(Context context){
@@ -66,6 +78,6 @@ public final class CorrectionsUtil {
         editor.putStringSet(key, corrections);
         editor.apply();
 
-        Log.d("CORRECTIONS", Integer.toString(corrections.size()));
+//        Log.d("CORRECTIONS", Integer.toString(corrections.size()));
     }
 }

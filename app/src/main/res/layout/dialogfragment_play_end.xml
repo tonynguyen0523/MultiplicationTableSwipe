@@ -49,6 +49,12 @@
         android:fontFamily="cursive"
         android:text="@string/final_time"/>
 
+        <Button
+            android:id="@+id/correction_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Corrections"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

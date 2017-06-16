@@ -27,6 +27,7 @@ public class HomeActivity extends AppCompatActivity {
 
         CorrectionsUtil.clearCorrections(this);
         Utility.setCurrentScore(this,0);
+        Utility.setIsCorrections(this,false);
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
