@@ -1,24 +1,16 @@
 package com.swipeacademy.multiplicationtableswipe;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 import com.swipeacademy.multiplicationtableswipe.Util.OnSwipeTouchListener;
@@ -45,6 +37,8 @@ public class PlayFragment extends Fragment {
     @BindView(R.id.question_border_4)View mBorder4;
 
     private static final int CORRECT_ANSWER_DELAY_MILLIS = 500;
+    private static final String REMAINING_QUESTIONS_KEY = "remainingList";
+    private static final String CORRECTIONS_KEY = "correctionsList";
 
     private ArrayList<Integer> mRemainingQuestionsIDs;
     private ArrayList<String> mCorrections;
@@ -62,6 +56,7 @@ public class PlayFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_play, container, false);
+
         unbinder = ButterKnife.bind(this, view);
 
         // Check if corrections mode
@@ -69,16 +64,23 @@ public class PlayFragment extends Fragment {
         // Get amount of questions selected
         int questionAmount = Utility.getSelectedAmount(getContext());
 
-        // Retrieve available questions
-        if (isCorrections) {
-            mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
-            mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
-            Log.d("Check boolean","true");
+        if(savedInstanceState != null){
+            mRemainingQuestionsIDs = savedInstanceState.getIntegerArrayList(REMAINING_QUESTIONS_KEY);
+            mCorrections = savedInstanceState.getStringArrayList(CORRECTIONS_KEY);
         } else {
-            mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(), questionAmount);
-            mCorrections = new ArrayList<>();
-            Log.d("Check boolean","false");
+            // Retrieve available questions
+            if (isCorrections) {
+                mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
+                mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
+                Log.d("Check boolean", "true");
+            } else {
+                mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(), questionAmount);
+                mCorrections = new ArrayList<>();
+                Log.d("Check boolean", "false");
+            }
         }
+
+        Log.d("RemainingID SIZE", Integer.toString(mRemainingQuestionsIDs.size()));
 
         // Create array with choicesTV and generate questions and answers
         final TextView[] mChoicesIDs = {mChoice1,mChoice2,mChoice3,mChoice4};
@@ -118,6 +120,13 @@ public class PlayFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putIntegerArrayList(REMAINING_QUESTIONS_KEY,mRemainingQuestionsIDs);
+        outState.putStringArrayList(CORRECTIONS_KEY, mCorrections);
     }
 
     /**
@@ -166,7 +175,6 @@ public class PlayFragment extends Fragment {
                     // Generate new question
                     generateQuestion(mRemainingQuestionsIDs, choicesTV);
                     changeSelectedColor(choicesTV,choiceTVID,Color.BLACK,ContextCompat.getColor(getContext(),R.color.colorPrimary));
-//                    mSwipeCircleImg.getBackground().setColorFilter(ContextCompat.getColor(getContext(),R.color.colorAccent), PorterDuff.Mode.SRC_IN);
                     // Update numbers
                     ((PlayActivity) getActivity()).updateNumbers(finalMRemainingQuestions);
                 }
