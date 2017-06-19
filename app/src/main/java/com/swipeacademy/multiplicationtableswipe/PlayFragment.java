@@ -3,15 +3,20 @@ package com.swipeacademy.multiplicationtableswipe;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +39,12 @@ public class PlayFragment extends Fragment {
     @BindView(R.id.choice2)TextView mChoice2;
     @BindView(R.id.choice3)TextView mChoice3;
     @BindView(R.id.choice4)TextView mChoice4;
+    @BindView(R.id.question_border_1)View mBorder1;
+    @BindView(R.id.question_border_2)View mBorder2;
+    @BindView(R.id.question_border_3)View mBorder3;
+    @BindView(R.id.question_border_4)View mBorder4;
+
+    private static final int CORRECT_ANSWER_DELAY_MILLIS = 500;
 
     private ArrayList<Integer> mRemainingQuestionsIDs;
     private ArrayList<String> mCorrections;
@@ -60,7 +71,7 @@ public class PlayFragment extends Fragment {
 
         // Retrieve available questions
         if (isCorrections) {
-            mCorrections = new ArrayList<>(CorrectionsUtil.getCorrectionsArrayList(getContext()));
+            mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
             mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
             Log.d("Check boolean","true");
         } else {
@@ -69,37 +80,37 @@ public class PlayFragment extends Fragment {
             Log.d("Check boolean","false");
         }
 
-        // Create array with choicesTV and generate quesions and answers
+        // Create array with choicesTV and generate questions and answers
         final TextView[] mChoicesIDs = {mChoice1,mChoice2,mChoice3,mChoice4};
-        generateQuestion(mRemainingQuestionsIDs, mChoicesIDs);
 
         mChoiceArea.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
 
             @Override
             public void onSwipeTop() {
                 super.onSwipeTop();
-                nextQuestion(mChoicesIDs, Integer.valueOf(mChoice2.getText().toString()));
+                nextQuestion(mChoicesIDs, 1, Integer.valueOf(mChoice2.getText().toString()));
             }
 
             @Override
             public void onSwipeRight() {
                 super.onSwipeRight();
-                nextQuestion(mChoicesIDs, Integer.valueOf(mChoice3.getText().toString()));
+                nextQuestion(mChoicesIDs, 2, Integer.valueOf(mChoice3.getText().toString()));
             }
 
             @Override
             public void onSwipeLeft() {
                 super.onSwipeLeft();
-                nextQuestion(mChoicesIDs, Integer.valueOf(mChoice1.getText().toString()));
+                nextQuestion(mChoicesIDs, 0, Integer.valueOf(mChoice1.getText().toString()));
             }
 
             @Override
             public void onSwipeBottom() {
                 super.onSwipeBottom();
-                nextQuestion(mChoicesIDs, Integer.valueOf(mChoice4.getText().toString()));
+                nextQuestion(mChoicesIDs, 3, Integer.valueOf(mChoice4.getText().toString()));
             }
         });
 
+        generateQuestion(mRemainingQuestionsIDs, mChoicesIDs);
         return view;
     }
 
@@ -112,7 +123,7 @@ public class PlayFragment extends Fragment {
     /**
      * Get next question method
      */
-    private void nextQuestion(TextView[] choicesTV, int userAnswer) {
+    private void nextQuestion(final TextView[] choicesTV, final int choiceTVID , int userAnswer) {
 
         // Get current score and remaining question
         int mCurrentScore = Utility.getCurrentScore(getContext());
@@ -124,8 +135,10 @@ public class PlayFragment extends Fragment {
         //else add questionId to correctionsList
         if(correct){
             mCurrentScore++;
+            changeSelectedColor(choicesTV,choiceTVID,Color.GREEN, Color.GREEN);
         } else{
             mCorrections.add(Integer.toString(mAnswerQuestionID));
+            changeSelectedColor(choicesTV,choiceTVID,Color.RED, Color.RED);
         }
 
         // Reduce remaining question by 1
@@ -138,17 +151,27 @@ public class PlayFragment extends Fragment {
         // Remove question so no repeat
         mRemainingQuestionsIDs.remove(Integer.valueOf(mAnswerQuestionID));
 
-        // Check if there is any questions left, if not end game
-        if (mRemainingQuestions == 0) {
-            ((PlayActivity) getActivity()).stopTimer();
-            CorrectionsUtil.editCorrectionsList(getContext(),mCorrections);
-            resultsDialog();
-        } else {
-            // Generate new question
-            generateQuestion(mRemainingQuestionsIDs, choicesTV);
-            // Update numbers
-            ((PlayActivity) getActivity()).updateNumbers(mRemainingQuestions);
-        }
+        // Delay for user to see if they were correct of wrong
+        final Handler handler = new Handler();
+        final int finalMRemainingQuestions = mRemainingQuestions;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Check if there is any questions left, if not end game
+                if (finalMRemainingQuestions == 0) {
+                    ((PlayActivity) getActivity()).stopTimer();
+                    CorrectionsUtil.editCorrectionsList(getContext(),mCorrections);
+                    resultsDialog();
+                } else {
+                    // Generate new question
+                    generateQuestion(mRemainingQuestionsIDs, choicesTV);
+                    changeSelectedColor(choicesTV,choiceTVID,Color.BLACK,ContextCompat.getColor(getContext(),R.color.colorPrimary));
+//                    mSwipeCircleImg.getBackground().setColorFilter(ContextCompat.getColor(getContext(),R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+                    // Update numbers
+                    ((PlayActivity) getActivity()).updateNumbers(finalMRemainingQuestions);
+                }
+            }
+        }, CORRECT_ANSWER_DELAY_MILLIS );
     }
 
     /**
@@ -203,5 +226,19 @@ public class PlayFragment extends Fragment {
         DialogFragment dialogFragment = new ResultsDialog();
         dialogFragment.setCancelable(false);
         dialogFragment.show(getFragmentManager(),"resultsdialog");
+    }
+
+    /**
+     * Change question border color
+     */
+    private void changeSelectedColor(TextView[] choicesTV, int choiceTVID, int choiceColor, int borderColor){
+
+        TextView choiceID = choicesTV[choiceTVID];
+        choiceID.setTextColor(choiceColor);
+
+        mBorder1.setBackgroundColor(borderColor);
+        mBorder2.setBackgroundColor(borderColor);
+        mBorder3.setBackgroundColor(borderColor);
+        mBorder4.setBackgroundColor(borderColor);
     }
 }
