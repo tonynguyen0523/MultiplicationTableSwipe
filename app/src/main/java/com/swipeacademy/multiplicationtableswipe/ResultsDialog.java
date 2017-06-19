@@ -82,11 +82,11 @@ public class ResultsDialog extends DialogFragment {
         mCorrectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), PlayActivity.class);
-//                Utility.setIsCorrections(getContext(),true);
-//                Utility.setCurrentScore(getActivity(),0);
-//                Utility.setRemainingQuestions(getActivity(), CorrectionsUtil.getCorrections(getContext()).size());
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), PlayActivity.class);
+                Utility.setIsCorrections(getContext(),true);
+                Utility.setCurrentScore(getActivity(),0);
+                Utility.setRemainingQuestions(getActivity(), CorrectionsUtil.getCorrections(getContext()).size());
+                startActivity(intent);
                 Log.d("Corrections List", CorrectionsUtil.getCorrections(getContext()).toString());
                 Toast.makeText(getContext(),Integer.toString(CorrectionsUtil.getCorrections(getContext()).size()),Toast.LENGTH_SHORT).show();
             }
