@@ -28,11 +28,12 @@ public class PlayActivity extends AppCompatActivity {
     @BindView(R.id.remaining_questions)TextView mRemainingQuestionTV;
     @BindView(R.id.current_time)Chronometer mChronometer;
     @BindView(R.id.adView)AdView mAdView;
-    @BindView(R.id.play_home_button)ImageButton mHomeButtom;
+    @BindView(R.id.play_home_button)ImageButton mHomeButton;
 
+
+    private static final String TIME_KEY = "time_key";
     private long mTime = 0;
     private int mSelectedAmount = 0;
-    private boolean mIsCorrections;
     private String date;
 
     @Override
@@ -47,14 +48,19 @@ public class PlayActivity extends AppCompatActivity {
         mSelectedAmount = Utility.getSelectedAmount(this);
         date = DateFormat.getDateTimeInstance().format(new Date());
 
-        startTimer();
+        if(savedInstanceState == null) {
+             startTimer();
+         } else{
+            mChronometer.setBase(savedInstanceState.getLong(TIME_KEY));
+            mChronometer.start();
+        }
 
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions, mRemainingQuestion));
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        mHomeButtom.setOnClickListener(new View.OnClickListener() {
+        mHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showAlertDialog();
@@ -66,6 +72,18 @@ public class PlayActivity extends AppCompatActivity {
     public void onBackPressed() {
         pauseTimer();
         showAlertDialog();
+    }
+
+    @Override
+    protected void onPause() {
+        pauseTimer();
+        super.onPause();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putLong(TIME_KEY, mChronometer.getBase());
+        super.onSaveInstanceState(outState);
     }
 
     public void updateNumbers(int remainingQuestions){

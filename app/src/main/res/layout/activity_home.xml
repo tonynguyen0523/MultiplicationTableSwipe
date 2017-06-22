@@ -18,6 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="@color/colorAccent"
+        android:layout_marginBottom="5dp"
         android:text="Lets Play!"
         android:onClick="letsPlay"/>
 
@@ -26,6 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@color/colorAccent"
+            android:layout_marginBottom="5dp"
             android:text="Practice"/>
 
         <Button
@@ -33,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@color/colorAccent"
             android:text="History"
             android:onClick="myHistory"/>
 

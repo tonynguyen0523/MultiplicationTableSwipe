@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="50dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,7 +11,7 @@
         android:id="@+id/card_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:orientation="vertical">
 
     <TextView
@@ -49,16 +50,9 @@
         android:fontFamily="cursive"
         android:text="@string/final_time"/>
 
-        <Button
-            android:id="@+id/correction_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Corrections"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:elevation="4dp"
         android:orientation="horizontal">
 
@@ -68,7 +62,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:padding="6dp"
-            android:background="@color/colorPrimary"
+            android:background="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_replay_white_36dp"/>
 
         <ImageButton
@@ -77,10 +71,17 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:padding="6dp"
-            android:background="@color/colorPrimary"
+            android:background="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_home_white_36dp"/>
-
     </LinearLayout>
+
+        <Button
+            android:id="@+id/correction_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorAccent"
+            android:text="Corrections"/>
 
     </LinearLayout>
 

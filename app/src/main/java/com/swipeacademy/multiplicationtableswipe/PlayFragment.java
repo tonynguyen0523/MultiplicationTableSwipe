@@ -3,6 +3,7 @@ package com.swipeacademy.multiplicationtableswipe;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -24,27 +25,39 @@ import butterknife.Unbinder;
 
 public class PlayFragment extends Fragment {
 
-    @BindView(R.id.play_answer_choices_area)View mChoiceArea;
-    @BindView(R.id.play_question1)TextView mQuestion1;
-    @BindView(R.id.play_question2)TextView mQuestion2;
-    @BindView(R.id.choice1)TextView mChoice1;
-    @BindView(R.id.choice2)TextView mChoice2;
-    @BindView(R.id.choice3)TextView mChoice3;
-    @BindView(R.id.choice4)TextView mChoice4;
-    @BindView(R.id.question_border_1)View mBorder1;
-    @BindView(R.id.question_border_2)View mBorder2;
-    @BindView(R.id.question_border_3)View mBorder3;
-    @BindView(R.id.question_border_4)View mBorder4;
+    @BindView(R.id.play_answer_choices_area)
+    View mChoiceArea;
+    @BindView(R.id.play_question1)
+    TextView mQuestion1;
+    @BindView(R.id.play_question2)
+    TextView mQuestion2;
+    @BindView(R.id.choice1)
+    TextView mChoice1;
+    @BindView(R.id.choice2)
+    TextView mChoice2;
+    @BindView(R.id.choice3)
+    TextView mChoice3;
+    @BindView(R.id.choice4)
+    TextView mChoice4;
+    @BindView(R.id.question_border_1)
+    View mBorder1;
+    @BindView(R.id.question_border_2)
+    View mBorder2;
+    @BindView(R.id.question_border_3)
+    View mBorder3;
+    @BindView(R.id.question_border_4)
+    View mBorder4;
 
-    private static final int CORRECT_ANSWER_DELAY_MILLIS = 500;
+//    private static final int CORRECT_ANSWER_DELAY_MILLIS = 500;
     private static final String REMAINING_QUESTIONS_KEY = "remainingList";
     private static final String CORRECTIONS_KEY = "correctionsList";
-
+    private static final String CURRENT_QUESTION = "currentQuestion";
     private ArrayList<Integer> mRemainingQuestionsIDs;
     private ArrayList<String> mCorrections;
-    private int mAnswerQuestionID;
+    private int mQuestionID;
     private int mCorrectAnswer;
-    private boolean isCorrections;
+    private int mCorrectTextViewID;
+    private boolean mIsCorrection;
     private Unbinder unbinder;
 
     public PlayFragment() {
@@ -59,31 +72,8 @@ public class PlayFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
 
-        // Check if corrections mode
-        isCorrections = Utility.getIsCorrections(getContext());
-        // Get amount of questions selected
-        int questionAmount = Utility.getSelectedAmount(getContext());
-
-        if(savedInstanceState != null){
-            mRemainingQuestionsIDs = savedInstanceState.getIntegerArrayList(REMAINING_QUESTIONS_KEY);
-            mCorrections = savedInstanceState.getStringArrayList(CORRECTIONS_KEY);
-        } else {
-            // Retrieve available questions
-            if (isCorrections) {
-                mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
-                mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
-                Log.d("Check boolean", "true");
-            } else {
-                mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(), questionAmount);
-                mCorrections = new ArrayList<>();
-                Log.d("Check boolean", "false");
-            }
-        }
-
-        Log.d("RemainingID SIZE", Integer.toString(mRemainingQuestionsIDs.size()));
-
         // Create array with choicesTV and generate questions and answers
-        final TextView[] mChoicesIDs = {mChoice1,mChoice2,mChoice3,mChoice4};
+        final TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
 
         mChoiceArea.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
 
@@ -112,7 +102,6 @@ public class PlayFragment extends Fragment {
             }
         });
 
-        generateQuestion(mRemainingQuestionsIDs, mChoicesIDs);
         return view;
     }
 
@@ -123,31 +112,71 @@ public class PlayFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState){
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
+        TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
+        // Check if corrections mode
+        mIsCorrection = Utility.getIsCorrections(getContext());
+        // Get amount of questions selected
+        int questionAmount = Utility.getSelectedAmount(getContext());
+
+        if (savedInstanceState == null) {
+            // Retrieve available questions
+            if (mIsCorrection) {
+                mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
+                mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
+                generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
+                Log.d("Check boolean", "true");
+            } else {
+                mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(), questionAmount);
+                mCorrections = new ArrayList<>();
+                generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
+                Log.d("Check boolean", "false");
+            }
+        } else {
+            mRemainingQuestionsIDs = savedInstanceState.getIntegerArrayList(REMAINING_QUESTIONS_KEY);
+            mCorrections = savedInstanceState.getStringArrayList(CORRECTIONS_KEY);
+            mQuestionID = savedInstanceState.getInt(CURRENT_QUESTION);
+            generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, true);
+        }
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putIntegerArrayList(REMAINING_QUESTIONS_KEY,mRemainingQuestionsIDs);
+        outState.putIntegerArrayList(REMAINING_QUESTIONS_KEY, mRemainingQuestionsIDs);
         outState.putStringArrayList(CORRECTIONS_KEY, mCorrections);
+        outState.putInt(CURRENT_QUESTION, mQuestionID);
     }
 
     /**
      * Get next question method
      */
-    private void nextQuestion(final TextView[] choicesTV, final int choiceTVID , int userAnswer) {
+    private void nextQuestion(final TextView[] choicesTV, final int choiceTVID, int userAnswer) {
 
         // Get current score and remaining question
         int mCurrentScore = Utility.getCurrentScore(getContext());
         int mRemainingQuestions = Utility.getRemainingQuestions(getContext());
+        int delay = 0;
 
-        boolean correct = Utility.userCorrect(mCorrectAnswer,userAnswer);
+        boolean correct = Utility.userCorrect(mCorrectAnswer, userAnswer);
 
         //If user chose correct answer, increase score by 1,
         //else add questionId to correctionsList
-        if(correct){
+        if (correct) {
             mCurrentScore++;
-            changeSelectedColor(choicesTV,choiceTVID,Color.GREEN, Color.GREEN);
-        } else{
-            mCorrections.add(Integer.toString(mAnswerQuestionID));
-            changeSelectedColor(choicesTV,choiceTVID,Color.RED, Color.RED);
+            changeSelectedColor(choicesTV, choiceTVID, Color.GREEN, Color.GREEN);
+            delay = 500;
+        } else if(mIsCorrection){
+            mCorrections.add(Integer.toString(mQuestionID));
+            changeSelectedColor(choicesTV, choiceTVID, Color.RED, Color.RED);
+            choicesTV[mCorrectTextViewID].setTextColor(Color.GREEN);
+            delay = 1000;
+        } else {
+            mCorrections.add(Integer.toString(mQuestionID));
+            changeSelectedColor(choicesTV, choiceTVID, Color.RED, Color.RED);
+            delay = 500;
         }
 
         // Reduce remaining question by 1
@@ -158,7 +187,7 @@ public class PlayFragment extends Fragment {
         Utility.setRemainingQuestions(getContext(), mRemainingQuestions);
 
         // Remove question so no repeat
-        mRemainingQuestionsIDs.remove(Integer.valueOf(mAnswerQuestionID));
+        mRemainingQuestionsIDs.remove(Integer.valueOf(mQuestionID));
 
         // Delay for user to see if they were correct of wrong
         final Handler handler = new Handler();
@@ -169,32 +198,34 @@ public class PlayFragment extends Fragment {
                 // Check if there is any questions left, if not end game
                 if (finalMRemainingQuestions == 0) {
                     ((PlayActivity) getActivity()).stopTimer();
-                    CorrectionsUtil.editCorrectionsList(getContext(),mCorrections);
+                    CorrectionsUtil.editCorrectionsList(getContext(), mCorrections);
                     resultsDialog();
                 } else {
                     // Generate new question
-                    generateQuestion(mRemainingQuestionsIDs, choicesTV);
-                    changeSelectedColor(choicesTV,choiceTVID,Color.BLACK,ContextCompat.getColor(getContext(),R.color.colorPrimary));
+                    choicesTV[mCorrectTextViewID].setTextColor(Color.BLACK);
+                    generateQuestion(mRemainingQuestionsIDs, choicesTV, false);
+                    changeSelectedColor(choicesTV, choiceTVID, Color.BLACK, ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     // Update numbers
                     ((PlayActivity) getActivity()).updateNumbers(finalMRemainingQuestions);
                 }
             }
-        }, CORRECT_ANSWER_DELAY_MILLIS );
+        }, delay);
     }
 
     /**
      * Generate new questions method
      */
-    private void generateQuestion(ArrayList<Integer> remainingQuestions, TextView[] choicesTV){
+    private void generateQuestion(ArrayList<Integer> remainingQuestions, TextView[] choicesTV, boolean reCreated) {
 
-        int questionID = Utility.chooseQuestionID(remainingQuestions);
-        QuestionSample qs = QuestionSample.getQuestionByID(getContext(),questionID);
+        if(!reCreated){
+            mQuestionID = Utility.chooseQuestionID(remainingQuestions);
+        }
+
+        QuestionSample qs = QuestionSample.getQuestionByID(getContext(),mQuestionID);
+        Log.d("GENERATE LIST", remainingQuestions.toString());
 
         setUpQuestion(qs);
         mCorrectAnswer = qs != null ? qs.getAnswer() : 0;
-        mAnswerQuestionID = questionID;
-
-        Log.d("REMAINING", Integer.toString(remainingQuestions.size()));
 
         initializeChoices(qs != null ? qs.getChoices() : null, choicesTV);
     }
@@ -202,7 +233,7 @@ public class PlayFragment extends Fragment {
     /**
      * Shuffle the two question numbers and random arrange them
      */
-    private void setUpQuestion(QuestionSample qs){
+    private void setUpQuestion(QuestionSample qs) {
 
         ArrayList<Integer> questions = qs.getQuestions();
         Collections.shuffle(questions);
@@ -215,31 +246,35 @@ public class PlayFragment extends Fragment {
     /**
      * Shuffle choices and set to text view
      */
-    private void initializeChoices(ArrayList<Integer> choicesList, TextView[] choicesTV){
+    private void initializeChoices(ArrayList<Integer> choicesList, TextView[] choicesTV) {
 
         Collections.shuffle(choicesList);
 
         TextView[] choices = new TextView[choicesTV.length];
-        for(int i = 0; i < choicesList.size(); i++){
+        for (int i = 0; i < choicesList.size(); i++) {
             TextView currentChoice = choicesTV[i];
+            int chosenChoice = choicesList.get(i);
             choices[i] = currentChoice;
-            currentChoice.setText(Integer.toString(choicesList.get(i)));
+            currentChoice.setText(Integer.toString(chosenChoice));
+            if(Utility.userCorrect(mCorrectAnswer,chosenChoice)){
+                mCorrectTextViewID = i;
+            }
         }
     }
 
     /**
      * Show results dialog
      */
-    private void resultsDialog(){
+    private void resultsDialog() {
         DialogFragment dialogFragment = new ResultsDialog();
         dialogFragment.setCancelable(false);
-        dialogFragment.show(getFragmentManager(),"resultsdialog");
+        dialogFragment.show(getFragmentManager(), "resultsdialog");
     }
 
     /**
      * Change question border color
      */
-    private void changeSelectedColor(TextView[] choicesTV, int choiceTVID, int choiceColor, int borderColor){
+    private void changeSelectedColor(TextView[] choicesTV, int choiceTVID, int choiceColor, int borderColor) {
 
         TextView choiceID = choicesTV[choiceTVID];
         choiceID.setTextColor(choiceColor);

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -52,21 +53,25 @@ public class ResultsDialog extends DialogFragment {
         View rootView = getActivity().getLayoutInflater().inflate(R.layout.dialogfragment_play_end,null);
         unbinder = ButterKnife.bind(this, rootView);
 
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(rootView);
 
         int mCurrentScore = Utility.getCurrentScore(getContext());
         long mFinishedTime = Utility.getFinishedTime(getContext());
         final int selectedAmount = Utility.getSelectedAmount(getContext());
-
         long minutes = TimeUnit.MILLISECONDS.toMinutes(mFinishedTime);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(mFinishedTime);
+        boolean isCorrection = Utility.getIsCorrections(getContext());
 
         mFinalScore.setText(getString(R.string.final_score,mCurrentScore,selectedAmount));
         mFinalTime.setText(getString(R.string.final_time,minutes,seconds));
 
-        if(!CorrectionsUtil.getCorrections(getContext()).isEmpty()){
+        if(!CorrectionsUtil.getCorrections(getContext()).isEmpty() && !isCorrection){
             mCorrectionButton.setVisibility(View.VISIBLE);
+        } else if (isCorrection) {
+            mCorrectionButton.setVisibility(View.GONE);
+            mFinalTime.setVisibility(View.GONE);
         } else {
             mCorrectionButton.setVisibility(View.GONE);
         }
@@ -86,6 +91,7 @@ public class ResultsDialog extends DialogFragment {
                 Utility.setIsCorrections(getContext(),true);
                 Utility.setCurrentScore(getActivity(),0);
                 Utility.setRemainingQuestions(getActivity(), CorrectionsUtil.getCorrections(getContext()).size());
+                Utility.setSelectedAmount(getContext(),CorrectionsUtil.getCorrections(getContext()).size());
                 startActivity(intent);
                 Log.d("Corrections List", CorrectionsUtil.getCorrections(getContext()).toString());
                 Toast.makeText(getContext(),Integer.toString(CorrectionsUtil.getCorrections(getContext()).size()),Toast.LENGTH_SHORT).show();
@@ -104,13 +110,13 @@ public class ResultsDialog extends DialogFragment {
             }
         });
 
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
-        return builder.create();
+        return alertDialog;
 
 
     }
-
-
 
     @Override
     public void onCancel(DialogInterface dialog) {
