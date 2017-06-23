@@ -5,19 +5,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
-
-import com.swipeacademy.multiplicationtableswipe.R;
-import com.swipeacademy.multiplicationtableswipe.data.TableContract;
-import com.swipeacademy.multiplicationtableswipe.data.TableDbHelper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
-import static com.swipeacademy.multiplicationtableswipe.data.TableContract.*;
+import static com.swipeacademy.multiplicationtableswipe.data.TableContract.ResultsEntry;
+import static com.swipeacademy.multiplicationtableswipe.data.TableContract.TableEntry;
 
 /**
  * Created by tonyn on 5/5/2017.
@@ -31,27 +25,7 @@ public class Utility {
     private static final String AMOUNT_SELECTED = "amount_selected";
     private static final String TABLE_SELECTED = "table_selected";
     private static final String ISCORRECTIONS = "is_corrections";
-//    private static final int NUM_ANSWERS = 4;
 
-//    static ArrayList<Integer> generateQuestion(ArrayList<Integer> remainingQuestionIDs){
-//
-//        Collections.shuffle(remainingQuestionIDs);
-//
-//        ArrayList<Integer> answers = new ArrayList<>();
-//        for(int i = 0; i < NUM_ANSWERS; i++){
-//            if(i < remainingQuestionIDs.size()){
-//                answers.add(remainingQuestionIDs.get(i));
-//            }
-//        }
-//
-//        return answers;
-//    }
-//
-//    static int getCorrectAnswerID(ArrayList<Integer> answers){
-//        Random r = new Random();
-//        int answerIndex = r.nextInt(answers.size());
-//        return answers.get(answerIndex);
-//    }
 
     static int chooseQuestionID(ArrayList<Integer> remainingQuestions){
         Random r = new Random();
