@@ -35,6 +35,7 @@ public class QuestionAmountDialog extends DialogFragment {
                         Utility.setSelectedAmount(getContext(),intAmount);
                         Utility.setRemainingQuestions(getContext(),intAmount);
                         Utility.setSelectedTable(getContext(),amountSelected);
+                        Utility.setSelectedAsset(getContext(),"letsplay.json");
 
                         Intent intent = new Intent(getActivity(), PlayActivity.class);
                         startActivity(intent);

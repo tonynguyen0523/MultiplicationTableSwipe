@@ -130,7 +130,7 @@ public class PlayFragment extends Fragment {
                 generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
                 Log.d("Check boolean", "true");
             } else {
-                mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(),mSelectedAsset, questionAmount);
+                mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(),mSelectedAsset);
                 mCorrections = new ArrayList<>();
                 generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
                 Log.d("Check boolean", "false");

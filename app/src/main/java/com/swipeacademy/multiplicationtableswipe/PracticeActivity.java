@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.swipeacademy.multiplicationtableswipe.Util.GridSpacingItemDecoration;
 
 import butterknife.BindView;
@@ -16,6 +18,7 @@ import butterknife.ButterKnife;
 public class PracticeActivity extends AppCompatActivity {
 
     @BindView(R.id.practice_recycler_view)RecyclerView mRecyclerView;
+    @BindView(R.id.practice_adView)AdView mAdView;
 
     private String[] tableSets = {"1","2","3","4","5","6","7","8","9","10","11","12"};
 
@@ -24,6 +27,9 @@ public class PracticeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
         ButterKnife.bind(this);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         PracticeAdapter practiceAdapter = new PracticeAdapter(tableSets);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));

@@ -49,13 +49,13 @@ public class QuestionSample {
         return null;
     }
 
-    static ArrayList<Integer> getAllQuestionsIDs(Context context,String assetJson, int questionAmount) {
+    static ArrayList<Integer> getAllQuestionsIDs(Context context,String assetJson) {
         JsonReader reader;
         ArrayList<Integer> questionIDs = new ArrayList<>();
         try {
             reader = readJsonFile(context, assetJson);
             reader.beginArray();
-                while (reader.hasNext() && questionIDs.size() < questionAmount) {
+                while (reader.hasNext()) {
                     questionIDs.add(readEntry(reader).getQuestionID());
                 }
             reader.close();
