@@ -38,7 +38,7 @@
   {
     "id": 607,
     "question":[7,6],
-    "choices":[42,36,36,48],
+    "choices":[42,36,32,48],
     "answer": 42
   },
   {
@@ -50,23 +50,23 @@
   {
     "id": 609,
     "question":[9,6],
-    "choices":[54,48,42,36],
+    "choices":[54,48,42,56],
     "answer": 54
   },
   {
-    "id": 510,
+    "id": 610,
     "question":[10,6],
     "choices":[60,55,66,65],
     "answer": 60
   },
   {
-    "id": 511,
+    "id": 611,
     "question":[11,6],
     "choices":[66,11,60,76],
     "answer": 66
   },
   {
-    "id": 512,
+    "id": 612,
     "question":[12,6],
     "choices":[72,54,66,78],
     "answer": 72

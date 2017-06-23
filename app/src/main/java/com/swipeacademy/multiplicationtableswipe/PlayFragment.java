@@ -48,7 +48,6 @@ public class PlayFragment extends Fragment {
     @BindView(R.id.question_border_4)
     View mBorder4;
 
-//    private static final int CORRECT_ANSWER_DELAY_MILLIS = 500;
     private static final String REMAINING_QUESTIONS_KEY = "remainingList";
     private static final String CORRECTIONS_KEY = "correctionsList";
     private static final String CURRENT_QUESTION = "currentQuestion";
@@ -57,6 +56,7 @@ public class PlayFragment extends Fragment {
     private int mQuestionID;
     private int mCorrectAnswer;
     private int mCorrectTextViewID;
+    private String mSelectedAsset;
     private boolean mIsCorrection;
     private Unbinder unbinder;
 
@@ -117,6 +117,8 @@ public class PlayFragment extends Fragment {
         TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
         // Check if corrections mode
         mIsCorrection = Utility.getIsCorrections(getContext());
+
+        mSelectedAsset = Utility.getSelectedAsset(getContext());
         // Get amount of questions selected
         int questionAmount = Utility.getSelectedAmount(getContext());
 
@@ -128,7 +130,7 @@ public class PlayFragment extends Fragment {
                 generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
                 Log.d("Check boolean", "true");
             } else {
-                mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(), questionAmount);
+                mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(),mSelectedAsset, questionAmount);
                 mCorrections = new ArrayList<>();
                 generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
                 Log.d("Check boolean", "false");
@@ -221,7 +223,7 @@ public class PlayFragment extends Fragment {
             mQuestionID = Utility.chooseQuestionID(remainingQuestions);
         }
 
-        QuestionSample qs = QuestionSample.getQuestionByID(getContext(),mQuestionID);
+        QuestionSample qs = QuestionSample.getQuestionByID(getContext(),mSelectedAsset,mQuestionID);
         Log.d("GENERATE LIST", remainingQuestions.toString());
 
         setUpQuestion(qs);

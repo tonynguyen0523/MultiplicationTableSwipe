@@ -24,6 +24,7 @@ public class Utility {
     private static final String FINISHED_TIME = "finished_time";
     private static final String AMOUNT_SELECTED = "amount_selected";
     private static final String TABLE_SELECTED = "table_selected";
+    private static final String ASSET_SELECTED = "asset_selected";
     private static final String ISCORRECTIONS = "is_corrections";
 
 
@@ -107,6 +108,22 @@ public class Utility {
         return sharedPreferences.getString(TABLE_SELECTED,"table");
 
     }
+
+    static void setSelectedAsset(Context context, String asset){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_selected_assets_key),Context.MODE_PRIVATE);
+        SharedPreferences.Editor spe = sharedPreferences.edit();
+        spe.putString(ASSET_SELECTED,asset);
+        spe.apply();
+    }
+
+    static String getSelectedAsset(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_selected_assets_key),Context.MODE_PRIVATE);
+        return sharedPreferences.getString(ASSET_SELECTED,"asset");
+
+    }
+
 
     static void setIsCorrections(Context context, boolean bool){
         SharedPreferences sharedPreferences = context.getSharedPreferences(

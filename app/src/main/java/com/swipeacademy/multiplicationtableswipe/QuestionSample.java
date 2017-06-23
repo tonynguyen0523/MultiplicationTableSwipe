@@ -30,10 +30,10 @@ public class QuestionSample {
         mAnswer = answer;
     }
 
-    static QuestionSample getQuestionByID(Context context, int questionID) {
+    static QuestionSample getQuestionByID(Context context,String assetJson, int questionID) {
         JsonReader reader;
         try {
-            reader = readJsonFile(context);
+            reader = readJsonFile(context,assetJson);
             reader.beginArray();
             while (reader.hasNext()) {
                 QuestionSample currentQuestion = readEntry(reader);
@@ -49,11 +49,11 @@ public class QuestionSample {
         return null;
     }
 
-    static ArrayList<Integer> getAllQuestionsIDs(Context context, int questionAmount) {
+    static ArrayList<Integer> getAllQuestionsIDs(Context context,String assetJson, int questionAmount) {
         JsonReader reader;
         ArrayList<Integer> questionIDs = new ArrayList<>();
         try {
-            reader = readJsonFile(context);
+            reader = readJsonFile(context, assetJson);
             reader.beginArray();
                 while (reader.hasNext() && questionIDs.size() < questionAmount) {
                     questionIDs.add(readEntry(reader).getQuestionID());
@@ -62,7 +62,6 @@ public class QuestionSample {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("LOGGYTAGGY", Integer.toString(questionIDs.size()));
 
         Collections.shuffle(questionIDs);
         return questionIDs;
@@ -70,11 +69,6 @@ public class QuestionSample {
 
     static ArrayList<Integer> getAllCorrectionsIDs(ArrayList<String> correctionIDs){
         ArrayList<Integer> correctionsIDs = new ArrayList<>();
-
-//        for(int i = 0; i < correctionIDs.size(); i++){
-//            int id = Integer.parseInt(correctionIDs.get(i));
-//            correctionsIDs.add(id);
-//        }
 
         for(String stringValue : correctionIDs){
             correctionsIDs.add(Integer.parseInt(stringValue.trim()));
@@ -131,10 +125,10 @@ public class QuestionSample {
         return choices;
     }
 
-    private static JsonReader readJsonFile(Context context) throws IOException {
+    private static JsonReader readJsonFile(Context context, String assetJson) throws IOException {
         AssetManager assetManager = context.getAssets();
 
-        InputStream inputStream = assetManager.open("fives.json");
+        InputStream inputStream = assetManager.open(assetJson);
 
         JsonReader reader;
         reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));

@@ -26,21 +26,11 @@ public class HomeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         CorrectionsUtil.clearCorrections(this);
-        Utility.setCurrentScore(this,0);
-        Utility.setIsCorrections(this,false);
+        Utility.setCurrentScore(this, 0);
+        Utility.setIsCorrections(this, false);
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
-
-
-//        mPracticeButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                practice();
-//            }
-//        });
-
     }
 
     public void letsPlay(View view){
@@ -54,14 +44,8 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    public void practice(){
-//
-//        ArrayList<Integer> remainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(this);
-//        remainingQuestionsIDs.size();
-//        int questionID = Utility.chooseQuestionID(remainingQuestionsIDs);
-//        QuestionSample qs = QuestionSample.getQuestionByID(this,questionID);
-//        String question = qs.getQuestion();
-//        Log.d("LOGTAG", question);
-//
-//    }
+    public void practice(View view){
+        Intent intent = new Intent(this, PracticeActivity.class);
+        startActivity(intent);
+    }
 }

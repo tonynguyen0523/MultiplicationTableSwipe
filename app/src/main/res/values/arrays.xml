@@ -8,4 +8,19 @@
         <item>10</item>
         <item>15</item>
     </string-array>
+
+    <string-array name="assets">
+        <item>ones.json</item>
+        <item>twos.json</item>
+        <item>threes.json</item>
+        <item>fours.json</item>
+        <item>fives.json</item>
+        <item>sixes.json</item>
+        <item>sevens.json</item>
+        <item>eights.json</item>
+        <item>nines.json</item>
+        <item>tens.json</item>
+        <item>elevens.json</item>
+        <item>twelves.json</item>
+    </string-array>
 </resources>

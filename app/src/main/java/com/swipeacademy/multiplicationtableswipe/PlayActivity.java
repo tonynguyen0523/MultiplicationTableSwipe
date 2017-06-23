@@ -30,10 +30,8 @@ public class PlayActivity extends AppCompatActivity {
     @BindView(R.id.adView)AdView mAdView;
     @BindView(R.id.play_home_button)ImageButton mHomeButton;
 
-
     private static final String TIME_KEY = "time_key";
     private long mTime = 0;
-    private int mSelectedAmount = 0;
     private String date;
 
     @Override
@@ -44,8 +42,6 @@ public class PlayActivity extends AppCompatActivity {
 
         // Get remaining questions
         int mRemainingQuestion = Utility.getRemainingQuestions(this);
-        // Get selected amount and format date
-        mSelectedAmount = Utility.getSelectedAmount(this);
         date = DateFormat.getDateTimeInstance().format(new Date());
 
         if(savedInstanceState == null) {
@@ -113,9 +109,13 @@ public class PlayActivity extends AppCompatActivity {
         mTime = SystemClock.elapsedRealtime();
         Utility.setFinishedTime(this,mTime);
 
-        int correct = Utility.getCurrentScore(this);
-        String selectedTable = Utility.getSelectedTable(this);
-        Utility.saveResults(this,selectedTable,date, correct,mTime);
+        String asset = Utility.getSelectedAsset(getApplicationContext());
+
+        if(asset.contains("letsplay")) {
+            int correct = Utility.getCurrentScore(this);
+            String selectedMode = Utility.getSelectedTable(this);
+            Utility.saveResults(this, selectedMode, date, correct, mTime);
+        }
     }
 
     private void showAlertDialog(){

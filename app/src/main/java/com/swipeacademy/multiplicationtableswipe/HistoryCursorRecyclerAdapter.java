@@ -26,7 +26,7 @@ public class HistoryCursorRecyclerAdapter extends CursorRecyclerViewAdapter<Hist
         mContext = context;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder  {
 
         @BindView(R.id.history_correct)TextView mCorrectTV;
         @BindView(R.id.history_time)TextView mTimeTV;
