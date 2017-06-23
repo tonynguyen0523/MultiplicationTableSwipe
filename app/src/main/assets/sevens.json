@@ -1,0 +1,74 @@
+[
+  {
+    "id": 701,
+    "question":[1,7],
+    "choices":[7,6,8,9],
+    "answer": 7
+  },
+  {
+    "id": 702,
+    "question":[2,7],
+    "choices":[14,13,21,18],
+    "answer": 14
+  },
+  {
+    "id": 703,
+    "question":[3,7],
+    "choices":[21,14,24,28],
+    "answer": 21
+  },
+  {
+    "id": 704,
+    "question":[4,7],
+    "choices":[28,21,35,14],
+    "answer": 28
+  },
+  {
+    "id": 705,
+    "question":[5,7],
+    "choices":[35,28,36,34],
+    "answer": 35
+  },
+  {
+    "id": 706,
+    "question":[6,7],
+    "choices":[42,49,36,37],
+    "answer": 42
+  },
+  {
+    "id": 707,
+    "question":[7,7],
+    "choices":[49,42,44,38],
+    "answer": 49
+  },
+  {
+    "id": 708,
+    "question":[8,7],
+    "choices":[56,49,63,54],
+    "answer": 56
+  },
+  {
+    "id": 709,
+    "question":[9,7],
+    "choices":[63,56,52,64],
+    "answer": 63
+  },
+  {
+    "id": 510,
+    "question":[10,7],
+    "choices":[70,80,63,60],
+    "answer": 70
+  },
+  {
+    "id": 511,
+    "question":[11,7],
+    "choices":[77,67,87,11],
+    "answer": 77
+  },
+  {
+    "id": 512,
+    "question":[12,7],
+    "choices":[84,77,91,87],
+    "answer": 84
+  }
+]
