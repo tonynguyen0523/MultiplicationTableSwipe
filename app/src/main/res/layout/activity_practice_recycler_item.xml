@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:elevation="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="5dp">
@@ -11,10 +12,11 @@
         android:id="@+id/practice_recycler_item_textView"
         style="@style/Base.TextAppearance.AppCompat.Display3"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="125dp"
         android:gravity="center"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFF"
         tools:text="1" />
 
 </android.support.v7.widget.CardView>

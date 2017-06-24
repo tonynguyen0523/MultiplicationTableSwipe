@@ -26,4 +26,6 @@
     <string name="pref_selected_table_key">selected_table</string>
     <string name="pref_selected_assets_key">selected_asset</string>
 
+    <string name="letsplay">letsplay.json</string>
+
 </resources>

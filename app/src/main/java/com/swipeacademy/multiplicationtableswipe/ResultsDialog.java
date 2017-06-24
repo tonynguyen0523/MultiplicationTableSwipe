@@ -1,28 +1,17 @@
 package com.swipeacademy.multiplicationtableswipe;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.swipeacademy.multiplicationtableswipe.HomeActivity;
-import com.swipeacademy.multiplicationtableswipe.PlayActivity;
-import com.swipeacademy.multiplicationtableswipe.PlayResultActivity;
-import com.swipeacademy.multiplicationtableswipe.R;
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
-import com.swipeacademy.multiplicationtableswipe.Utility;
 
 import java.util.concurrent.TimeUnit;
 
@@ -67,6 +56,8 @@ public class ResultsDialog extends DialogFragment {
         mFinalScore.setText(getString(R.string.final_score,mCurrentScore,selectedAmount));
         mFinalTime.setText(getString(R.string.final_time,minutes,seconds));
 
+        // Display correction button if correction are available &
+        // is not already doing corrections
         if(!CorrectionsUtil.getCorrections(getContext()).isEmpty() && !isCorrection){
             mCorrectionButton.setVisibility(View.VISIBLE);
         } else if (isCorrection) {
@@ -93,8 +84,6 @@ public class ResultsDialog extends DialogFragment {
                 Utility.setRemainingQuestions(getActivity(), CorrectionsUtil.getCorrections(getContext()).size());
                 Utility.setSelectedAmount(getContext(),CorrectionsUtil.getCorrections(getContext()).size());
                 startActivity(intent);
-                Log.d("Corrections List", CorrectionsUtil.getCorrections(getContext()).toString());
-                Toast.makeText(getContext(),Integer.toString(CorrectionsUtil.getCorrections(getContext()).size()),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -114,12 +103,11 @@ public class ResultsDialog extends DialogFragment {
         alertDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         return alertDialog;
-
-
     }
 
     @Override
-    public void onCancel(DialogInterface dialog) {
-        super.onCancel(dialog);
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

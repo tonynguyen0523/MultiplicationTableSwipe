@@ -1,12 +1,11 @@
 package com.swipeacademy.multiplicationtableswipe;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -34,7 +33,7 @@ public class PracticeActivity extends AppCompatActivity {
         PracticeAdapter practiceAdapter = new PracticeAdapter(tableSets);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(this, 10),true));
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(this, 2),true));
         mRecyclerView.setAdapter(practiceAdapter);
 
         practiceAdapter.setOnItemClickListener(new PracticeAdapter.ItemClickListener() {

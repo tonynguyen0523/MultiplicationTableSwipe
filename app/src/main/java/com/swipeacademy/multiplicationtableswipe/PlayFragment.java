@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,38 +24,27 @@ import butterknife.Unbinder;
 
 public class PlayFragment extends Fragment {
 
-    @BindView(R.id.play_answer_choices_area)
-    View mChoiceArea;
-    @BindView(R.id.play_question1)
-    TextView mQuestion1;
-    @BindView(R.id.play_question2)
-    TextView mQuestion2;
-    @BindView(R.id.choice1)
-    TextView mChoice1;
-    @BindView(R.id.choice2)
-    TextView mChoice2;
-    @BindView(R.id.choice3)
-    TextView mChoice3;
-    @BindView(R.id.choice4)
-    TextView mChoice4;
-    @BindView(R.id.question_border_1)
-    View mBorder1;
-    @BindView(R.id.question_border_2)
-    View mBorder2;
-    @BindView(R.id.question_border_3)
-    View mBorder3;
-    @BindView(R.id.question_border_4)
-    View mBorder4;
+    @BindView(R.id.play_answer_choices_area)View mChoiceArea;
+    @BindView(R.id.play_question1)TextView mQuestion1;
+    @BindView(R.id.play_question2)TextView mQuestion2;
+    @BindView(R.id.choice1)TextView mChoice1;
+    @BindView(R.id.choice2)TextView mChoice2;
+    @BindView(R.id.choice3)TextView mChoice3;
+    @BindView(R.id.choice4)TextView mChoice4;
+    @BindView(R.id.question_border_1)View mBorder1;
+    @BindView(R.id.question_border_2)View mBorder2;
+    @BindView(R.id.question_border_3)View mBorder3;
+    @BindView(R.id.question_border_4)View mBorder4;
 
     private static final String REMAINING_QUESTIONS_KEY = "remainingList";
     private static final String CORRECTIONS_KEY = "correctionsList";
     private static final String CURRENT_QUESTION = "currentQuestion";
     private ArrayList<Integer> mRemainingQuestionsIDs;
     private ArrayList<String> mCorrections;
+    private String mSelectedAsset;
     private int mQuestionID;
     private int mCorrectAnswer;
     private int mCorrectTextViewID;
-    private String mSelectedAsset;
     private boolean mIsCorrection;
     private Unbinder unbinder;
 
@@ -69,7 +57,6 @@ public class PlayFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_play, container, false);
-
         unbinder = ButterKnife.bind(this, view);
 
         // Create array with choicesTV and generate questions and answers
@@ -101,7 +88,6 @@ public class PlayFragment extends Fragment {
                 nextQuestion(mChoicesIDs, 3, Integer.valueOf(mChoice4.getText().toString()));
             }
         });
-
         return view;
     }
 
@@ -115,12 +101,11 @@ public class PlayFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
         TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
+
         // Check if corrections mode
         mIsCorrection = Utility.getIsCorrections(getContext());
-
+        // Check which asset to display
         mSelectedAsset = Utility.getSelectedAsset(getContext());
-        // Get amount of questions selected
-        int questionAmount = Utility.getSelectedAmount(getContext());
 
         if (savedInstanceState == null) {
             // Retrieve available questions
@@ -128,12 +113,10 @@ public class PlayFragment extends Fragment {
                 mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
                 mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
                 generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
-                Log.d("Check boolean", "true");
             } else {
                 mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(),mSelectedAsset);
                 mCorrections = new ArrayList<>();
                 generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
-                Log.d("Check boolean", "false");
             }
         } else {
             mRemainingQuestionsIDs = savedInstanceState.getIntegerArrayList(REMAINING_QUESTIONS_KEY);
@@ -158,14 +141,13 @@ public class PlayFragment extends Fragment {
     private void nextQuestion(final TextView[] choicesTV, final int choiceTVID, int userAnswer) {
 
         // Get current score and remaining question
+        boolean correct = Utility.userCorrect(mCorrectAnswer, userAnswer);
         int mCurrentScore = Utility.getCurrentScore(getContext());
         int mRemainingQuestions = Utility.getRemainingQuestions(getContext());
-        int delay = 0;
+        int delay;
 
-        boolean correct = Utility.userCorrect(mCorrectAnswer, userAnswer);
-
-        //If user chose correct answer, increase score by 1,
-        //else add questionId to correctionsList
+        // If user chose correct answer, increase score by 1,
+        // else add questionId to correctionsList
         if (correct) {
             mCurrentScore++;
             changeSelectedColor(choicesTV, choiceTVID, Color.GREEN, Color.GREEN);
@@ -222,13 +204,10 @@ public class PlayFragment extends Fragment {
         if(!reCreated){
             mQuestionID = Utility.chooseQuestionID(remainingQuestions);
         }
-
         QuestionSample qs = QuestionSample.getQuestionByID(getContext(),mSelectedAsset,mQuestionID);
-        Log.d("GENERATE LIST", remainingQuestions.toString());
 
         setUpQuestion(qs);
         mCorrectAnswer = qs != null ? qs.getAnswer() : 0;
-
         initializeChoices(qs != null ? qs.getChoices() : null, choicesTV);
     }
 
@@ -242,7 +221,6 @@ public class PlayFragment extends Fragment {
 
         mQuestion1.setText(Integer.toString(questions.get(0)));
         mQuestion2.setText(Integer.toString(questions.get(1)));
-
     }
 
     /**
