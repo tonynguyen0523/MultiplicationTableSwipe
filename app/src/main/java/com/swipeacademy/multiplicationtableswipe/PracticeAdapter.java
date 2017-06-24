@@ -1,5 +1,6 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +17,13 @@ import butterknife.ButterKnife;
 public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHolder> {
 
     private String[] mDataSet;
+    private Context mContext;
     private ItemClickListener listener;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @BindView(R.id.practice_recycler_item_textView)TextView mTableTV;
+        @BindView(R.id.practice_recycler_item_title_textView)TextView mTableTitleTV;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -42,8 +45,9 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
         void onItemClicked(View view, int position);
     }
 
-    public PracticeAdapter(String[] dataSet){
+    public PracticeAdapter(Context context, String[] dataSet){
         mDataSet = dataSet;
+        mContext = context;
     }
 
     @Override
@@ -57,6 +61,7 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
     public void onBindViewHolder(PracticeAdapter.ViewHolder holder, int position) {
 
         holder.mTableTV.setText(mDataSet[position]);
+        holder.mTableTitleTV.setText(mContext.getResources().getStringArray(R.array.table_title)[position]);
     }
 
     @Override

@@ -26,6 +26,22 @@
     <string name="pref_selected_table_key">selected_table</string>
     <string name="pref_selected_assets_key">selected_asset</string>
 
-    <string name="letsplay">letsplay.json</string>
+    <string name="letsplay_json">letsplay.json</string>
+    <string name="go_home_alert">Go Home?</string>
+    <string name="back_press_alert_message">Current results will reset.</string>
+    <string name="go_home_option">Go home</string>
+    <string name="cancel_dialog_option">Cancel</string>
+    <string name="amount_dialog_title">Choose a mode!</string>
+    <string name="click_to_go_home_description">Click to go home.</string>
+    <string name="corrections">Corrections</string>
+    <string name="awesome_job">Awesome Job!</string>
+    <string name="delete_history">Delete History</string>
+    <string name="times_x">x</string>
+    <string name="times">times</string>
+    <string name="equals">=</string>
+    <string name="equals_description">equals</string>
+    <string name="home_play_button">Lets Play!</string>
+    <string name="home_practice_button">Practice</string>
+    <string name="home_history_button">History</string>
 
 </resources>

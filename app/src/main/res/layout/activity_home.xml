@@ -18,9 +18,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/colorAccent"
+        android:background="@drawable/home_button"
         android:layout_marginBottom="5dp"
-        android:text="Lets Play!"
+        android:text="@string/home_play_button"
         android:onClick="letsPlay"/>
 
         <Button
@@ -28,19 +28,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/colorAccent"
+            android:background="@drawable/home_button"
             android:layout_marginBottom="5dp"
             android:onClick="practice"
-            android:text="Practice"/>
+            android:text="@string/home_practice_button"/>
 
         <Button
             android:id="@+id/history_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/colorAccent"
-            android:text="History"
+            android:background="@drawable/home_button"
+            android:text="@string/home_history_button"
             android:onClick="myHistory"/>
+
 
 
  </LinearLayout>

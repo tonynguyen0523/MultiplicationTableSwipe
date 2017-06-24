@@ -27,6 +27,7 @@ public class ResultsDialog extends DialogFragment {
 
     @BindView(R.id.play_final_score)TextView mFinalScore;
     @BindView(R.id.play_final_time)TextView mFinalTime;
+    @BindView(R.id.results_header)TextView mResultHeader;
     @BindView(R.id.results_home_button)ImageButton mHomeButton;
     @BindView(R.id.results_replay_button)ImageButton mReplayButton;
     @BindView(R.id.correction_button)Button mCorrectionButton;
@@ -42,17 +43,29 @@ public class ResultsDialog extends DialogFragment {
         View rootView = getActivity().getLayoutInflater().inflate(R.layout.dialogfragment_play_end,null);
         unbinder = ButterKnife.bind(this, rootView);
 
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(rootView);
 
         int mCurrentScore = Utility.getCurrentScore(getContext());
-        long mFinishedTime = Utility.getFinishedTime(getContext());
         final int selectedAmount = Utility.getSelectedAmount(getContext());
+        int resultPercentage = mCurrentScore/selectedAmount;
+        long mFinishedTime = Utility.getFinishedTime(getContext());
         long minutes = TimeUnit.MILLISECONDS.toMinutes(mFinishedTime);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(mFinishedTime);
         boolean isCorrection = Utility.getIsCorrections(getContext());
 
+        String resultHeader;
+        if(resultPercentage == 100) {
+            resultHeader = "Perfect!";
+        } else if (resultPercentage < 100 && resultPercentage >= 90){
+            resultHeader = "Awesome Job!";
+        } else if (resultPercentage < 90 && resultPercentage > 70){
+            resultHeader = "Good Job!";
+        } else {
+            resultHeader = "Try Again!";
+        }
+
+        mResultHeader.setText(resultHeader);
         mFinalScore.setText(getString(R.string.final_score,mCurrentScore,selectedAmount));
         mFinalTime.setText(getString(R.string.final_time,minutes,seconds));
 

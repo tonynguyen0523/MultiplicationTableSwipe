@@ -35,6 +35,7 @@
                     android:layout_width="@dimen/play_question_border"
                     android:layout_height="100dp"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:background="@color/questionBorder" />
 
                 <View
@@ -42,6 +43,7 @@
                     android:layout_width="@dimen/play_question_border"
                     android:layout_height="100dp"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:background="@color/questionBorder" />
 
                 <LinearLayout
@@ -65,7 +67,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:text="x" />
+                    android:contentDescription="@string/times"
+                    android:text="@string/times_x" />
 
                 <TextView
                     android:id="@+id/play_question2"
@@ -80,7 +83,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:text="="/>
+                    android:paddingStart="10dp"
+                    android:contentDescription="@string/equals_description"
+                    android:text="@string/equals"/>
 
                 </LinearLayout>
 
@@ -106,9 +111,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
-                android:text="1" />
+                tools:text="1" />
 
             <TextView
                 android:id="@+id/choice2"
@@ -118,7 +124,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
-                android:text="2" />
+                tools:text="2" />
 
             <TextView
                 android:id="@+id/choice3"
@@ -126,9 +132,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
-                android:text="3" />
+                tools:text="3" />
 
             <TextView
                 android:id="@+id/choice4"
@@ -138,7 +145,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="10dp"
-                android:text="4" />
+                tools:text="4" />
 
             <ImageView
                 android:id="@+id/swipe_circle_img"
@@ -154,6 +161,7 @@
                 android:layout_height="25dp"
                 android:src="@drawable/swipe_arrow"
                 android:layout_centerInParent="true"
+                android:layout_toEndOf="@id/swipe_circle_img"
                 android:layout_toRightOf="@id/swipe_circle_img"/>
 
             <ImageView
@@ -172,6 +180,7 @@
                 android:src="@drawable/swipe_arrow"
                 android:rotation="180"
                 android:layout_centerInParent="true"
+                android:layout_toStartOf="@id/swipe_circle_img"
                 android:layout_toLeftOf="@id/swipe_circle_img"/>
 
             <ImageView

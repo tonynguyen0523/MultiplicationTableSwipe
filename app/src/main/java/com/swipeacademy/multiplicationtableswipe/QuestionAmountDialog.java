@@ -23,7 +23,7 @@ public class QuestionAmountDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Choose a mode!")
+        builder.setTitle(R.string.amount_dialog_title)
                 .setItems(R.array.questions_amount, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -34,11 +34,11 @@ public class QuestionAmountDialog extends DialogFragment {
                         Utility.setSelectedAmount(getContext(),intAmount);
                         Utility.setRemainingQuestions(getContext(),intAmount);
                         Utility.setSelectedTable(getContext(),amountSelected);
-                        Utility.setSelectedAsset(getContext(),getString(R.string.letsplay));
+                        Utility.setSelectedAsset(getContext(),getString(R.string.letsplay_json));
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancel_dialog_option), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

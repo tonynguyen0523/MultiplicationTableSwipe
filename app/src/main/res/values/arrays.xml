@@ -23,4 +23,19 @@
         <item>elevens.json</item>
         <item>twelves.json</item>
     </string-array>
+
+    <string-array name="table_title">
+        <item>Ones Table</item>
+        <item>Twos Table</item>
+        <item>Threes Table</item>
+        <item>Fours Table</item>
+        <item>Fives Table</item>
+        <item>Sixes Table</item>
+        <item>Sevens Table</item>
+        <item>Eights Table</item>
+        <item>Nines Table</item>
+        <item>Tens Table</item>
+        <item>Elevens Table</item>
+        <item>Twelves Table</item>
+    </string-array>
 </resources>

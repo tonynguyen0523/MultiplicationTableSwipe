@@ -7,7 +7,7 @@
         android:id="@+id/delete_history_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete History"/>
+        android:text="@string/delete_history"/>
 
     <LinearLayout
         android:layout_width="match_parent"

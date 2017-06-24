@@ -2,14 +2,14 @@ package com.swipeacademy.multiplicationtableswipe.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.support.v4.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.DialogFragment;
 
 import com.swipeacademy.multiplicationtableswipe.HomeActivity;
 import com.swipeacademy.multiplicationtableswipe.PlayActivity;
+import com.swipeacademy.multiplicationtableswipe.R;
 
 /**
  * Created by tonyn on 5/16/2017.
@@ -26,9 +26,9 @@ public class PlayBackPressDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        alertDialogBuilder.setTitle("Go Home?");
-        alertDialogBuilder.setMessage("Current results will reset.");
-        alertDialogBuilder.setPositiveButton("Go home", new DialogInterface.OnClickListener(){
+        alertDialogBuilder.setTitle(R.string.go_home_alert);
+        alertDialogBuilder.setMessage(R.string.back_press_alert_message);
+        alertDialogBuilder.setPositiveButton(R.string.go_home_option, new DialogInterface.OnClickListener(){
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -36,7 +36,7 @@ public class PlayBackPressDialogFragment extends DialogFragment {
                 startActivity(intent);
             }
         });
-        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton(R.string.cancel_dialog_option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ((PlayActivity) getActivity()).startTimer();
