@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/delete_history_icon"
-        android:icon="@drawable/ic_delete_forever_white_36dp"
+        android:icon="@drawable/ic_replay_black_36dp"
         app:showAsAction="ifRoom"
         android:title="@string/delete_history">
     </item>

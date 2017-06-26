@@ -1,6 +1,7 @@
 package com.swipeacademy.multiplicationtableswipe;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -47,10 +48,9 @@ public class HistoryActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.delete_history_icon:
                 Intent refresh = new Intent(this, HistoryActivity.class);
-                getContentResolver().delete(TableContract.TableEntry.CONTENT_URI,null,null);
+//                getContentResolver().delete(TableContract.TableEntry.CONTENT_URI,null,null);
+                new DeleteHistory().execute();
                 startActivity(refresh);
-                this.finish();
-                Toast.makeText(this,"Delete pressed",Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -90,6 +90,20 @@ public class HistoryActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             return tabs[position];
+        }
+    }
+
+    private class DeleteHistory extends AsyncTask<Void,Void, Object>{
+
+        @Override
+        protected Object doInBackground(Void... params) {
+            getContentResolver().delete(TableContract.TableEntry.CONTENT_URI,null,null);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            finish();
         }
     }
 }

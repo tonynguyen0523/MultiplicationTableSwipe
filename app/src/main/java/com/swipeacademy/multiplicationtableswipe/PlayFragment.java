@@ -193,7 +193,6 @@ public class PlayFragment extends Fragment {
                     changeSelectedColor(choicesTV, choiceTVID, Color.BLACK, ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     // Update numbers
                     ((PlayActivity) getActivity()).updateNumbers(finalMRemainingQuestions);
-                    ((PlayActivity) getActivity()).circleAnimation();
                 }
             }
         }, delay);

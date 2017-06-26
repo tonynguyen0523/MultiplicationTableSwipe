@@ -1,9 +1,12 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.pm.ActivityInfoCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
@@ -29,7 +32,8 @@ public class PlayActivity extends AppCompatActivity {
     @BindView(R.id.play_home_button)ImageButton mHomeButton;
 
     private static final String TIME_KEY = "time_key";
-    private long mTime = 0;
+    private static final String TIME = "time";
+    private long mTime;
     private String date;
 
     @Override
@@ -43,13 +47,15 @@ public class PlayActivity extends AppCompatActivity {
         date = DateFormat.getDateTimeInstance().format(new Date());
 
         if(savedInstanceState == null) {
-             startTimer();
+            mTime = 0;
+            startTimer();
          } else{
+            mTime = savedInstanceState.getLong(TIME);
             mChronometer.setBase(savedInstanceState.getLong(TIME_KEY));
             mChronometer.start();
         }
 
-        circleAnimation();
+//        circleAnimation();
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions, mRemainingQuestion));
 
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -70,6 +76,12 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        startTimer();
+    }
+
+    @Override
     protected void onPause() {
         pauseTimer();
         super.onPause();
@@ -78,6 +90,7 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putLong(TIME_KEY, mChronometer.getBase());
+        outState.putLong(TIME, mTime);
         super.onSaveInstanceState(outState);
     }
 
@@ -123,10 +136,10 @@ public class PlayActivity extends AppCompatActivity {
         alertDialog.show(getSupportFragmentManager(),"backPress");
     }
 
-    public void circleAnimation(){
-        Circle mTimeCircle = (Circle) findViewById(R.id.time_cicle);
-        CircleAngleAnimation circleAngleAnimation = new CircleAngleAnimation(mTimeCircle, 360);
-        circleAngleAnimation.setDuration(24000);
-        mTimeCircle.startAnimation(circleAngleAnimation);
-    }
+//    public void circleAnimation(){
+//        Circle mTimeCircle = (Circle) findViewById(R.id.time_cicle);
+//        CircleAngleAnimation circleAngleAnimation = new CircleAngleAnimation(mTimeCircle, 360);
+//        circleAngleAnimation.setDuration(24000);
+//        mTimeCircle.startAnimation(circleAngleAnimation);
+//    }
 }
