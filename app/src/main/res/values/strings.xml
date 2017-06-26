@@ -33,7 +33,7 @@
     <string name="cancel_dialog_option">Cancel</string>
     <string name="amount_dialog_title">Choose a mode!</string>
     <string name="click_to_go_home_description">Click to go home.</string>
-    <string name="corrections">Corrections</string>
+    <string name="corrections">Do Corrections</string>
     <string name="awesome_job">Awesome Job!</string>
     <string name="delete_history">Delete History</string>
     <string name="times_x">x</string>
@@ -43,5 +43,6 @@
     <string name="home_play_button">Lets Play!</string>
     <string name="home_practice_button">Practice</string>
     <string name="home_history_button">History</string>
+    <string name="history">History</string>
 
 </resources>

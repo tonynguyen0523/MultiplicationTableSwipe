@@ -4,6 +4,7 @@ import android.support.v4.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,12 +19,14 @@ public class HomeActivity extends AppCompatActivity {
 
     @BindView(R.id.practice_button)Button mPracticeButton;
     @BindView(R.id.home_adView)AdView mAdView;
+    @BindView(R.id.home_toolbar)Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        setSupportActionBar(mToolbar);
 
         CorrectionsUtil.clearCorrections(this);
         Utility.setCurrentScore(this, 0);

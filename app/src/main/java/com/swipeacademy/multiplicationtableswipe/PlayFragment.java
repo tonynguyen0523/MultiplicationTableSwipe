@@ -2,6 +2,7 @@ package com.swipeacademy.multiplicationtableswipe;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -10,6 +11,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
@@ -107,6 +110,18 @@ public class PlayFragment extends Fragment {
         // Check which asset to display
         mSelectedAsset = Utility.getSelectedAsset(getContext());
 
+        new CountDownTimer(48000, 1000) {
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                resultsDialog();
+            }
+        }.start();
+
         if (savedInstanceState == null) {
             // Retrieve available questions
             if (mIsCorrection) {
@@ -191,6 +206,7 @@ public class PlayFragment extends Fragment {
                     changeSelectedColor(choicesTV, choiceTVID, Color.BLACK, ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     // Update numbers
                     ((PlayActivity) getActivity()).updateNumbers(finalMRemainingQuestions);
+                    ((PlayActivity) getActivity()).circleAnimation();
                 }
             }
         }, delay);
@@ -220,7 +236,9 @@ public class PlayFragment extends Fragment {
         Collections.shuffle(questions);
 
         mQuestion1.setText(Integer.toString(questions.get(0)));
+        setAnimation(mQuestion1);
         mQuestion2.setText(Integer.toString(questions.get(1)));
+        setAnimation(mQuestion2);
     }
 
     /**
@@ -236,6 +254,7 @@ public class PlayFragment extends Fragment {
             int chosenChoice = choicesList.get(i);
             choices[i] = currentChoice;
             currentChoice.setText(Integer.toString(chosenChoice));
+            setAnimation(currentChoice);
             if(Utility.userCorrect(mCorrectAnswer,chosenChoice)){
                 mCorrectTextViewID = i;
             }
@@ -263,5 +282,11 @@ public class PlayFragment extends Fragment {
         mBorder2.setBackgroundColor(borderColor);
         mBorder3.setBackgroundColor(borderColor);
         mBorder4.setBackgroundColor(borderColor);
+    }
+
+    private void setAnimation(View viewToAnimate){
+
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.grow);
+        viewToAnimate.startAnimation(animation);
     }
 }

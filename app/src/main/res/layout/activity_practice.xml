@@ -5,8 +5,25 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
     tools:context="com.swipeacademy.multiplicationtableswipe.PracticeActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/practice_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#FFF"
+            android:text="Choose a table to practice!"/>
+
+    </android.support.v7.widget.Toolbar>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/practice_adView"
@@ -20,6 +37,7 @@
         android:id="@+id/practice_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/practice_toolbar"
         android:layout_above="@id/practice_adView"/>
 
 </RelativeLayout>

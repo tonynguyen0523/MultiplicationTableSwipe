@@ -1,12 +1,9 @@
 package com.swipeacademy.multiplicationtableswipe;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
@@ -14,7 +11,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
+import com.swipeacademy.multiplicationtableswipe.Util.Circle;
+import com.swipeacademy.multiplicationtableswipe.Util.CircleAngleAnimation;
 import com.swipeacademy.multiplicationtableswipe.dialog.PlayBackPressDialogFragment;
 
 import java.text.DateFormat;
@@ -51,6 +49,7 @@ public class PlayActivity extends AppCompatActivity {
             mChronometer.start();
         }
 
+        circleAnimation();
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions, mRemainingQuestion));
 
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -110,16 +109,24 @@ public class PlayActivity extends AppCompatActivity {
         Utility.setFinishedTime(this,mTime);
 
         String asset = Utility.getSelectedAsset(getApplicationContext());
+        boolean corrections = Utility.getIsCorrections(getApplicationContext());
 
-        if(asset.contains("letsplay")) {
+        if(asset.contains("letsplay") && !corrections) {
             int correct = Utility.getCurrentScore(this);
             String selectedMode = Utility.getSelectedTable(this);
             Utility.saveResults(this, selectedMode, date, correct, mTime);
         }
     }
 
-    private void showAlertDialog(){
+    public void showAlertDialog(){
         DialogFragment alertDialog = new PlayBackPressDialogFragment();
         alertDialog.show(getSupportFragmentManager(),"backPress");
+    }
+
+    public void circleAnimation(){
+        Circle mTimeCircle = (Circle) findViewById(R.id.time_cicle);
+        CircleAngleAnimation circleAngleAnimation = new CircleAngleAnimation(mTimeCircle, 360);
+        circleAngleAnimation.setDuration(24000);
+        mTimeCircle.startAnimation(circleAngleAnimation);
     }
 }

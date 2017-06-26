@@ -1,6 +1,5 @@
 package com.swipeacademy.multiplicationtableswipe;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,19 +10,15 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
-import com.swipeacademy.multiplicationtableswipe.data.TableContract;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.swipeacademy.multiplicationtableswipe.data.TableContract.*;
+import static com.swipeacademy.multiplicationtableswipe.data.TableContract.ResultsEntry;
 
 /**
  * Created by tonyn on 5/24/2017.
@@ -32,7 +27,7 @@ import static com.swipeacademy.multiplicationtableswipe.data.TableContract.*;
 public class HistoryListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     @BindView(R.id.history_list_recycler_view)RecyclerView mRecyclerView;
-    @BindView(R.id.delete_history_button)Button mDeleteHistoryButton;
+//    @BindView(R.id.delete_history_button)Button mDeleteHistoryButton;
 
     private static final int HISTORY_LOADER = 0;
     private Unbinder unbinder;
@@ -60,16 +55,15 @@ public class HistoryListFragment extends Fragment implements LoaderManager.Loade
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(adapter);
 
-        mDeleteHistoryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),HistoryActivity.class);
-                getActivity().getContentResolver().delete(TableEntry.CONTENT_URI,null,null);
-                startActivity(intent);
-
-            }
-        });
-
+//        mDeleteHistoryButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(),HistoryActivity.class);
+//                getActivity().getContentResolver().delete(TableEntry.CONTENT_URI,null,null);
+//                startActivity(intent);
+//
+//            }
+//        });
         return view;
     }
 

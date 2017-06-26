@@ -17,9 +17,9 @@ import com.swipeacademy.multiplicationtableswipe.R;
 
 public class PlayBackPressDialogFragment extends DialogFragment {
 
+
     public PlayBackPressDialogFragment() {
         // Empty constructor required for DialogFragment
-
     }
 
     @Override
@@ -33,6 +33,7 @@ public class PlayBackPressDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
+                getActivity().finish();
                 startActivity(intent);
             }
         });
@@ -47,6 +48,8 @@ public class PlayBackPressDialogFragment extends DialogFragment {
         return  alertDialogBuilder.create();
     }
 
-
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

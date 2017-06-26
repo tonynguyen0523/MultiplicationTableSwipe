@@ -7,10 +7,29 @@
     android:orientation="vertical"
     tools:context="com.swipeacademy.multiplicationtableswipe.HistoryActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/history_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFF"
+            android:text="@string/history"/>
+
+    </android.support.v7.widget.Toolbar>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/history_viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+
 
         <android.support.v4.view.PagerTabStrip
             android:id="@+id/pager_header"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.google.android.gms.ads.AdRequest;
@@ -18,7 +19,7 @@ public class PracticeActivity extends AppCompatActivity {
 
     @BindView(R.id.practice_recycler_view)RecyclerView mRecyclerView;
     @BindView(R.id.practice_adView)AdView mAdView;
-
+    @BindView(R.id.practice_toolbar)Toolbar mToolbar;
     private String[] tableSets = {"1","2","3","4","5","6","7","8","9","10","11","12"};
 
     @Override
@@ -26,11 +27,12 @@ public class PracticeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
         ButterKnife.bind(this);
+        setSupportActionBar(mToolbar);
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        PracticeAdapter practiceAdapter = new PracticeAdapter(tableSets);
+        PracticeAdapter practiceAdapter = new PracticeAdapter(this,tableSets);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(this, 2),true));

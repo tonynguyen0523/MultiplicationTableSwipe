@@ -22,14 +22,14 @@
         <activity
             android:name=".PlayResultActivity"
             android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" />
-        <activity android:name=".HistoryActivity" />
+        <activity android:name=".HistoryActivity"/>
 
         <provider
             android:name=".data.TableProvider"
             android:authorities="com.swipeacademy.multiplicationtableswipe"
             android:exported="false" />
 
-        <activity android:name=".PracticeActivity"></activity>
+        <activity android:name=".PracticeActivity" />
     </application>
 
 </manifest>

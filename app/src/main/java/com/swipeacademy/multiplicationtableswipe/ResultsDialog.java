@@ -34,7 +34,8 @@ public class ResultsDialog extends DialogFragment {
 
     private Unbinder unbinder;
 
-    public ResultsDialog(){}
+    public ResultsDialog(){
+    }
 
     @NonNull
     @Override
@@ -48,7 +49,7 @@ public class ResultsDialog extends DialogFragment {
 
         int mCurrentScore = Utility.getCurrentScore(getContext());
         final int selectedAmount = Utility.getSelectedAmount(getContext());
-        int resultPercentage = mCurrentScore/selectedAmount;
+        double resultPercentage = (double)mCurrentScore/selectedAmount * 100;
         long mFinishedTime = Utility.getFinishedTime(getContext());
         long minutes = TimeUnit.MILLISECONDS.toMinutes(mFinishedTime);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(mFinishedTime);
@@ -57,9 +58,9 @@ public class ResultsDialog extends DialogFragment {
         String resultHeader;
         if(resultPercentage == 100) {
             resultHeader = "Perfect!";
-        } else if (resultPercentage < 100 && resultPercentage >= 90){
+        } else if (resultPercentage > 90){
             resultHeader = "Awesome Job!";
-        } else if (resultPercentage < 90 && resultPercentage > 70){
+        } else if (resultPercentage > 70){
             resultHeader = "Good Job!";
         } else {
             resultHeader = "Try Again!";
@@ -84,6 +85,7 @@ public class ResultsDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
+                getActivity().finish();
                 startActivity(intent);
             }
         });
