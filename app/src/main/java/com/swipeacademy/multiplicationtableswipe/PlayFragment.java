@@ -2,7 +2,6 @@ package com.swipeacademy.multiplicationtableswipe;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -103,24 +102,12 @@ public class PlayFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
-        TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
+        final TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
 
         // Check if corrections mode
         mIsCorrection = Utility.getIsCorrections(getContext());
         // Check which asset to display
         mSelectedAsset = Utility.getSelectedAsset(getContext());
-
-        new CountDownTimer(48000, 1000) {
-            @Override
-            public void onTick(long l) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                resultsDialog();
-            }
-        }.start();
 
         if (savedInstanceState == null) {
             // Retrieve available questions
@@ -285,7 +272,6 @@ public class PlayFragment extends Fragment {
     }
 
     private void setAnimation(View viewToAnimate){
-
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.grow);
         viewToAnimate.startAnimation(animation);
     }

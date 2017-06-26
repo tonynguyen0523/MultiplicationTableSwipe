@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.swipeacademy.multiplicationtableswipe.HistoryActivity">
 
     <android.support.v7.widget.Toolbar
@@ -12,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        android:layout_alignParentTop="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,22 +24,44 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <GridLayout
+        android:id="@+id/history_gridlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:layout_below="@id/history_toolbar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Correct"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Display1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Time"/>
+
+    </GridLayout>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/history_viewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_below="@id/history_gridlayout">
 
-
-
-        <android.support.v4.view.PagerTabStrip
-            android:id="@+id/pager_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp">
-
-        </android.support.v4.view.PagerTabStrip>
     </android.support.v4.view.ViewPager>
 
-</LinearLayout>
+
+
+
+
+</RelativeLayout>

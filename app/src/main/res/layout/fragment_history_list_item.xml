@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
 
-    <GridLayout
-        android:id="@+id/history_gridlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2">
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/history_gridlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="2">
 
     <TextView
         android:id="@+id/history_correct"
+        style="@style/TextAppearance.AppCompat.Display1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        tools:text="30"/>
+        android:layout_columnWeight="1"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        tools:text="30" />
 
     <TextView
         android:id="@+id/history_time"
+        style="@style/TextAppearance.AppCompat.Display1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        tools:text="10:30"/>
+        android:layout_columnWeight="1"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        tools:text="10:30" />
+</GridLayout>
 
-    </GridLayout>
-
-</LinearLayout>
