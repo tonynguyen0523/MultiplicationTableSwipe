@@ -1,6 +1,7 @@
 package com.swipeacademy.multiplicationtableswipe;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IFillFormatter;
+import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.swipeacademy.multiplicationtableswipe.data.TableContract;
 
 import java.util.ArrayList;
@@ -29,7 +40,7 @@ import butterknife.Unbinder;
 public class HistoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
 //    @BindView(R.id.delete_history_button)Button mDeleteButton;
-    @BindView(R.id.history_list_recycler_view)RecyclerView mRecyclerView;
+//    @BindView(R.id.history_list_recycler_view)RecyclerView mRecyclerView;
 //    @BindView(R.id.history_lineChart)LineChart mLineChart;
 
     private String mTable;
@@ -139,6 +150,8 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
 //
 //        LineDataSet set1;
 //
+//
+//
 //        if(mLineChart.getData()!= null &&
 //                mLineChart.getData().getDataSetCount() > 0){
 //            set1 = (LineDataSet)mLineChart.getData().getDataSetByIndex(0);
@@ -185,17 +198,17 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
 //            mLineChart.setData(lineData);
 //        }
 //    }
-
-    private Integer[] getUserCorrectHistory(Cursor data){
-
-        ArrayList<Integer> correctHistory = new ArrayList<>();
-        data.moveToFirst();
-        while(!data.isAfterLast()){
-            correctHistory.add(data.getInt(HistoryFragment.COL_ROW_TOTAL_RIGHT));
-            data.moveToNext();
-        }
-        return correctHistory.toArray(new Integer[correctHistory.size()]);
-    }
+//
+//    private Integer[] getUserCorrectHistory(Cursor data){
+//
+//        ArrayList<Integer> correctHistory = new ArrayList<>();
+//        data.moveToFirst();
+//        while(!data.isAfterLast()){
+//            correctHistory.add(data.getInt(HistoryFragment.COL_ROW_TOTAL_RIGHT));
+//            data.moveToNext();
+//        }
+//        return correctHistory.toArray(new Integer[correctHistory.size()]);
+//    }
 
 }
 

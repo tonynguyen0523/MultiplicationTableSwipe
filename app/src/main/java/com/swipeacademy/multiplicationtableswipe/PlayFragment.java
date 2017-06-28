@@ -60,6 +60,7 @@ public class PlayFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_play, container, false);
         unbinder = ButterKnife.bind(this, view);
+        setRetainInstance(true);
 
         // Create array with choicesTV and generate questions and answers
         final TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};

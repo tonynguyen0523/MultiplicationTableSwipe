@@ -24,39 +24,11 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <GridLayout
-        android:id="@+id/history_gridlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:layout_below="@id/history_toolbar">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_columnWeight="1"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:text="Correct"/>
-
-        <TextView
-            style="@style/TextAppearance.AppCompat.Display1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_columnWeight="1"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:text="Time"/>
-
-    </GridLayout>
-
     <android.support.v4.view.ViewPager
         android:id="@+id/history_viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/history_gridlayout">
+        android:layout_below="@id/history_toolbar">
 
     </android.support.v4.view.ViewPager>
 

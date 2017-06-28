@@ -46,14 +46,16 @@ public class PlayActivity extends AppCompatActivity {
         int mRemainingQuestion = Utility.getRemainingQuestions(this);
         date = DateFormat.getDateTimeInstance().format(new Date());
 
-        if(savedInstanceState == null) {
-            mTime = 0;
-            startTimer();
-         } else{
-            mTime = savedInstanceState.getLong(TIME);
-            mChronometer.setBase(savedInstanceState.getLong(TIME_KEY));
-            mChronometer.start();
-        }
+            if (savedInstanceState == null) {
+                mTime = 0;
+                startTimer();
+            }
+            else {
+                mTime = savedInstanceState.getLong(TIME);
+                mChronometer.setBase(savedInstanceState.getLong(TIME_KEY));
+                mChronometer.start();
+            }
+
 
 //        circleAnimation();
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions, mRemainingQuestion));
@@ -75,17 +77,17 @@ public class PlayActivity extends AppCompatActivity {
         showAlertDialog();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startTimer();
-    }
-
-    @Override
-    protected void onPause() {
-        pauseTimer();
-        super.onPause();
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        pauseTimer();
+//    }
+//
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        startTimer();
+//    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -109,6 +111,7 @@ public class PlayActivity extends AppCompatActivity {
         mChronometer.start();
     }
 
+
     private void pauseTimer(){
         mChronometer.stop();
         mTime = SystemClock.elapsedRealtime();
@@ -119,7 +122,7 @@ public class PlayActivity extends AppCompatActivity {
         mChronometer.stop();
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions,0));
         mTime = SystemClock.elapsedRealtime();
-        Utility.setFinishedTime(this,mTime);
+        Utility.setFinishedTime(this,mChronometer.getBase());
 
         String asset = Utility.getSelectedAsset(getApplicationContext());
         boolean corrections = Utility.getIsCorrections(getApplicationContext());
@@ -127,13 +130,22 @@ public class PlayActivity extends AppCompatActivity {
         if(asset.contains("letsplay") && !corrections) {
             int correct = Utility.getCurrentScore(this);
             String selectedMode = Utility.getSelectedTable(this);
-            Utility.saveResults(this, selectedMode, date, correct, mTime);
+            Utility.saveResults(this, selectedMode, date, correct, mChronometer.getBase());
         }
     }
 
     public void showAlertDialog(){
         DialogFragment alertDialog = new PlayBackPressDialogFragment();
+        showChronometer(false);
         alertDialog.show(getSupportFragmentManager(),"backPress");
+    }
+
+    public void showChronometer(boolean show){
+        if(show) {
+            mChronometer.setVisibility(View.VISIBLE);
+        } else {
+            mChronometer.setVisibility(View.INVISIBLE);
+        }
     }
 
 //    public void circleAnimation(){

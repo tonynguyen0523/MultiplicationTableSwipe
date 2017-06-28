@@ -42,6 +42,7 @@ public class PlayBackPressDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ((PlayActivity) getActivity()).startTimer();
+                ((PlayActivity) getActivity()).showChronometer(true);
                 dialog.dismiss();
             }
         });

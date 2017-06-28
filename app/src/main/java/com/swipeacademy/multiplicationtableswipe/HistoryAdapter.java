@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -48,10 +52,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         cursor.moveToPosition(position);
 
         int correct = cursor.getInt(HistoryFragment.COL_ROW_TOTAL_RIGHT);
-        int time = cursor.getInt(HistoryFragment.COL_ROW_TIME);
+        String time = cursor.getString(HistoryListFragment.COL_ROW_TIME);
 
         holder.historyCorrect.setText(Integer.toString(correct));
-        holder.historyTime.setText(Integer.toString(time));
+        holder.historyTime.setText(time);
     }
 
     void setCursor(Cursor cursor){

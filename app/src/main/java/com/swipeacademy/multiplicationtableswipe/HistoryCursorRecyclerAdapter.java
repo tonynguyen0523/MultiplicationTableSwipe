@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import com.swipeacademy.multiplicationtableswipe.Util.CursorRecyclerViewAdapter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -55,9 +59,12 @@ public class HistoryCursorRecyclerAdapter extends CursorRecyclerViewAdapter<Hist
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
 
         int correct = cursor.getInt(HistoryListFragment.COL_ROW_TOTAL_RIGHT);
-        int time = cursor.getInt(HistoryListFragment.COL_ROW_TIME);
+        int time = cursor.getInt(HistoryListFragment.COL_ROW_TIME)/1000;
+        Date timeFormat = new Date((((long)time)*1000L));
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        String dateFormatted = dateFormat.format(timeFormat);
 
         viewHolder.mCorrectTV.setText(Integer.toString(correct));
-        viewHolder.mTimeTV.setText(Integer.toString(time));
+        viewHolder.mTimeTV.setText(dateFormatted);
     }
 }

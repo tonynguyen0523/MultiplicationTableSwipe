@@ -142,12 +142,13 @@ public class Utility {
     static void saveResults(Context context, String table, String date, int correct, long time){
 
         long tableId = addTableToDatabase(context, table);
+        String stringTime = Long.toString(time);
 
         ContentValues values = new ContentValues();
         values.put(ResultsEntry.COLUMN_TABLES_KEY,tableId);
         values.put(ResultsEntry.COLUMN_DATE,date);
         values.put(ResultsEntry.COLUMN_TOTAL_RIGHT,correct);
-        values.put(ResultsEntry.COLUMN_TIME,time);
+        values.put(ResultsEntry.COLUMN_TIME,stringTime);
 
         context.getContentResolver().insert(ResultsEntry.CONTENT_URI, values);
     }

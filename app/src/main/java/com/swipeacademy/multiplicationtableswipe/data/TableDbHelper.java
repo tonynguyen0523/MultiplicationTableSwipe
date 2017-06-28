@@ -12,7 +12,7 @@ import static com.swipeacademy.multiplicationtableswipe.data.TableContract.*;
 
 public class TableDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     public static final String DATABASE_NAME = "samts.db";
 
@@ -33,7 +33,7 @@ public class TableDbHelper extends SQLiteOpenHelper {
                 + ResultsEntry.COLUMN_TABLES_KEY + " INTEGER NOT NULL, "
                 + ResultsEntry.COLUMN_DATE + " TEXT NOT NULL, "
                 + ResultsEntry.COLUMN_TOTAL_RIGHT + " INTEGER NOT NULL, "
-                + ResultsEntry.COLUMN_TIME + " INTEGER NOT NULL, "
+                + ResultsEntry.COLUMN_TIME + " TEXT NOT NULL, "
                 + " FOREIGN KEY (" + ResultsEntry.COLUMN_TABLES_KEY + ") REFERENCES "
                 + TableEntry.TABLE_NAME + " ("
                 + TableEntry._ID + "));";
