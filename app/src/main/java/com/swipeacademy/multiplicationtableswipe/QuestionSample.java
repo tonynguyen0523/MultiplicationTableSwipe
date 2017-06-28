@@ -3,7 +3,6 @@ package com.swipeacademy.multiplicationtableswipe;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.JsonReader;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +17,6 @@ import java.util.Collections;
 public class QuestionSample {
 
     private int mQuestionID;
-//    private String mQuestion;
     private ArrayList<Integer> mQuestions;
     private ArrayList<Integer> mChoices;
     private int mAnswer;

@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.swipeacademy.multiplicationtableswipe.data.TableContract;
 
@@ -61,7 +60,7 @@ public class HistoryActivity extends AppCompatActivity {
     public static class MyPagerAdapter extends FragmentPagerAdapter{
 
         private static int NUM_ITEMS = 3;
-        private String[] tabs = {"24","48","72"};
+        private String[] tabs = {"5","7","10"};
 
 
         public MyPagerAdapter(FragmentManager fm) {
@@ -77,11 +76,11 @@ public class HistoryActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return HistoryFragment.newInstance("24");
+                    return HistoryFragment.newInstance("5");
                 case 1:
-                    return HistoryFragment.newInstance("48");
+                    return HistoryFragment.newInstance("7");
                 case 2:
-                    return HistoryFragment.newInstance("72");
+                    return HistoryFragment.newInstance("10");
                 default:
                     return null;
             }

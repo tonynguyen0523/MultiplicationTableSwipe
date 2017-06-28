@@ -5,14 +5,14 @@
     android:id="@+id/chart_card"
     android:layout_margin="1dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    williamchart:cardBackgroundColor="@color/colorPrimaryDark"
+    android:layout_height="wrap_content"
+    williamchart:cardBackgroundColor="#FFF"
     williamchart:cardCornerRadius="2dp">
 
     <com.db.chart.view.LineChartView
         android:id="@+id/history_lineChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300dp"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
