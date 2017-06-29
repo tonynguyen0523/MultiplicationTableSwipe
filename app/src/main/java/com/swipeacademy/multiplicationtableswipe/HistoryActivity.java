@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.swipeacademy.multiplicationtableswipe.data.TableContract;
 
 import butterknife.BindView;
@@ -21,6 +23,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     @BindView(R.id.history_viewPager)ViewPager mViewPager;
     @BindView(R.id.history_toolbar)Toolbar mToolbar;
+    @BindView(R.id.history_adView)AdView mAdView;
 
     FragmentPagerAdapter pagerAdapter;
 
@@ -34,6 +37,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(pagerAdapter);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override

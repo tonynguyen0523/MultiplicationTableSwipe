@@ -12,9 +12,12 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.db.chart.view.LineChartView;
 import com.swipeacademy.multiplicationtableswipe.data.TableContract;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +31,7 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
 
     @BindView(R.id.chart_card)CardView mCardView;
     @BindView(R.id.history_lineChart)LineChartView mLineChartView;
+    @BindView(R.id.chart_empty_textView)TextView mEmptyTextView;
 
     private String mTable;
     private static final int HISTORY_LOADER = 0;
@@ -98,7 +102,12 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-        new HistoryLineChart(mCardView,getContext(),data).show();
+        if(data.getCount() > 2) {
+            mEmptyTextView.setVisibility(View.INVISIBLE);
+            new HistoryLineChart(mCardView, getContext(), data).show();
+        } else {
+            mEmptyTextView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

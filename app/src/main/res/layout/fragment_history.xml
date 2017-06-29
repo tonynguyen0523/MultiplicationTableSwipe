@@ -9,6 +9,10 @@
     williamchart:cardBackgroundColor="#FFF"
     williamchart:cardCornerRadius="2dp">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <com.db.chart.view.LineChartView
         android:id="@+id/history_lineChart"
         android:layout_width="match_parent"
@@ -19,5 +23,15 @@
         williamchart:chart_axis="false"
         williamchart:chart_axisBorderSpacing="15dp"
         williamchart:chart_labelColor="#6a84c3" />
+
+        <TextView
+            android:id="@+id/chart_empty_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:text="Play three times to see history."/>
+
+    </FrameLayout>
 
 </android.support.v7.widget.CardView>

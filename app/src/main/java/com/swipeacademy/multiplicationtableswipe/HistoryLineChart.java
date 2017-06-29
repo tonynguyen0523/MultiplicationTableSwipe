@@ -73,7 +73,7 @@ public class HistoryLineChart {
 
         tooltip = new Tooltip(mContext,R.layout.line_graph_tooltip, R.id.line_graph_value);
         tooltip.setVerticalAlignment(Tooltip.Alignment.BOTTOM_TOP);
-        tooltip.setDimensions((int) Tools.fromDpToPx(40), (int) Tools.fromDpToPx(25));
+        tooltip.setDimensions((int) Tools.fromDpToPx(30), (int) Tools.fromDpToPx(25));
 
         tooltip.setEnterAnimation(PropertyValuesHolder.ofFloat(View.ALPHA, 1),
                 PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f),
@@ -90,7 +90,7 @@ public class HistoryLineChart {
             @Override
             public void run() {
 
-                tooltip.prepare(mChart.getEntriesArea(0).get(1), valuesArray[1]);
+                tooltip.prepare(mChart.getEntriesArea(0).get(0), valuesArray[0]);
                 mChart.showTooltip(tooltip, true);
             }
         };
