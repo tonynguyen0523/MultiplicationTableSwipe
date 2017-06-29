@@ -26,18 +26,12 @@ import butterknife.Unbinder;
 
 public class HistoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
-//    @BindView(R.id.delete_history_button)Button mDeleteButton;
-//    @BindView(R.id.history_list_recycler_view)RecyclerView mRecyclerView;
-//    @BindView(R.id.history_lineChart)LineChart mLineChart;
     @BindView(R.id.chart_card)CardView mCardView;
     @BindView(R.id.history_lineChart)LineChartView mLineChartView;
 
     private String mTable;
     private static final int HISTORY_LOADER = 0;
     private Unbinder unbinder;
-    private HistoryAdapter adapter;
-    private float[] mHistoryData;
-    Cursor cursor;
 
     private static final String[] HISTORY_COLUMNS = {
             TableContract.ResultsEntry.TABLE_NAME + " . " + TableContract.ResultsEntry._ID,

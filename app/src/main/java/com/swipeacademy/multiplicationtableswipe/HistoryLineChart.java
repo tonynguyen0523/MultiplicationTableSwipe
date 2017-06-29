@@ -1,14 +1,18 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.view.View;
 import android.view.animation.BounceInterpolator;
 
 import com.db.chart.animation.Animation;
 import com.db.chart.model.LineSet;
 import com.db.chart.renderer.AxisRenderer;
+import com.db.chart.tooltip.Tooltip;
+import com.db.chart.util.Tools;
 import com.db.chart.view.LineChartView;
 
 import java.util.ArrayList;
@@ -22,17 +26,16 @@ public class HistoryLineChart {
 
     private final LineChartView mChart;
     private final Context mContext;
+    private Tooltip tooltip;
     private Cursor cursor;
-    private static float[] mValues;
-    private static String[] mStrings = {"1","2","3","4","5","6","7"};
 
-    public HistoryLineChart(CardView card, Context context, Cursor data){
+    HistoryLineChart(CardView card, Context context, Cursor data){
         mContext = context;
         cursor = data;
         mChart = (LineChartView) card.findViewById(R.id.history_lineChart);
     }
 
-    public ArrayList<Integer> getValues(Cursor cursor) {
+    private ArrayList<Integer> getValues(Cursor cursor) {
 
         ArrayList<Integer> valuesList = new ArrayList<>();
         cursor.moveToFirst();
@@ -43,7 +46,7 @@ public class HistoryLineChart {
         return valuesList;
     }
 
-    public float[] convertListToFloatArray(ArrayList<Integer> valuesList){
+    private float[] convertListToFloatArray(ArrayList<Integer> valuesList){
 
         float[] valueArray = new float[valuesList.size()];
         Iterator<Integer> iterator = valuesList.iterator();
@@ -53,7 +56,7 @@ public class HistoryLineChart {
         return valueArray;
     }
 
-    public String[] getLabels(float[] values){
+    private String[] getLabels(float[] values){
 
         String[] labels = new String[values.length];
         for (int i = 0; i < values.length; i++){
@@ -62,10 +65,36 @@ public class HistoryLineChart {
         return labels;
     }
 
-    public void show(){
+    void show(){
 
         ArrayList<Integer> values = getValues(cursor);
-        float[] valuesArray = convertListToFloatArray(values);
+        final float[] valuesArray = convertListToFloatArray(values);
+        final int arrayLength = valuesArray.length;
+
+        tooltip = new Tooltip(mContext,R.layout.line_graph_tooltip, R.id.line_graph_value);
+        tooltip.setVerticalAlignment(Tooltip.Alignment.BOTTOM_TOP);
+        tooltip.setDimensions((int) Tools.fromDpToPx(40), (int) Tools.fromDpToPx(25));
+
+        tooltip.setEnterAnimation(PropertyValuesHolder.ofFloat(View.ALPHA, 1),
+                PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f),
+                PropertyValuesHolder.ofFloat(View.SCALE_X, 1f)).setDuration(200);
+
+        tooltip.setExitAnimation(PropertyValuesHolder.ofFloat(View.ALPHA, 0),
+                PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f),
+                PropertyValuesHolder.ofFloat(View.SCALE_X, 0f)).setDuration(200);
+
+        tooltip.setPivotX(Tools.fromDpToPx(65) / 2);
+        tooltip.setPivotY(Tools.fromDpToPx(25));
+
+        Runnable chartAction = new Runnable() {
+            @Override
+            public void run() {
+
+                tooltip.prepare(mChart.getEntriesArea(0).get(1), valuesArray[1]);
+                mChart.showTooltip(tooltip, true);
+            }
+        };
+
 
         LineSet dataSet = new LineSet(getLabels(valuesArray), valuesArray);
         dataSet.setColor(ContextCompat.getColor(mContext,R.color.colorAccent))
@@ -74,9 +103,11 @@ public class HistoryLineChart {
                 .setThickness(4);
         mChart.addData(dataSet);
 
-        mChart.setAxisBorderValues(0, 20)
+        mChart.setAxisBorderValues(0, 10)
                 .setYLabels(AxisRenderer.LabelPosition.NONE)
+                .setTooltips(tooltip)
                 .show(new Animation().setInterpolator(new BounceInterpolator())
-                        .fromAlpha(0));
+                        .fromAlpha(0)
+                        .withEndAction(chartAction));
     }
 }
