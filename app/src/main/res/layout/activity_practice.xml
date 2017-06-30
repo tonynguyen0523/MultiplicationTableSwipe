@@ -7,12 +7,17 @@
     android:layout_height="match_parent"
     tools:context="com.swipeacademy.multiplicationtableswipe.PracticeActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/practice_appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/practice_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        android:elevation="4dp"
         android:layout_alignParentTop="true">
 
         <TextView
@@ -25,11 +30,14 @@
 
     </android.support.v7.widget.Toolbar>
 
+    </android.support.design.widget.AppBarLayout>
+
     <com.google.android.gms.ads.AdView
         android:id="@+id/practice_adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="#FFFFFFFF"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id"/>
 
@@ -37,7 +45,7 @@
         android:id="@+id/practice_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/practice_toolbar"
+        android:layout_below="@id/practice_appBarLayout"
         android:layout_above="@id/practice_adView"/>
 
 </RelativeLayout>

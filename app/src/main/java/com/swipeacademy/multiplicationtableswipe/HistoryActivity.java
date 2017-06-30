@@ -1,12 +1,15 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -23,7 +26,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     @BindView(R.id.history_viewPager)ViewPager mViewPager;
     @BindView(R.id.history_toolbar)Toolbar mToolbar;
-    @BindView(R.id.history_adView)AdView mAdView;
+    @BindView(R.id.tabs)TabLayout mTabLayout;
 
     FragmentPagerAdapter pagerAdapter;
 
@@ -33,13 +36,12 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(pagerAdapter);
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
@@ -52,11 +54,10 @@ public class HistoryActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.delete_history_icon:
-                Intent refresh = new Intent(this, HistoryActivity.class);
-//                getContentResolver().delete(TableContract.TableEntry.CONTENT_URI,null,null);
-                new DeleteHistory().execute();
-                startActivity(refresh);
+                DeleteHistoryAlertDialog();
                 break;
+            case android.R.id.home:
+                onBackPressed();
             default:
                 break;
         }
@@ -110,5 +111,26 @@ public class HistoryActivity extends AppCompatActivity {
         protected void onPostExecute(Object o) {
             finish();
         }
+    }
+
+    public void DeleteHistoryAlertDialog(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("All your history will be erased.")
+                .setTitle("Erase history?")
+                .setPositiveButton("Erase", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new DeleteHistory().execute();
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancel_dialog_option), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        builder.create().show();
     }
 }

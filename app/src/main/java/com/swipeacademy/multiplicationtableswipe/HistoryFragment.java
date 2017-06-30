@@ -102,9 +102,11 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
+        int axisValue = Integer.parseInt(mTable);
+
         if(data.getCount() > 2) {
             mEmptyTextView.setVisibility(View.INVISIBLE);
-            new HistoryLineChart(mCardView, getContext(), data).show();
+            new HistoryLineChart(mCardView, getContext(), data, axisValue).show();
         } else {
             mEmptyTextView.setVisibility(View.VISIBLE);
         }

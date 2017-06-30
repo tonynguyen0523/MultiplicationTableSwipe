@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.ads.AdRequest;
@@ -28,6 +30,8 @@ public class PracticeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_practice);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -35,7 +39,7 @@ public class PracticeActivity extends AppCompatActivity {
         PracticeAdapter practiceAdapter = new PracticeAdapter(this,tableSets);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(this, 2),true));
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2,GridSpacingItemDecoration.dpToPx(this, 10),true));
         mRecyclerView.setAdapter(practiceAdapter);
 
         practiceAdapter.setOnItemClickListener(new PracticeAdapter.ItemClickListener() {
@@ -49,8 +53,17 @@ public class PracticeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+            default:
+                break;
+        }
+        return true;
     }
 
 

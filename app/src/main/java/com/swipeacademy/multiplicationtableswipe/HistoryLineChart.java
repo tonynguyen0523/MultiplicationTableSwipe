@@ -28,10 +28,12 @@ public class HistoryLineChart {
     private final Context mContext;
     private Tooltip tooltip;
     private Cursor cursor;
+    private int mAxisBorderValue;
 
-    HistoryLineChart(CardView card, Context context, Cursor data){
+    HistoryLineChart(CardView card, Context context, Cursor data, int axisBorderValue){
         mContext = context;
         cursor = data;
+        mAxisBorderValue = axisBorderValue;
         mChart = (LineChartView) card.findViewById(R.id.history_lineChart);
     }
 
@@ -69,7 +71,7 @@ public class HistoryLineChart {
 
         ArrayList<Integer> values = getValues(cursor);
         final float[] valuesArray = convertListToFloatArray(values);
-        final int arrayLength = valuesArray.length;
+        final int valueSize = valuesArray.length;
 
         tooltip = new Tooltip(mContext,R.layout.line_graph_tooltip, R.id.line_graph_value);
         tooltip.setVerticalAlignment(Tooltip.Alignment.BOTTOM_TOP);
@@ -90,20 +92,20 @@ public class HistoryLineChart {
             @Override
             public void run() {
 
-                tooltip.prepare(mChart.getEntriesArea(0).get(0), valuesArray[0]);
+                tooltip.prepare(mChart.getEntriesArea(0).get(valueSize - 1), valuesArray[valueSize - 1]);
                 mChart.showTooltip(tooltip, true);
             }
         };
 
 
         LineSet dataSet = new LineSet(getLabels(valuesArray), valuesArray);
-        dataSet.setColor(ContextCompat.getColor(mContext,R.color.colorAccent))
-                .setFill(ContextCompat.getColor(mContext,R.color.colorPrimaryDark))
+        dataSet.setColor(ContextCompat.getColor(mContext,R.color.colorPrimaryDark))
+                .setFill(ContextCompat.getColor(mContext,R.color.colorPrimary))
                 .setDotsColor(ContextCompat.getColor(mContext,R.color.colorAccent))
-                .setThickness(4);
+                .setThickness(8);
         mChart.addData(dataSet);
 
-        mChart.setAxisBorderValues(0, 10)
+        mChart.setAxisBorderValues(0, mAxisBorderValue + 1)
                 .setYLabels(AxisRenderer.LabelPosition.NONE)
                 .setTooltips(tooltip)
                 .show(new Animation().setInterpolator(new BounceInterpolator())

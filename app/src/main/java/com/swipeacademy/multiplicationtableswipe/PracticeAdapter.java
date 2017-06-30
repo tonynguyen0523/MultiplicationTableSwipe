@@ -28,8 +28,6 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
         @BindView(R.id.practice_recycler_item_textView)TextView mTableTV;
         @BindView(R.id.practice_recycler_item_title_textView)TextView mTableTitleTV;
 
-//        @BindView(R.id.flip_view)FlipView mFlipView;
-
         ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
@@ -58,7 +56,6 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
     @Override
     public PracticeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_practice_recycler_item, parent, false);
-//      View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_practice_recycler_view_item, parent, false);
 
         final ViewHolder vh = new ViewHolder(item);
         return vh;
@@ -71,8 +68,6 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
         holder.mTableTitleTV.setText(mContext.getResources().getStringArray(R.array.table_title)[position]);
 
         setAnimation(holder.itemView,position);
-
-//      holder.mFlipView.setFrontText(mDataSet[position]);
     }
 
     private void setAnimation(View viewToAnimate, int position)

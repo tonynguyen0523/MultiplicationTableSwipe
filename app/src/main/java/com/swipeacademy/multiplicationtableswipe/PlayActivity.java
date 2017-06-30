@@ -6,6 +6,7 @@ import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.pm.ActivityInfoCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.Chronometer;
@@ -42,6 +43,7 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
         ButterKnife.bind(this);
 
+
         // Get remaining questions
         int mRemainingQuestion = Utility.getRemainingQuestions(this);
         date = DateFormat.getDateTimeInstance().format(new Date());
@@ -76,18 +78,6 @@ public class PlayActivity extends AppCompatActivity {
         pauseTimer();
         showAlertDialog();
     }
-
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        pauseTimer();
-//    }
-//
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        startTimer();
-//    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -147,11 +137,4 @@ public class PlayActivity extends AppCompatActivity {
             mChronometer.setVisibility(View.INVISIBLE);
         }
     }
-
-//    public void circleAnimation(){
-//        Circle mTimeCircle = (Circle) findViewById(R.id.time_cicle);
-//        CircleAngleAnimation circleAngleAnimation = new CircleAngleAnimation(mTimeCircle, 360);
-//        circleAngleAnimation.setDuration(24000);
-//        mTimeCircle.startAnimation(circleAngleAnimation);
-//    }
 }

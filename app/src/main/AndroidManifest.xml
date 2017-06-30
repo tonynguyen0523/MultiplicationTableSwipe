@@ -18,11 +18,13 @@
         </activity>
         <activity
             android:name=".PlayActivity"
-            android:theme="@style/PlayTheme" />
+            android:parentActivityName=".HomeActivity"/>
         <activity
             android:name=".PlayResultActivity"
             android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" />
-        <activity android:name=".HistoryActivity"/>
+        <activity
+            android:name=".HistoryActivity"
+            android:parentActivityName=".HomeActivity"/>
 
         <provider
             android:name=".data.TableProvider"
