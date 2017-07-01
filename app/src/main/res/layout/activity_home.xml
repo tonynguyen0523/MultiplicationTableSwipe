@@ -21,48 +21,38 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#FFF"
-            android:text="MULTIPLICATION TABLE SWIPE"/>
+            android:text="Multiplication Table Swipe"/>
 
     </android.support.v7.widget.Toolbar>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
+    <!--<Button-->
+        <!--android:id="@+id/play_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:background="@drawable/home_button"-->
+        <!--android:layout_marginBottom="5dp"-->
+        <!--android:text="@string/home_play_button"-->
+        <!--android:onClick="letsPlay"/>-->
 
-    <Button
-        android:id="@+id/play_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/home_button"
-        android:layout_marginBottom="5dp"
-        android:text="@string/home_play_button"
-        android:onClick="letsPlay"/>
+        <!--<Button-->
+            <!--android:id="@+id/practice_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:background="@drawable/home_button"-->
+            <!--android:layout_marginBottom="5dp"-->
+            <!--android:onClick="practice"-->
+            <!--android:text="@string/home_practice_button"/>-->
 
-        <Button
-            android:id="@+id/practice_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/home_button"
-            android:layout_marginBottom="5dp"
-            android:onClick="practice"
-            android:text="@string/home_practice_button"/>
-
-        <Button
-            android:id="@+id/history_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/home_button"
-            android:text="@string/home_history_button"
-            android:onClick="myHistory"/>
-
-
-
- </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/history_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:background="@drawable/home_button"-->
+            <!--android:text="@string/home_history_button"-->
+            <!--android:onClick="myHistory"/>-->
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/home_adView"
@@ -71,5 +61,19 @@
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/home_toolbar"
+        android:layout_above="@id/home_adView"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/home_play_card" />
+
+        <include
+            layout="@layout/home_practice_history_cards"/>
+    </LinearLayout>
 
 </RelativeLayout>
