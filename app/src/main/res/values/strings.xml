@@ -44,5 +44,6 @@
     <string name="home_practice_button">Practice</string>
     <string name="home_history_button">History</string>
     <string name="history">History</string>
+    <string name="multiplication_table_swipe">Multiplication Table Swipe</string>
 
 </resources>

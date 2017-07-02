@@ -30,7 +30,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/Table80"/>
+                android:src="@drawable/table80"/>
 
             <TextView
                 android:layout_width="match_parent"

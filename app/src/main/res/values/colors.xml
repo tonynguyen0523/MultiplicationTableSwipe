@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#0077c2</color>
     <color name="colorPrimaryLight">#80d6ff</color>
     <color name="colorAccent">#ffa726</color>
-
+    <color name="white">#fff</color>
     <color name="questionBorder">#42a5f5</color>
     <color name="correct">#42FF33</color>
 </resources>
