@@ -1,7 +1,6 @@
 package com.swipeacademy.multiplicationtableswipe;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -27,6 +26,7 @@ public class HistoryActivity extends AppCompatActivity {
     @BindView(R.id.history_viewPager)ViewPager mViewPager;
     @BindView(R.id.history_toolbar)Toolbar mToolbar;
     @BindView(R.id.tabs)TabLayout mTabLayout;
+    @BindView(R.id.history_adView)AdView mAdView;
 
     FragmentPagerAdapter pagerAdapter;
 
@@ -42,6 +42,9 @@ public class HistoryActivity extends AppCompatActivity {
         pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(pagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override

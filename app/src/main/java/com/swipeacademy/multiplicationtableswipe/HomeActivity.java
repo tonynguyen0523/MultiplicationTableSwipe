@@ -17,7 +17,6 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity {
 
-//    @BindView(R.id.practice_button)Button mPracticeButton;
     @BindView(R.id.home_adView)AdView mAdView;
     @BindView(R.id.home_toolbar)Toolbar mToolbar;
     @BindView(R.id.included_home_play_card)CardView mIncludedPlayCard;

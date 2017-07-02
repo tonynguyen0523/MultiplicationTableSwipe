@@ -12,11 +12,7 @@
         style="@style/home_toolbar">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="#FFF"
+            style="@style/home_toolbar_text"
             android:text="@string/multiplication_table_swipe"/>
 
     </android.support.v7.widget.Toolbar>

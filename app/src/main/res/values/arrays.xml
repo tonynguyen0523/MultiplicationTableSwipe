@@ -25,17 +25,17 @@
     </string-array>
 
     <string-array name="table_title">
-        <item>Ones Times Table</item>
-        <item>Twos Times Table</item>
-        <item>Threes Times Table</item>
-        <item>Fours Times Table</item>
-        <item>Fives Times Table</item>
-        <item>Sixes Times Table</item>
-        <item>Sevens Times Table</item>
-        <item>Eights Times Table</item>
-        <item>Nines Times Table</item>
-        <item>Tens Times Table</item>
-        <item>Elevens Times Table</item>
-        <item>Twelves Times Table</item>
+        <item>Ones</item>
+        <item>Twos</item>
+        <item>Threes</item>
+        <item>Fours</item>
+        <item>Fives</item>
+        <item>Sixes</item>
+        <item>Sevens</item>
+        <item>Eights</item>
+        <item>Nines</item>
+        <item>Tens</item>
+        <item>Elevens</item>
+        <item>Twelves</item>
     </string-array>
 </resources>
