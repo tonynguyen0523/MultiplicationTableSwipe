@@ -2,11 +2,13 @@ package com.swipeacademy.multiplicationtableswipe.Util;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.swipeacademy.multiplicationtableswipe.R;
 
 /**
  * Created by tonynguyen on 6/25/17.
@@ -31,7 +33,7 @@ public class Circle extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(strokeWidth);
         //Circle color
-        paint.setColor(Color.RED);
+        paint.setColor(ContextCompat.getColor(context, R.color.colorPrimary));
 
         //size 200x200 example
         rect = new RectF(strokeWidth, strokeWidth, 200 + strokeWidth, 200 + strokeWidth);

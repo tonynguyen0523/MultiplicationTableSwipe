@@ -30,11 +30,10 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"/>
 
-        <View
+        <com.swipeacademy.multiplicationtableswipe.Util.Circle
             android:id="@+id/remaining_circle"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:background="@drawable/remaining_circle"
             android:layout_centerInParent="true"/>
 
         <ImageButton

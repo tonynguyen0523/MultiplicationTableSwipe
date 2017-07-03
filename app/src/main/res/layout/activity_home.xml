@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     tools:context="com.swipeacademy.multiplicationtableswipe.HomeActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/home_appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/home_toolbar"
         style="@style/home_toolbar">
@@ -16,6 +22,7 @@
             android:text="@string/multiplication_table_swipe"/>
 
     </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/home_adView"
@@ -28,8 +35,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/home_toolbar"
+        android:layout_below="@id/home_appBar"
         android:layout_above="@id/home_adView"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
         <include
@@ -40,17 +48,12 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp">
+            >
 
             <android.support.v7.widget.CardView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/home_practice_card_view"
                 style="@style/home_card_view"
-                android:layout_marginRight="20dp"
-                android:layout_marginEnd="20dp"
                 app:cardCornerRadius="@dimen/home_card_corner_radius">
 
                 <LinearLayout

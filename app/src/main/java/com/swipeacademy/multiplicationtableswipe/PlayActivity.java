@@ -1,13 +1,9 @@
 package com.swipeacademy.multiplicationtableswipe;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.pm.ActivityInfoCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
@@ -31,6 +27,7 @@ public class PlayActivity extends AppCompatActivity {
     @BindView(R.id.current_time)Chronometer mChronometer;
     @BindView(R.id.adView)AdView mAdView;
     @BindView(R.id.play_home_button)ImageButton mHomeButton;
+    @BindView(R.id.remaining_circle)Circle mCountdownCircle;
 
     private static final String TIME_KEY = "time_key";
     private static final String TIME = "time";
@@ -58,8 +55,6 @@ public class PlayActivity extends AppCompatActivity {
                 mChronometer.start();
             }
 
-
-//        circleAnimation();
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions, mRemainingQuestion));
 
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -136,5 +131,13 @@ public class PlayActivity extends AppCompatActivity {
         } else {
             mChronometer.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void countdownCircle(){
+        CircleAngleAnimation angleAnimation = new CircleAngleAnimation(mCountdownCircle,365);
+        mCountdownCircle.clearAnimation();
+        mCountdownCircle.setAngle(0);
+        angleAnimation.setDuration(5000);
+        mCountdownCircle.startAnimation(angleAnimation);
     }
 }

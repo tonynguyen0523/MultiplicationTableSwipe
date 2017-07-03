@@ -110,6 +110,8 @@ public class PlayFragment extends Fragment {
         // Check which asset to display
         mSelectedAsset = Utility.getSelectedAsset(getContext());
 
+        ((PlayActivity) getActivity()).countdownCircle();
+
         if (savedInstanceState == null) {
             // Retrieve available questions
             if (mIsCorrection) {
@@ -274,5 +276,8 @@ public class PlayFragment extends Fragment {
     private void setAnimation(View viewToAnimate){
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.grow);
         viewToAnimate.startAnimation(animation);
+
+        ((PlayActivity) getActivity()).countdownCircle();
+
     }
 }

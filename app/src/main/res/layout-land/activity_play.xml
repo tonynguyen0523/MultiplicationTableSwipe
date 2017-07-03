@@ -64,13 +64,12 @@
             android:src="@drawable/ic_home_white_36dp"
             android:contentDescription= "@string/click_to_go_home_description" />
 
-        <View
+        <com.swipeacademy.multiplicationtableswipe.Util.Circle
             android:id="@+id/remaining_circle"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:background="@drawable/remaining_circle"
-            android:layout_marginTop="6dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
             android:layout_below="@id/current_time"/>
 
 
