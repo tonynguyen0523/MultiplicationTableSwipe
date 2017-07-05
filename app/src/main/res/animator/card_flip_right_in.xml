@@ -8,7 +8,7 @@
 
     <!-- Rotate. -->
     <objectAnimator
-        android:valueFrom="-180"
+        android:valueFrom="180"
         android:valueTo="0"
         android:propertyName="rotationY"
         android:interpolator="@android:interpolator/accelerate_decelerate"
