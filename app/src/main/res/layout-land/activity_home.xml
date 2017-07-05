@@ -33,12 +33,18 @@
         android:layout_margin="10dp"
         android:orientation="horizontal">
 
-        <include
-            android:id="@+id/included_home_play_card"
+        <!--<include-->
+            <!--android:id="@+id/included_home_play_card"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="2"-->
+            <!--layout="@layout/home_play_card_front" />-->
+
+        <FrameLayout
+            android:id="@+id/home_play_card_container"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            layout="@layout/home_play_card" />
+            android:layout_weight="2"/>
 
         <LinearLayout
             android:orientation="vertical"

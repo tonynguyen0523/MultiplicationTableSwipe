@@ -18,12 +18,15 @@
         </activity>
         <activity
             android:name=".PlayActivity"
+            android:label="play"
             android:parentActivityName=".HomeActivity"/>
         <activity
             android:name=".PlayResultActivity"
+            android:label="results"
             android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" />
         <activity
             android:name=".HistoryActivity"
+            android:label="@string/history"
             android:parentActivityName=".HomeActivity"/>
 
         <provider
@@ -31,7 +34,9 @@
             android:authorities="com.swipeacademy.multiplicationtableswipe"
             android:exported="false" />
 
-        <activity android:name=".PracticeActivity" />
+        <activity android:name=".PracticeActivity"
+            android:label="practice"
+            android:parentActivityName=".HomeActivity"/>
     </application>
 
 </manifest>

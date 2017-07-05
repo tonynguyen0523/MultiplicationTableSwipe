@@ -2,11 +2,13 @@ package com.swipeacademy.multiplicationtableswipe;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -30,13 +32,20 @@ public class HomeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 
-        mIncludedPlayCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment dialogFragment =  new QuestionAmountDialog();
-                dialogFragment.show(getSupportFragmentManager(), "dialog");
-            }
-        });
+        if(savedInstanceState == null){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.play_container, new PlayCardFrontFragment())
+                    .commit();
+        }
+
+//        mIncludedPlayCard.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                DialogFragment dialogFragment = new QuestionAmountDialog();
+//                dialogFragment.show(getSupportFragmentManager(), "dialog");
+//            }
+//        });
 
         mPracticeCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,26 +71,21 @@ public class HomeActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
     }
 
-    static class IncludedLayout{
-        @BindView(R.id.home_play_card_view)CardView playCardView;
-        @BindView(R.id.home_practice_card_view)CardView practiceCardView;
-        @BindView(R.id.home_history_card_view)CardView historyCardView;
+    public static class PlayCardFrontFragment extends Fragment {
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.home_play_card_front,container,false);
+        }
     }
 
+    public static class PlayCardBackFragment extends Fragment {
 
-//    public void letsPlay(View view){
-//
-//        DialogFragment dialogFragment =  new QuestionAmountDialog();
-//        dialogFragment.show(getSupportFragmentManager(), "dialog");
-//    }
-//
-//    public void myHistory(View view){
-//        Intent intent = new Intent(this, HistoryActivity.class);
-//        startActivity(intent);
-//    }
-//
-//    public void practice(View view){
-//        Intent intent = new Intent(this, PracticeActivity.class);
-//        startActivity(intent);
-//    }
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.home_play_card_back,container,false);
+        }
+    }
 }

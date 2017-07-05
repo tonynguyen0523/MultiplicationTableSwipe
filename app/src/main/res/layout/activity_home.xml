@@ -40,9 +40,16 @@
         android:layout_margin="10dp"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/included_home_play_card"
-            layout="@layout/home_play_card" />
+        <!--<include-->
+            <!--android:id="@+id/included_home_play_card"-->
+            <!--layout="@layout/home_play_card_front" />-->
+
+        <FrameLayout
+            android:id="@+id/home_play_card_container"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+        </FrameLayout>
 
         <LinearLayout
             android:orientation="horizontal"

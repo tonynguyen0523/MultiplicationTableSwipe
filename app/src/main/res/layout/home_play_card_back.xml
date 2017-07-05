@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/play_24_option_cardView"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/home_play_back_option_card_height">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/Base.TextAppearance.AppCompat.Display4"
+            android:text="24"/>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/play_48_option_cardView"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/home_play_back_option_card_height">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/Base.TextAppearance.AppCompat.Display4"
+            android:gravity="center"
+            android:text="48"/>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/play_72_option_cardView"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/home_play_back_option_card_height">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/Base.TextAppearance.AppCompat.Display4"
+            android:text="72"/>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
