@@ -41,12 +41,14 @@ public class PlayFragment extends Fragment {
     private static final String REMAINING_QUESTIONS_KEY = "remainingList";
     private static final String CORRECTIONS_KEY = "correctionsList";
     private static final String CURRENT_QUESTION = "currentQuestion";
+    private static final String COUNTDOWN_CIRCLE_ANGLE = "circleAngle";
     private ArrayList<Integer> mRemainingQuestionsIDs;
     private ArrayList<String> mCorrections;
     private String mSelectedAsset;
     private int mQuestionID;
     private int mCorrectAnswer;
     private int mCorrectTextViewID;
+    private float mCountdownCircleAngle;
     private boolean mIsCorrection;
     private Unbinder unbinder;
 
@@ -110,13 +112,14 @@ public class PlayFragment extends Fragment {
         // Check which asset to display
         mSelectedAsset = Utility.getSelectedAsset(getContext());
 
-        ((PlayActivity) getActivity()).countdownCircle();
+//        ((PlayActivity) getActivity()).countdownCircle();
 
         if (savedInstanceState == null) {
             // Retrieve available questions
             if (mIsCorrection) {
                 mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
                 mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
+                mCountdownCircleAngle = 0;
                 generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
             } else {
                 mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(),mSelectedAsset);
@@ -127,6 +130,7 @@ public class PlayFragment extends Fragment {
             mRemainingQuestionsIDs = savedInstanceState.getIntegerArrayList(REMAINING_QUESTIONS_KEY);
             mCorrections = savedInstanceState.getStringArrayList(CORRECTIONS_KEY);
             mQuestionID = savedInstanceState.getInt(CURRENT_QUESTION);
+            mCountdownCircleAngle = savedInstanceState.getFloat(COUNTDOWN_CIRCLE_ANGLE);
             generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, true);
         }
         super.onActivityCreated(savedInstanceState);
@@ -138,6 +142,7 @@ public class PlayFragment extends Fragment {
         outState.putIntegerArrayList(REMAINING_QUESTIONS_KEY, mRemainingQuestionsIDs);
         outState.putStringArrayList(CORRECTIONS_KEY, mCorrections);
         outState.putInt(CURRENT_QUESTION, mQuestionID);
+        outState.putFloat(COUNTDOWN_CIRCLE_ANGLE,((PlayActivity)getActivity()).getCountdownCircleAngle());
     }
 
     /**
@@ -170,6 +175,7 @@ public class PlayFragment extends Fragment {
 
         // Reduce remaining question by 1
         mRemainingQuestions--;
+        mCountdownCircleAngle = 0;
 
         // Update preferences
         Utility.setCurrentScore(getContext(), mCurrentScore);
@@ -276,8 +282,6 @@ public class PlayFragment extends Fragment {
     private void setAnimation(View viewToAnimate){
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.grow);
         viewToAnimate.startAnimation(animation);
-
-        ((PlayActivity) getActivity()).countdownCircle();
-
+        ((PlayActivity)getActivity()).countdownCircle(mCountdownCircleAngle);
     }
 }

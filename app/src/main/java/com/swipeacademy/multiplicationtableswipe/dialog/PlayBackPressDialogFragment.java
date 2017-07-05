@@ -44,6 +44,7 @@ public class PlayBackPressDialogFragment extends DialogFragment {
                 ((PlayActivity) getActivity()).startTimer();
                 ((PlayActivity) getActivity()).showChronometer(true);
                 dialog.dismiss();
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             }
         });
 

@@ -1,5 +1,7 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
@@ -31,6 +33,9 @@ public class PlayActivity extends AppCompatActivity {
 
     private static final String TIME_KEY = "time_key";
     private static final String TIME = "time";
+    private static final String CIRCLE_ANIMATION_ANGLE = "cirgle_angle";
+    private float circleAngle;
+    private long circleAnimationDuration;
     private long mTime;
     private String date;
 
@@ -47,10 +52,12 @@ public class PlayActivity extends AppCompatActivity {
 
             if (savedInstanceState == null) {
                 mTime = 0;
+                circleAngle = 0;
                 startTimer();
             }
             else {
                 mTime = savedInstanceState.getLong(TIME);
+                circleAngle = savedInstanceState.getFloat(CIRCLE_ANIMATION_ANGLE);
                 mChronometer.setBase(savedInstanceState.getLong(TIME_KEY));
                 mChronometer.start();
             }
@@ -72,12 +79,19 @@ public class PlayActivity extends AppCompatActivity {
     public void onBackPressed() {
         pauseTimer();
         showAlertDialog();
+        if(getResources().getBoolean(R.bool.is_portrait)){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        circleAngle = mCountdownCircle.getAngle();
         outState.putLong(TIME_KEY, mChronometer.getBase());
         outState.putLong(TIME, mTime);
+        outState.putFloat(CIRCLE_ANIMATION_ANGLE,circleAngle);
         super.onSaveInstanceState(outState);
     }
 
@@ -133,11 +147,14 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    public void countdownCircle(){
+    public void countdownCircle(float angle){
         CircleAngleAnimation angleAnimation = new CircleAngleAnimation(mCountdownCircle,365);
-        mCountdownCircle.clearAnimation();
-        mCountdownCircle.setAngle(0);
+        mCountdownCircle.setAngle(angle);
         angleAnimation.setDuration(5000);
         mCountdownCircle.startAnimation(angleAnimation);
+    }
+
+    public float getCountdownCircleAngle(){
+        return  mCountdownCircle.getAngle();
     }
 }
