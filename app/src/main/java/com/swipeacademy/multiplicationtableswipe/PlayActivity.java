@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -144,8 +146,8 @@ public class PlayActivity extends AppCompatActivity {
 
     public void countdownCircle(float angle, long duration){
         angleAnimation = new CircleAngleAnimation(mCountdownCircle,365);
+        angleAnimation.setDuration(duration);
         mCountdownCircle.setAngle(angle);
-        angleAnimation.setDuration(5000);
         mCountdownCircle.startAnimation(angleAnimation);
     }
 

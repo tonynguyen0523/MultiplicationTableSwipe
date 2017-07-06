@@ -2,17 +2,20 @@ package com.swipeacademy.multiplicationtableswipe;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 import com.swipeacademy.multiplicationtableswipe.Util.OnSwipeTouchListener;
@@ -43,6 +46,7 @@ public class PlayFragment extends Fragment {
     private static final String CURRENT_QUESTION = "currentQuestion";
     private static final String COUNTDOWN_CIRCLE_ANGLE = "circleAngle";
     private static final String COUNTDOWN_CIRCLE_DURATION = "circleDuration";
+    private static final String COUNTDOWN_TIME_LEFT = "timeLeft";
     private ArrayList<Integer> mRemainingQuestionsIDs;
     private ArrayList<String> mCorrections;
     private String mSelectedAsset;
@@ -51,8 +55,10 @@ public class PlayFragment extends Fragment {
     private int mCorrectTextViewID;
     private float mCountdownCircleAngle;
     private long mCountdownCircleDuration;
+    private long mCountdownTimerDuration;
     private boolean mIsCorrection;
     private Unbinder unbinder;
+    private CountDownTimer countDownTimer;
 
     public PlayFragment() {
         // Required empty public constructor
@@ -121,12 +127,14 @@ public class PlayFragment extends Fragment {
                 mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
                 mCountdownCircleAngle = 0;
                 mCountdownCircleDuration = 5000;
+                mCountdownTimerDuration = 5000;
                 generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
             } else {
                 mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(),mSelectedAsset);
                 mCorrections = new ArrayList<>();
                 mCountdownCircleAngle = 0;
                 mCountdownCircleDuration = 5000;
+                mCountdownTimerDuration = 5000;
                 generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
             }
         } else {
@@ -134,9 +142,12 @@ public class PlayFragment extends Fragment {
             mCorrections = savedInstanceState.getStringArrayList(CORRECTIONS_KEY);
             mQuestionID = savedInstanceState.getInt(CURRENT_QUESTION);
             mCountdownCircleAngle = savedInstanceState.getFloat(COUNTDOWN_CIRCLE_ANGLE);
-            mCountdownCircleDuration = savedInstanceState.getLong(COUNTDOWN_CIRCLE_DURATION);
+            mCountdownTimerDuration = savedInstanceState.getLong(COUNTDOWN_TIME_LEFT);
+//            mCountdownCircleDuration = 5000 - savedInstanceState.getLong(COUNTDOWN_CIRCLE_DURATION);
             generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, true);
         }
+
+        startCountdownTimer(mCountdownTimerDuration);
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -147,7 +158,28 @@ public class PlayFragment extends Fragment {
         outState.putStringArrayList(CORRECTIONS_KEY, mCorrections);
         outState.putInt(CURRENT_QUESTION, mQuestionID);
         outState.putFloat(COUNTDOWN_CIRCLE_ANGLE,((PlayActivity)getActivity()).getCountdownCircleAngle());
-        outState.putFloat(COUNTDOWN_CIRCLE_DURATION,((PlayActivity)getActivity()).getCountDownCircleDuration());
+        outState.putLong(COUNTDOWN_CIRCLE_DURATION,((PlayActivity)getActivity()).getCountDownCircleDuration());
+        outState.putLong(COUNTDOWN_TIME_LEFT,mCountdownTimerDuration);
+    }
+
+    private void startCountdownTimer(long remainingTime){
+
+        final TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
+
+        countDownTimer = new CountDownTimer(remainingTime,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mCountdownTimerDuration = millisUntilFinished;
+            }
+
+            @Override
+            public void onFinish() {
+                Toast.makeText(getContext(),"Countdown finish",Toast.LENGTH_SHORT).show();
+                nextQuestion(mChoicesIDs, 5, 12345);
+            }
+        };
+
+        countDownTimer.start();
     }
 
     /**
@@ -160,6 +192,8 @@ public class PlayFragment extends Fragment {
         int mCurrentScore = Utility.getCurrentScore(getContext());
         int mRemainingQuestions = Utility.getRemainingQuestions(getContext());
         int delay;
+
+        countDownTimer.cancel();
 
         // If user chose correct answer, increase score by 1,
         // else add questionId to correctionsList
@@ -181,6 +215,8 @@ public class PlayFragment extends Fragment {
         // Reduce remaining question by 1
         mRemainingQuestions--;
         mCountdownCircleAngle = 0;
+        mCountdownTimerDuration = 5000;
+        Log.d("DURATION",Long.toString(((PlayActivity)getActivity()).getCountDownCircleDuration()));
 
         // Update preferences
         Utility.setCurrentScore(getContext(), mCurrentScore);
@@ -205,6 +241,7 @@ public class PlayFragment extends Fragment {
                     choicesTV[mCorrectTextViewID].setTextColor(Color.BLACK);
                     generateQuestion(mRemainingQuestionsIDs, choicesTV, false);
                     changeSelectedColor(choicesTV, choiceTVID, Color.BLACK, ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                    startCountdownTimer(mCountdownTimerDuration);
                     // Update numbers
                     ((PlayActivity) getActivity()).updateNumbers(finalMRemainingQuestions);
                 }
@@ -275,8 +312,10 @@ public class PlayFragment extends Fragment {
      */
     private void changeSelectedColor(TextView[] choicesTV, int choiceTVID, int choiceColor, int borderColor) {
 
-        TextView choiceID = choicesTV[choiceTVID];
-        choiceID.setTextColor(choiceColor);
+        if(choiceTVID != 5) {
+            TextView choiceID = choicesTV[choiceTVID];
+            choiceID.setTextColor(choiceColor);
+        } 
 
         mBorder1.setBackgroundColor(borderColor);
         mBorder2.setBackgroundColor(borderColor);
@@ -287,6 +326,6 @@ public class PlayFragment extends Fragment {
     private void setAnimation(View viewToAnimate){
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.grow);
         viewToAnimate.startAnimation(animation);
-        ((PlayActivity)getActivity()).countdownCircle(mCountdownCircleAngle, mCountdownCircleDuration);
+        ((PlayActivity)getActivity()).countdownCircle(mCountdownCircleAngle, mCountdownTimerDuration);
     }
 }
