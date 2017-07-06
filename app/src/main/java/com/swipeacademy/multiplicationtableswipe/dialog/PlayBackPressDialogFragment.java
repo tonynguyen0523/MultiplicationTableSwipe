@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 
 import com.swipeacademy.multiplicationtableswipe.HomeActivity;
 import com.swipeacademy.multiplicationtableswipe.PlayActivity;
+import com.swipeacademy.multiplicationtableswipe.PlayFragment;
 import com.swipeacademy.multiplicationtableswipe.R;
 
 /**
@@ -41,8 +42,6 @@ public class PlayBackPressDialogFragment extends DialogFragment {
         alertDialogBuilder.setNegativeButton(R.string.cancel_dialog_option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ((PlayActivity) getActivity()).startTimer();
-                ((PlayActivity) getActivity()).showChronometer(true);
                 dialog.dismiss();
                 getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             }

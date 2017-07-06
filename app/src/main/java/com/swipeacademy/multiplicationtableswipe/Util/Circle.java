@@ -26,7 +26,7 @@ public class Circle extends View {
     public Circle(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        final int strokeWidth = 40;
+        final int strokeWidth = 30;
 
         paint = new Paint();
         paint.setAntiAlias(true);
@@ -36,7 +36,7 @@ public class Circle extends View {
         paint.setColor(ContextCompat.getColor(context, R.color.colorPrimary));
 
         //size 200x200 example
-        rect = new RectF(strokeWidth, strokeWidth, 200 + strokeWidth, 200 + strokeWidth);
+        rect = new RectF(strokeWidth, strokeWidth, 250 + strokeWidth, 250 + strokeWidth);
 
         //Initial Angle (optional, it can be zero)
         angle = 0;

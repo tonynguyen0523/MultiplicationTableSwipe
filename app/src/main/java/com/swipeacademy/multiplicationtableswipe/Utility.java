@@ -21,12 +21,13 @@ public class Utility {
 
     private static final String CURRENT_SCORE = "current_score";
     private static final String REMAINING_QUESTIONS = "remaining_questions";
-    private static final String FINISHED_TIME = "finished_time";
     private static final String AMOUNT_SELECTED = "amount_selected";
     private static final String TABLE_SELECTED = "table_selected";
     private static final String ASSET_SELECTED = "asset_selected";
     private static final String IS_CORRECTIONS = "is_corrections";
-
+    private static final String RECENT_24 = "recent_24";
+    private static final String RECENT_48 = "recent_48";
+    private static final String RECENT_72 = "recent_72";
 
     static int chooseQuestionID(ArrayList<Integer> remainingQuestions){
         Random r = new Random();
@@ -66,20 +67,6 @@ public class Utility {
         spe.apply();
     }
 
-    static void setFinishedTime(Context context, long finishedTime){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor spe = sharedPreferences.edit();
-        spe.putLong(FINISHED_TIME, finishedTime);
-        spe.apply();
-    }
-
-    static long getFinishedTime(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        return sharedPreferences.getLong(FINISHED_TIME, 0);
-    }
-
     static void setSelectedAmount(Context context,int amount){
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.pref_amount_key), Context.MODE_PRIVATE);
@@ -109,6 +96,48 @@ public class Utility {
 
     }
 
+    static void setRecent24(Context context,int result){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_recent_24_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor spe = sharedPreferences.edit();
+        spe.putInt(RECENT_24,result);
+        spe.apply();
+    }
+
+    static int getRecent24(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_recent_24_key), Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(RECENT_24, -1);
+    }
+
+    static void setRecent48(Context context,int result){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_recent_48_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor spe = sharedPreferences.edit();
+        spe.putInt(RECENT_48,result);
+        spe.apply();
+    }
+
+    static int getRecent48(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_recent_48_key), Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(RECENT_48, -1);
+    }
+
+    static void setRecent72(Context context,int result){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_recent_72_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor spe = sharedPreferences.edit();
+        spe.putInt(RECENT_72,result);
+        spe.apply();
+    }
+
+    static int getRecent72(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_recent_72_key), Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(RECENT_72, -1);
+    }
+
     static void setSelectedAsset(Context context, String asset){
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.pref_selected_assets_key),Context.MODE_PRIVATE);
@@ -124,7 +153,6 @@ public class Utility {
 
     }
 
-
     static void setIsCorrections(Context context, boolean bool){
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.pref_is_corrections), Context.MODE_PRIVATE);
@@ -139,16 +167,15 @@ public class Utility {
         return sharedPreferences.getBoolean(IS_CORRECTIONS, false);
     }
 
-    static void saveResults(Context context, String table, String date, int correct, long time){
+    static void saveResults(Context context, String table, String date, int correct){
 
         long tableId = addTableToDatabase(context, table);
-        String stringTime = Long.toString(time);
 
         ContentValues values = new ContentValues();
         values.put(ResultsEntry.COLUMN_TABLES_KEY,tableId);
         values.put(ResultsEntry.COLUMN_DATE,date);
         values.put(ResultsEntry.COLUMN_TOTAL_RIGHT,correct);
-        values.put(ResultsEntry.COLUMN_TIME,stringTime);
+        values.put(ResultsEntry.COLUMN_TIME,0);
 
         context.getContentResolver().insert(ResultsEntry.CONTENT_URI, values);
     }

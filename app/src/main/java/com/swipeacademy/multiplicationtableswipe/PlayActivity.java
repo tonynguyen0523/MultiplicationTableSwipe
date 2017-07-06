@@ -1,5 +1,6 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -28,16 +29,12 @@ import butterknife.ButterKnife;
 public class PlayActivity extends AppCompatActivity {
 
     @BindView(R.id.remaining_questions)TextView mRemainingQuestionTV;
-    @BindView(R.id.current_time)Chronometer mChronometer;
     @BindView(R.id.adView)AdView mAdView;
     @BindView(R.id.play_home_button)ImageButton mHomeButton;
     @BindView(R.id.remaining_circle)Circle mCountdownCircle;
 
-    private static final String TIME_KEY = "time_key";
-    private static final String TIME = "time";
-    private static final String CIRCLE_ANIMATION_ANGLE = "cirgle_angle";
-    private CircleAngleAnimation angleAnimation;
-    private long mTime;
+    public static final String ACTION_RECENT_RESULTS_UPDATED =
+            "com.example.android.sunshine.app.ACTION_RECENT_RESULTS_UPDATED";
     private String date;
 
     @Override
@@ -46,20 +43,9 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
         ButterKnife.bind(this);
 
-
         // Get remaining questions
         int mRemainingQuestion = Utility.getRemainingQuestions(this);
         date = DateFormat.getDateTimeInstance().format(new Date());
-
-            if (savedInstanceState == null) {
-                mTime = 0;
-                startTimer();
-            }
-            else {
-                mTime = savedInstanceState.getLong(TIME);
-                mChronometer.setBase(savedInstanceState.getLong(TIME_KEY));
-                mChronometer.start();
-            }
 
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions, mRemainingQuestion));
 
@@ -72,12 +58,14 @@ public class PlayActivity extends AppCompatActivity {
                 showAlertDialog();
             }
         });
+
+        countdownCircle();
     }
 
     @Override
     public void onBackPressed() {
-        pauseTimer();
         showAlertDialog();
+
         if(getResources().getBoolean(R.bool.is_portrait)){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
@@ -85,77 +73,52 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putLong(TIME_KEY, mChronometer.getBase());
-        outState.putLong(TIME, mTime);
-        super.onSaveInstanceState(outState);
-    }
 
     public void updateNumbers(int remainingQuestions){
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions,remainingQuestions));
     }
 
-    public void startTimer(){
+    public void playFinished(){
 
-        if (mTime == 0){
-            mChronometer.setBase(SystemClock.elapsedRealtime());
-        } else {
-            long intervalOnPause = (SystemClock.elapsedRealtime() - mTime);
-            mChronometer.setBase(mChronometer.getBase() + intervalOnPause);
-        }
-        mChronometer.start();
-    }
-
-
-    private void pauseTimer(){
-        mChronometer.stop();
-        mTime = SystemClock.elapsedRealtime();
-    }
-
-    public void stopTimer(){
-
-        mChronometer.stop();
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions,0));
-        mTime = SystemClock.elapsedRealtime();
-        Utility.setFinishedTime(this,mChronometer.getBase());
 
         String asset = Utility.getSelectedAsset(getApplicationContext());
         boolean corrections = Utility.getIsCorrections(getApplicationContext());
+        int correct = Utility.getCurrentScore(this);
 
         if(asset.contains("letsplay") && !corrections) {
-            int correct = Utility.getCurrentScore(this);
             String selectedMode = Utility.getSelectedTable(this);
-            Utility.saveResults(this, selectedMode, date, correct, mChronometer.getBase());
+            Utility.saveResults(this, selectedMode, date, correct);
+
+            switch (Utility.getSelectedTable(this)) {
+                case "24":
+                    Utility.setRecent24(this, correct);
+                    break;
+                case "48":
+                    Utility.setRecent48(this, correct);
+                    break;
+                case "72":
+                    Utility.setRecent72(this, correct);
+                    break;
+                default:
+                    break;
+            }
+
+            Intent recentResultsUpdated = new Intent(ACTION_RECENT_RESULTS_UPDATED)
+                    .setPackage(getPackageName());
+            this.sendBroadcast(recentResultsUpdated);
         }
     }
 
     public void showAlertDialog(){
         DialogFragment alertDialog = new PlayBackPressDialogFragment();
-        showChronometer(false);
         alertDialog.show(getSupportFragmentManager(),"backPress");
     }
 
-    public void showChronometer(boolean show){
-        if(show) {
-            mChronometer.setVisibility(View.VISIBLE);
-        } else {
-            mChronometer.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    public void countdownCircle(float angle, long duration){
-        angleAnimation = new CircleAngleAnimation(mCountdownCircle,365);
-        angleAnimation.setDuration(duration);
-        mCountdownCircle.setAngle(angle);
+    public void countdownCircle(){
+        CircleAngleAnimation angleAnimation = new CircleAngleAnimation(mCountdownCircle, 370);
+        angleAnimation.setDuration(750);
+        mCountdownCircle.setAngle(0);
         mCountdownCircle.startAnimation(angleAnimation);
-    }
-
-    public float getCountdownCircleAngle(){
-        return  mCountdownCircle.getAngle();
-    }
-
-    public long getCountDownCircleDuration(){
-        return  angleAnimation.getDuration();
     }
 }

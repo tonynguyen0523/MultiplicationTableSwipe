@@ -23,10 +23,9 @@ import butterknife.Unbinder;
  * Created by tonyn on 6/11/2017.
  */
 
-public class ResultsDialog extends DialogFragment {
+public class PlayResultsDialog extends DialogFragment {
 
     @BindView(R.id.play_final_score)TextView mFinalScore;
-    @BindView(R.id.play_final_time)TextView mFinalTime;
     @BindView(R.id.results_header)TextView mResultHeader;
     @BindView(R.id.results_home_button)ImageButton mHomeButton;
     @BindView(R.id.results_replay_button)ImageButton mReplayButton;
@@ -34,7 +33,7 @@ public class ResultsDialog extends DialogFragment {
 
     private Unbinder unbinder;
 
-    public ResultsDialog(){
+    public PlayResultsDialog(){
     }
 
     @NonNull
@@ -50,9 +49,6 @@ public class ResultsDialog extends DialogFragment {
         int mCurrentScore = Utility.getCurrentScore(getContext());
         final int selectedAmount = Utility.getSelectedAmount(getContext());
         double resultPercentage = (double)mCurrentScore/selectedAmount * 100;
-        long mFinishedTime = Utility.getFinishedTime(getContext());
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(mFinishedTime);
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(mFinishedTime);
         boolean isCorrection = Utility.getIsCorrections(getContext());
 
         String resultHeader;
@@ -68,7 +64,6 @@ public class ResultsDialog extends DialogFragment {
 
         mResultHeader.setText(resultHeader);
         mFinalScore.setText(getString(R.string.final_score,mCurrentScore,selectedAmount));
-        mFinalTime.setText(getString(R.string.final_time,minutes,seconds));
 
         // Display correction button if correction are available &
         // is not already doing corrections
@@ -76,7 +71,6 @@ public class ResultsDialog extends DialogFragment {
             mCorrectionButton.setVisibility(View.VISIBLE);
         } else if (isCorrection) {
             mCorrectionButton.setVisibility(View.GONE);
-            mFinalTime.setVisibility(View.GONE);
         } else {
             mCorrectionButton.setVisibility(View.GONE);
         }

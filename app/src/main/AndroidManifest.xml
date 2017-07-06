@@ -21,10 +21,6 @@
             android:label="play"
             android:parentActivityName=".HomeActivity"/>
         <activity
-            android:name=".PlayResultActivity"
-            android:label="results"
-            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" />
-        <activity
             android:name=".HistoryActivity"
             android:label="@string/history"
             android:parentActivityName=".HomeActivity"/>
@@ -37,6 +33,18 @@
         <activity android:name=".PracticeActivity"
             android:label="practice"
             android:parentActivityName=".HomeActivity"/>
+        <!--Widget-->
+        <receiver android:name=".WidgetProvider"
+            android:label="Recent Play Results">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.android.sunshine.app.ACTION_RECENT_RESULTS_UPDATED" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
+        <service android:name=".WidgetIntentService" />
     </application>
+
 
 </manifest>
