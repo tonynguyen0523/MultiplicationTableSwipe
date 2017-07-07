@@ -67,6 +67,36 @@ public class PlayFragment extends Fragment {
         // Create array with choicesTV and generate questions and answers
         final TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
 
+        // Set click listener for textViews
+        mChoice1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nextQuestion(mChoicesIDs, 0, Integer.valueOf(mChoice1.getText().toString()));
+
+            }
+        });
+        mChoice2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nextQuestion(mChoicesIDs, 1, Integer.valueOf(mChoice2.getText().toString()));
+
+            }
+        });
+        mChoice3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nextQuestion(mChoicesIDs, 2, Integer.valueOf(mChoice3.getText().toString()));
+
+            }
+        });
+        mChoice4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nextQuestion(mChoicesIDs, 3, Integer.valueOf(mChoice4.getText().toString()));
+            }
+        });
+
+        // Set swipe listener
         mChoiceArea.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
 
             @Override
