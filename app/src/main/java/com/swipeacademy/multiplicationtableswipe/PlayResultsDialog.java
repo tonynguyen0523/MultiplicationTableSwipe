@@ -114,7 +114,6 @@ public class PlayResultsDialog extends DialogFragment {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
         return alertDialog;
     }
 

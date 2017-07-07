@@ -70,7 +70,7 @@ public class HistoryActivity extends AppCompatActivity {
     private static class MyPagerAdapter extends FragmentPagerAdapter{
 
         private static int NUM_ITEMS = 3;
-        private String[] tabs = {"5","7","9"};
+        private String[] tabs = {"24","48","72"};
 
 
         MyPagerAdapter(FragmentManager fm) {
@@ -86,11 +86,11 @@ public class HistoryActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return HistoryFragment.newInstance("5");
+                    return HistoryFragment.newInstance("24");
                 case 1:
-                    return HistoryFragment.newInstance("7");
+                    return HistoryFragment.newInstance("48");
                 case 2:
-                    return HistoryFragment.newInstance("9");
+                    return HistoryFragment.newInstance("72");
                 default:
                     return null;
             }

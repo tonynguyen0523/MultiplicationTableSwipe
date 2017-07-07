@@ -177,9 +177,9 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
     /**Fragment for back of card*/
     public static class PlayCardBackFragment extends Fragment {
 
-        private int amount24 = 5;
-        private int amount48 = 7;
-        private int amount72 = 9;
+        private int amount24 = 24;
+        private int amount48 = 48;
+        private int amount72 = 72;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,

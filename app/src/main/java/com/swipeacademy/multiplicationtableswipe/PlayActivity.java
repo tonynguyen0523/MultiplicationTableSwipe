@@ -93,13 +93,13 @@ public class PlayActivity extends AppCompatActivity {
             PrefUtility.saveResults(this, selectedMode, date, correct);
 
             switch (PrefUtility.getSelectedTable(this)) {
-                case "5":
+                case "24":
                     PrefUtility.setRecent24(this, correct);
                     break;
-                case "7":
+                case "48":
                     PrefUtility.setRecent48(this, correct);
                     break;
-                case "9":
+                case "72":
                     PrefUtility.setRecent72(this, correct);
                     break;
                 default:
