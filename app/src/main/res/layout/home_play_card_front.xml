@@ -20,12 +20,13 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/play_icon"
             android:src="@drawable/icons8playaccent"/>
 
         <TextView
             style="@style/home_card_text"
             android:layout_marginTop="20dp"
-            android:text="Lets Play!"/>
+            android:text="@string/lets_play"/>
 
     </LinearLayout>
 

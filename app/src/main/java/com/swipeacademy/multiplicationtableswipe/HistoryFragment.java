@@ -13,28 +13,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.db.chart.view.LineChartView;
 import com.swipeacademy.multiplicationtableswipe.data.TableContract;
-
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
  * Created by tonyn on 6/12/2017.
+ *
  */
 
 public class HistoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    @BindView(R.id.chart_card)CardView mCardView;
-    @BindView(R.id.history_lineChart)LineChartView mLineChartView;
-    @BindView(R.id.chart_empty_textView)TextView mEmptyTextView;
+    @BindView(R.id.chart_card)
+    CardView mCardView;
+    @BindView(R.id.history_lineChart)
+    LineChartView mLineChartView;
+    @BindView(R.id.chart_empty_textView)
+    TextView mEmptyTextView;
 
-    private String mTable;
     private static final int HISTORY_LOADER = 0;
+    private String mTable;
     private Unbinder unbinder;
 
     private static final String[] HISTORY_COLUMNS = {
@@ -44,13 +44,9 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
             TableContract.ResultsEntry.COLUMN_TIME
     };
 
-    static final int COL_ROW_ID = 0;
-    static final int COL_ROW_DATE = 1;
     static final int COL_ROW_TOTAL_RIGHT = 2;
-    static final int COL_ROW_TIME = 3;
 
-
-    public static HistoryFragment newInstance(String table){
+    public static HistoryFragment newInstance(String table) {
         HistoryFragment fragment = new HistoryFragment();
         Bundle args = new Bundle();
         args.putString("tableSelected", table);
@@ -68,14 +64,14 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_history,container,false);
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        getLoaderManager().initLoader(HISTORY_LOADER,null,this);
+        getLoaderManager().initLoader(HISTORY_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -103,11 +99,13 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
         int axisValue = Integer.parseInt(mTable);
+        String emptyView = "Play " + mTable + " three times to view history.";
 
-        if(data.getCount() > 2) {
+        if (data.getCount() > 2) {
             mEmptyTextView.setVisibility(View.INVISIBLE);
             new HistoryLineChart(mCardView, getContext(), data, axisValue).show();
         } else {
+            mEmptyTextView.setText(emptyView);
             mEmptyTextView.setVisibility(View.VISIBLE);
         }
     }
@@ -115,7 +113,6 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
     }
-
 }
 
 

@@ -67,13 +67,13 @@ public class HistoryActivity extends AppCompatActivity {
         return true;
     }
 
-    public static class MyPagerAdapter extends FragmentPagerAdapter{
+    private static class MyPagerAdapter extends FragmentPagerAdapter{
 
         private static int NUM_ITEMS = 3;
-        private String[] tabs = {"24","48","72"};
+        private String[] tabs = {"5","7","9"};
 
 
-        public MyPagerAdapter(FragmentManager fm) {
+        MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -86,11 +86,11 @@ public class HistoryActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return HistoryFragment.newInstance("24");
+                    return HistoryFragment.newInstance("5");
                 case 1:
-                    return HistoryFragment.newInstance("48");
+                    return HistoryFragment.newInstance("7");
                 case 2:
-                    return HistoryFragment.newInstance("72");
+                    return HistoryFragment.newInstance("9");
                 default:
                     return null;
             }
@@ -120,9 +120,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setMessage("All your history will be erased.")
-                .setTitle("Erase history?")
-                .setPositiveButton("Erase", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.delete_dialog_message)
+                .setTitle(R.string.delete_history_title)
+                .setPositiveButton(R.string.delete_dialog_pos_erase_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         new DeleteHistory().execute();

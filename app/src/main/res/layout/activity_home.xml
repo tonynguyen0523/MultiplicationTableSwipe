@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.swipeacademy.multiplicationtableswipe.HomeActivity">
@@ -13,15 +13,15 @@
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/home_toolbar"
-        style="@style/home_toolbar">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/home_toolbar"
+            style="@style/home_toolbar">
 
-        <TextView
-            style="@style/home_toolbar_text"
-            android:text="@string/multiplication_table_swipe"/>
+            <TextView
+                style="@style/home_toolbar_text"
+                android:text="@string/multiplication_table_swipe" />
 
-    </android.support.v7.widget.Toolbar>
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <com.google.android.gms.ads.AdView
@@ -30,19 +30,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"/>
+        ads:adUnitId="@string/banner_ad_unit_id" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/home_appBar"
         android:layout_above="@id/home_adView"
+        android:layout_below="@id/home_appBar"
         android:layout_margin="10dp"
         android:orientation="vertical">
-
-        <!--<include-->
-            <!--android:id="@+id/included_home_play_card"-->
-            <!--layout="@layout/home_play_card_front" />-->
 
         <FrameLayout
             android:id="@+id/home_play_card_container"
@@ -51,14 +47,12 @@
         </FrameLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            >
+            android:orientation="horizontal">
 
-            <android.support.v7.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/home_practice_card_view"
                 style="@style/home_card_view"
                 app:cardCornerRadius="@dimen/home_card_corner_radius">
@@ -69,12 +63,13 @@
 
                     <ImageView
                         style="@style/home_icon"
-                        android:src="@drawable/icons8tableaccent"/>
+                        android:contentDescription="@string/practice_icon"
+                        android:src="@drawable/icons8tableaccent" />
 
                     <TextView
                         style="@style/home_card_text"
                         android:layout_marginTop="20dp"
-                        android:text="Practice"/>
+                        android:text="@string/practice" />
 
                 </LinearLayout>
 
@@ -93,12 +88,13 @@
 
                     <ImageView
                         style="@style/home_icon"
-                        android:src="@drawable/icons8museumaccent"/>
+                        android:contentDescription="@string/history_icon"
+                        android:src="@drawable/icons8museumaccent" />
 
                     <TextView
                         style="@style/home_card_text"
                         android:layout_marginTop="20dp"
-                        android:text="History"/>
+                        android:text="@string/history" />
 
                 </LinearLayout>
 

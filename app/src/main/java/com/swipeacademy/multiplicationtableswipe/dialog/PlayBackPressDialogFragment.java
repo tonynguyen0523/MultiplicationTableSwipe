@@ -6,15 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-
 import com.swipeacademy.multiplicationtableswipe.HomeActivity;
-import com.swipeacademy.multiplicationtableswipe.PlayActivity;
-import com.swipeacademy.multiplicationtableswipe.PlayFragment;
 import com.swipeacademy.multiplicationtableswipe.R;
 
 /**
  * Created by tonyn on 5/16/2017.
+ * Dialog for when user presses the home or back button during PlayActivity.
  */
 
 public class PlayBackPressDialogFragment extends DialogFragment {
@@ -24,6 +23,7 @@ public class PlayBackPressDialogFragment extends DialogFragment {
         // Empty constructor required for DialogFragment
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -46,7 +46,6 @@ public class PlayBackPressDialogFragment extends DialogFragment {
                 getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             }
         });
-
         return  alertDialogBuilder.create();
     }
 

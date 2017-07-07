@@ -1,70 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_layout"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/widget_margin">
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
+    <TextView
+        android:id="@+id/widget_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:text="@string/recent_play_results"
+        android:textColor="#000"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:id="@+id/widget_horizontal_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/widget_appbar"
+        android:background="#b6b6b6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
+        android:layout_below="@id/widget_horizontal_line"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
-        <TextView
-            android:id="@+id/widget_recent_24_result"
-            style="@style/widget_big_textView"
-            tools:text="24"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_below="@id/widget_recent_24_result"
-            android:text="/24"/>
+            <TextView
+                android:id="@+id/widget_recent_24_result"
+                style="@style/widget_big_textView"
+                android:layout_centerInParent="true"
+                tools:text="24" />
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/widget_recent_24_result"
+                android:gravity="center"
+                android:text="@string/_widget24" />
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark">
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/widget_recent_48_result"
-            style="@style/widget_big_textView"
-            tools:text="39"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_below="@id/widget_recent_48_result"
-            android:text="/42"/>
+            <TextView
+                android:id="@+id/widget_recent_48_result"
+                style="@style/widget_big_textView"
+                android:layout_centerInParent="true"
+                tools:text="39" />
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/widget_recent_48_result"
+                android:gravity="center"
+                android:text="@string/_widget48" />
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent">
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/widget_recent_72_result"
-            style="@style/widget_big_textView"
-            tools:text="--"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorAccent">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_below="@id/widget_recent_72_result"
-            android:text="/72"/>
+            <TextView
+                android:id="@+id/widget_recent_72_result"
+                style="@style/widget_big_textView"
+                android:layout_centerInParent="true"
+                tools:text="--" />
 
-    </RelativeLayout>
-</LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/widget_recent_72_result"
+                android:gravity="center"
+                android:text="@string/_widget72" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

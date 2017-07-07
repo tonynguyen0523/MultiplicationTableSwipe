@@ -1,18 +1,15 @@
 package com.swipeacademy.multiplicationtableswipe;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.RemoteViews;
 
-import com.swipeacademy.multiplicationtableswipe.HomeActivity;
-import com.swipeacademy.multiplicationtableswipe.R;
 
 /**
  * Created by tonyn on 7/6/2017.
+ *
  */
 
 public class WidgetProvider extends AppWidgetProvider {

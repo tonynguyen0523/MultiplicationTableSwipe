@@ -20,6 +20,7 @@ import static com.swipeacademy.multiplicationtableswipe.data.TableContract.PATH_
 
 /**
  * Created by tonyn on 5/5/2017.
+ *
  */
 
 public class TableProvider extends ContentProvider {
@@ -74,11 +75,10 @@ public class TableProvider extends ContentProvider {
         String tables = ResultsEntry.getTablesFromUri(uri);
 
         String[] selectionArgs = new String[]{tables};
-        String selection = sTablesSelection;
 
         return sTableWithResultsQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
-                selection,
+                sTablesSelection,
                 selectionArgs,
                 null,
                 null,

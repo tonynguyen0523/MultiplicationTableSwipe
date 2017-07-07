@@ -13,14 +13,13 @@ import android.widget.TextView;
 
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 
-import java.util.concurrent.TimeUnit;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
  * Created by tonyn on 6/11/2017.
+ *
  */
 
 public class PlayResultsDialog extends DialogFragment {
@@ -46,20 +45,20 @@ public class PlayResultsDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(rootView);
 
-        int mCurrentScore = Utility.getCurrentScore(getContext());
-        final int selectedAmount = Utility.getSelectedAmount(getContext());
+        int mCurrentScore = PrefUtility.getCurrentScore(getContext());
+        final int selectedAmount = PrefUtility.getSelectedAmount(getContext());
         double resultPercentage = (double)mCurrentScore/selectedAmount * 100;
-        boolean isCorrection = Utility.getIsCorrections(getContext());
+        boolean isCorrection = PrefUtility.getIsCorrections(getContext());
 
         String resultHeader;
         if(resultPercentage == 100) {
-            resultHeader = "Perfect!";
+            resultHeader = getString(R.string.result100);
         } else if (resultPercentage > 90){
-            resultHeader = "Awesome Job!";
+            resultHeader = getString(R.string.result90);
         } else if (resultPercentage > 70){
-            resultHeader = "Good Job!";
+            resultHeader = getString(R.string.result70);
         } else {
-            resultHeader = "Try Again!";
+            resultHeader = getString(R.string.result_fail);
         }
 
         mResultHeader.setText(resultHeader);
@@ -71,6 +70,7 @@ public class PlayResultsDialog extends DialogFragment {
             mCorrectionButton.setVisibility(View.VISIBLE);
         } else if (isCorrection) {
             mCorrectionButton.setVisibility(View.GONE);
+            mReplayButton.setVisibility(View.GONE);
         } else {
             mCorrectionButton.setVisibility(View.GONE);
         }
@@ -88,10 +88,12 @@ public class PlayResultsDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PlayActivity.class);
-                Utility.setIsCorrections(getContext(),true);
-                Utility.setCurrentScore(getActivity(),0);
-                Utility.setRemainingQuestions(getActivity(), CorrectionsUtil.getCorrections(getContext()).size());
-                Utility.setSelectedAmount(getContext(),CorrectionsUtil.getCorrections(getContext()).size());
+                // Prep for correction mode
+                PrefUtility.setIsCorrections(getContext(),true);
+                PrefUtility.setCurrentScore(getActivity(),0);
+                PrefUtility.setRemainingQuestions(getActivity(), CorrectionsUtil.getCorrections(getContext()).size());
+                PrefUtility.setSelectedAmount(getContext(),CorrectionsUtil.getCorrections(getContext()).size());
+                getActivity().finish();
                 startActivity(intent);
             }
         });
@@ -100,10 +102,12 @@ public class PlayResultsDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PlayActivity.class);
-                Utility.setIsCorrections(getContext(),false);
-                Utility.setCurrentScore(getActivity(),0);
-                Utility.setRemainingQuestions(getActivity(), selectedAmount);
+                // Make sure results are cleared for fresh replay
+                PrefUtility.setIsCorrections(getContext(),false);
+                PrefUtility.setCurrentScore(getActivity(),0);
+                PrefUtility.setRemainingQuestions(getActivity(), selectedAmount);
                 CorrectionsUtil.clearCorrections(getActivity());
+                getActivity().finish();
                 startActivity(intent);
             }
         });

@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:williamchart="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/chart_card"
     android:layout_margin="1dp"
     android:layout_width="match_parent"
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            android:text="Play three times to see history."/>
+            tools:text="Play three times to see history."/>
 
     </FrameLayout>
 

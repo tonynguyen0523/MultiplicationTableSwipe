@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,9 +16,10 @@ import static com.swipeacademy.multiplicationtableswipe.data.TableContract.Table
 
 /**
  * Created by tonyn on 5/5/2017.
+ *
  */
 
-public class Utility {
+class PrefUtility {
 
     private static final String CURRENT_SCORE = "current_score";
     private static final String REMAINING_QUESTIONS = "remaining_questions";
@@ -25,6 +27,7 @@ public class Utility {
     private static final String TABLE_SELECTED = "table_selected";
     private static final String ASSET_SELECTED = "asset_selected";
     private static final String IS_CORRECTIONS = "is_corrections";
+    private static final String USER_SCHOOL_GRADE = "school_grade";
     private static final String RECENT_24 = "recent_24";
     private static final String RECENT_48 = "recent_48";
     private static final String RECENT_72 = "recent_72";
@@ -104,10 +107,15 @@ public class Utility {
         spe.apply();
     }
 
-    static int getRecent24(Context context){
+    static String getRecent24(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.pref_recent_24_key), Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(RECENT_24, -1);
+        int result = sharedPreferences.getInt(RECENT_24, -1);
+        if (result == -1){
+            return "--";
+        } else {
+            return Integer.toString(result);
+        }
     }
 
     static void setRecent48(Context context,int result){
@@ -118,10 +126,15 @@ public class Utility {
         spe.apply();
     }
 
-    static int getRecent48(Context context){
+    static String getRecent48(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.pref_recent_48_key), Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(RECENT_48, -1);
+        int result = sharedPreferences.getInt(RECENT_48, -1);
+        if (result == -1){
+            return "--";
+        } else {
+            return Integer.toString(result);
+        }
     }
 
     static void setRecent72(Context context,int result){
@@ -132,10 +145,15 @@ public class Utility {
         spe.apply();
     }
 
-    static int getRecent72(Context context){
+    static String getRecent72(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.pref_recent_72_key), Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(RECENT_72, -1);
+        int result = sharedPreferences.getInt(RECENT_72, -1);
+        if (result == -1){
+            return "--";
+        } else {
+            return Integer.toString(result);
+        }
     }
 
     static void setSelectedAsset(Context context, String asset){
@@ -167,6 +185,18 @@ public class Utility {
         return sharedPreferences.getBoolean(IS_CORRECTIONS, false);
     }
 
+    static int getSchoolGrade(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getInt(USER_SCHOOL_GRADE, -1);
+    }
+
+    static void setSchoolGrade(Context context, int grade) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(USER_SCHOOL_GRADE, grade);
+        editor.apply();
+    }
+
     static void saveResults(Context context, String table, String date, int correct){
 
         long tableId = addTableToDatabase(context, table);
@@ -180,7 +210,7 @@ public class Utility {
         context.getContentResolver().insert(ResultsEntry.CONTENT_URI, values);
     }
 
-    static long addTableToDatabase(Context context, String table){
+    private static long addTableToDatabase(Context context, String table){
 
         long tableId;
 
@@ -192,6 +222,7 @@ public class Utility {
                 null
         );
 
+        assert tableCursor != null;
         if (tableCursor.moveToFirst()) {
             int tableIndex = tableCursor.getColumnIndex(TableEntry._ID);
             tableId = tableCursor.getLong(tableIndex);

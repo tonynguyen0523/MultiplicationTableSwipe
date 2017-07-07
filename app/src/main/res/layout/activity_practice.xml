@@ -26,7 +26,7 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#FFF"
-            android:text="Choose a table to practice!"/>
+            android:text="@string/choose_a_table_to_practice"/>
 
     </android.support.v7.widget.Toolbar>
 

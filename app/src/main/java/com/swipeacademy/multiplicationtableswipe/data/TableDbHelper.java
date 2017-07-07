@@ -8,6 +8,7 @@ import static com.swipeacademy.multiplicationtableswipe.data.TableContract.*;
 
 /**
  * Created by tonyn on 5/5/2017.
+ *
  */
 
 public class TableDbHelper extends SQLiteOpenHelper {

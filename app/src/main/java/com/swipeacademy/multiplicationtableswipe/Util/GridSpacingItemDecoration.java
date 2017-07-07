@@ -45,7 +45,6 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-
     /**
      * Converting dp to pixel
      */

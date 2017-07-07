@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer-array name="correctionsID">
+    <integer-array translatable="false" name="correctionsID">
     </integer-array>
 
-    <string-array name="questions_amount">
-        <item>5</item>
-        <item>7</item>
-        <item>10</item>
-    </string-array>
-
-    <string-array name="assets">
+    <string-array translatable="false" name="assets">
         <item>ones.json</item>
         <item>twos.json</item>
         <item>threes.json</item>
@@ -24,7 +18,7 @@
         <item>twelves.json</item>
     </string-array>
 
-    <string-array name="table_title">
+    <string-array translatable="false" name="table_title">
         <item>Ones</item>
         <item>Twos</item>
         <item>Threes</item>
@@ -37,5 +31,14 @@
         <item>Tens</item>
         <item>Elevens</item>
         <item>Twelves</item>
+    </string-array>
+
+    <string-array translatable="false" name="user_school_grade">
+        <item>Preschool</item>
+        <item>Kindergarten</item>
+        <item>Elementary School</item>
+        <item>Middle School</item>
+        <item>High School</item>
+        <item>Other</item>
     </string-array>
 </resources>

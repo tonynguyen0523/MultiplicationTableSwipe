@@ -14,16 +14,17 @@ import butterknife.ButterKnife;
 
 /**
  * Created by tonyn on 6/23/2017.
+ *
  */
 
-public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHolder> {
+class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHolder> {
 
     private String[] mDataSet;
     private Context mContext;
     private ItemClickListener listener;
     private int lastPosition = -1;
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @BindView(R.id.practice_recycler_item_textView)TextView mTableTV;
         @BindView(R.id.practice_recycler_item_title_textView)TextView mTableTitleTV;
@@ -40,15 +41,15 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
         }
     }
 
-    public void setOnItemClickListener(final ItemClickListener listener){
+    void setOnItemClickListener(final ItemClickListener listener){
         this.listener = listener;
     }
 
-    public interface ItemClickListener{
+    interface ItemClickListener{
         void onItemClicked(View view, int position);
     }
 
-    public PracticeAdapter(Context context, String[] dataSet){
+    PracticeAdapter(Context context, String[] dataSet){
         mDataSet = dataSet;
         mContext = context;
     }
@@ -57,8 +58,7 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
     public PracticeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_practice_recycler_item, parent, false);
 
-        final ViewHolder vh = new ViewHolder(item);
-        return vh;
+        return new ViewHolder(item);
     }
 
     @Override

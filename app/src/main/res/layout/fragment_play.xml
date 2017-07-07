@@ -114,6 +114,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
+                android:clickable="true"
+                android:onClick="choice1"
                 tools:text="1" />
 
             <TextView
@@ -124,6 +126,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
+                android:onClick="choice2"
                 tools:text="2" />
 
             <TextView
@@ -135,6 +138,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
+                android:onClick="choice3"
                 tools:text="3" />
 
             <TextView
@@ -145,6 +149,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="10dp"
+                android:onClick="choice4"
                 tools:text="4" />
 
             <ImageView

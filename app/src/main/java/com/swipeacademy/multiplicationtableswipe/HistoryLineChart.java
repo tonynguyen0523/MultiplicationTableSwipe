@@ -20,9 +20,10 @@ import java.util.Iterator;
 
 /**
  * Created by tonyn on 6/27/2017.
+ *
  */
 
-public class HistoryLineChart {
+class HistoryLineChart {
 
     private final LineChartView mChart;
     private final Context mContext;

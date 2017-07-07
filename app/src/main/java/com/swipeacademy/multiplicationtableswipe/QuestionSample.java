@@ -12,9 +12,10 @@ import java.util.Collections;
 
 /**
  * Created by tonyn on 5/17/2017.
+ *
  */
 
-public class QuestionSample {
+class QuestionSample {
 
     private int mQuestionID;
     private ArrayList<Integer> mQuestions;
@@ -28,6 +29,7 @@ public class QuestionSample {
         mAnswer = answer;
     }
 
+    /**Find single question using its question ID*/
     static QuestionSample getQuestionByID(Context context,String assetJson, int questionID) {
         JsonReader reader;
         try {
@@ -47,6 +49,7 @@ public class QuestionSample {
         return null;
     }
 
+    /**Retrieve all question from correct asset Json*/
     static ArrayList<Integer> getAllQuestionsIDs(Context context,String assetJson) {
         JsonReader reader;
         ArrayList<Integer> questionIDs = new ArrayList<>();
@@ -61,10 +64,12 @@ public class QuestionSample {
             e.printStackTrace();
         }
 
+        // Make sure to shuffle questions
         Collections.shuffle(questionIDs);
         return questionIDs;
     }
 
+    /**Get all questions ID from corrections arrayList*/
     static ArrayList<Integer> getAllCorrectionsIDs(ArrayList<String> correctionIDs){
         ArrayList<Integer> correctionsIDs = new ArrayList<>();
 
@@ -75,6 +80,7 @@ public class QuestionSample {
         return correctionsIDs;
     }
 
+    /**Create question object*/
     private static QuestionSample readEntry(JsonReader reader) {
 
         ArrayList<Integer> questions = null;
@@ -111,6 +117,7 @@ public class QuestionSample {
         return new QuestionSample(id, questions, choices, answer);
     }
 
+    /**Retrieve question choices*/
     private static ArrayList<Integer> readChoices(JsonReader reader) throws IOException {
 
         ArrayList<Integer> choices = new ArrayList<>();
@@ -123,6 +130,7 @@ public class QuestionSample {
         return choices;
     }
 
+    /**JsonReader*/
     private static JsonReader readJsonFile(Context context, String assetJson) throws IOException {
         AssetManager assetManager = context.getAssets();
 
@@ -147,17 +155,11 @@ public class QuestionSample {
         return mChoices;
     }
 
-    public ArrayList<Integer> getQuestions() {return mQuestions;}
+    ArrayList<Integer> getQuestions() {return mQuestions;}
 
-    public int getQuestionID() {
+    private int getQuestionID() {
         return mQuestionID;
     }
-
-    public void setQuestionID(int questionID) {
-        mQuestionID = questionID;
-    }
-
-
 }
 
 

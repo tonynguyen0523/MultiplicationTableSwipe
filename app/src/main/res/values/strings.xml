@@ -1,36 +1,35 @@
 <resources>
-    <string name="app_name">Multiplication Table Swipe</string>
+    <string translatable="false" name="app_name">Multiplication Table Swipe</string>
 
     <!--Testing ad banner-->
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string translatable="false" name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
     <!-- Play pref keys -->
-    <string name="current_score">Current score: %1$d / %2$d</string>
-    <string name="final_score">Score: %1$d / %2$d</string>
-    <string name="final_time">Time: %1$d : %2$d</string>
-    <string name="remaining_questions">%1$d</string>
-    <string name="preference_file_key">Score Preferences</string>
-    <string name="preference_remaining_questions_key">Remaining Questions Preferences</string>
-    <string name="pref_recent_24_key">recent_24</string>
-    <string name="pref_recent_48_key">recent_48</string>
-    <string name="pref_recent_72_key">recent_72</string>
+    <string translatable="false" name="current_score">Current score: %1$d / %2$d</string>
+    <string translatable="false" name="final_score">Score: %1$d / %2$d</string>
+    <string translatable="false" name="final_time">Time: %1$d : %2$d</string>
+    <string translatable="false" name="remaining_questions">%1$d</string>
+    <string translatable="false" name="preference_file_key">Score Preferences</string>
+    <string translatable="false" name="preference_remaining_questions_key">Remaining Questions Preferences</string>
+    <string translatable="false" name="pref_recent_24_key">recent_24</string>
+    <string translatable="false" name="pref_recent_48_key">recent_48</string>
+    <string translatable="false" name="pref_recent_72_key">recent_72</string>
 
 
     <!-- Correction's key -->
-    <string name="pref_corrections_key">corrections_key</string>
-    <string name="pref_corrections_initialized_key">correction_initialized_key</string>
-    <string name="pref_is_corrections">isCorrections</string>
-    <string name="isCorrections">isCorrections</string>
+    <string translatable="false" name="pref_corrections_key">corrections_key</string>
+    <string translatable="false" name="pref_corrections_initialized_key">correction_initialized_key</string>
+    <string translatable="false" name="pref_is_corrections">isCorrections</string>
+    <string translatable="false" name="isCorrections">isCorrections</string>
 
     <!-- Selected amount key -->
-    <string name="pref_amount_key">amount_key</string>
-    <string name="pref_selected_table_key">selected_table</string>
-    <string name="pref_selected_assets_key">selected_asset</string>
+    <string translatable="false" name="pref_amount_key">amount_key</string>
+    <string translatable="false" name="pref_selected_table_key">selected_table</string>
+    <string translatable="false" name="pref_selected_assets_key">selected_asset</string>
 
-    <string name="letsplay_json">letsplay.json</string>
+    <string translatable="false" name="user_property_key_school_grade">user_school_grade</string>
+
+    <string translatable="false" name="letsplay_json">letsplay.json</string>
     <string name="go_home_alert">Go Home?</string>
     <string name="back_press_alert_message">Current results will reset.</string>
     <string name="go_home_option">Go home</string>
@@ -40,14 +39,40 @@
     <string name="corrections">Do Corrections</string>
     <string name="awesome_job">Awesome Job!</string>
     <string name="delete_history">Delete History</string>
-    <string name="times_x">x</string>
+    <string translatable="false" name="times_x">x</string>
     <string name="times">times</string>
-    <string name="equals">=</string>
+    <string translatable="false" name="equals">=</string>
     <string name="equals_description">equals</string>
     <string name="home_play_button">Lets Play!</string>
     <string name="home_practice_button">Practice</string>
     <string name="home_history_button">History</string>
     <string name="history">History</string>
     <string name="multiplication_table_swipe">Multiplication Table Swipe</string>
+    <string name="delete_dialog_message">All your history will be erased.</string>
+    <string name="delete_history_title">Erase history?</string>
+    <string name="delete_dialog_pos_erase_button">Erase</string>
+    <string name="school_grade_dialog_title">School Grade</string>
+    <string name="school_grade_dialog_pos">Save</string>
+    <string translatable="false" name="letsplay">letsplay</string>
+    <string name="result100">Perfect!</string>
+    <string name="result90">Awesome Job!</string>
+    <string name="result70">Good Job!</string>
+    <string name="result_fail">Keep Playing!</string>
+    <string name="practice">Practice</string>
+    <string name="history_icon">history icon</string>
+    <string name="practice_icon">practice icon</string>
+    <string name="choose_a_table_to_practice">Choose a table to practice!</string>
+    <string name="home_button">home button</string>
+    <string name="replay_button">replay button</string>
+    <string name="_24">24</string>
+    <string name="_48">48</string>
+    <string name="_72">72</string>
+    <string name="select_amount_of_questions">Select amount of questions!</string>
+    <string name="play_icon">Play icon</string>
+    <string name="lets_play">Lets Play!</string>
+    <string translatable="false" name="_widget24">/24</string>
+    <string translatable="false" name="_widget48">/48</string>
+    <string translatable="false" name="_widget72">/72</string>
+    <string name="recent_play_results">Recent Play Results</string>
 
 </resources>

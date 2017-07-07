@@ -1,21 +1,24 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.os.Handler;
 import android.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.swipeacademy.multiplicationtableswipe.Util.Analytics;
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 
 import butterknife.BindView;
@@ -30,6 +33,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
     @BindView(R.id.home_history_card_view)CardView mHistoryCard;
 
     private boolean mShowingBack = false;
+    private int mGradeChoice = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +67,12 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
             }
         });
 
+        // Make sure prefs are cleared
         CorrectionsUtil.clearCorrections(this);
-        Utility.setCurrentScore(this, 0);
-        Utility.setIsCorrections(this, false);
+        PrefUtility.setCurrentScore(this, 0);
+        PrefUtility.setIsCorrections(this, false);
 
+        // Load ad
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -74,10 +80,29 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.home_user_profile_icon:
+                showUserSchoolGradeDialog();
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    @Override
     public void onBackStackChanged() {
         mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
     }
 
+    // Flip play card animation
     private void flipCard(){
         if(mShowingBack){
             getFragmentManager().popBackStack();
@@ -97,6 +122,40 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
                 .commit();
     }
 
+    // Dialog for users to selected their school grade
+    private void showUserSchoolGradeDialog(){
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.school_grade_dialog_title)
+                .setSingleChoiceItems(
+                        R.array.user_school_grade,
+                        PrefUtility.getSchoolGrade(this),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mGradeChoice = which;
+                            }
+                        }
+                )
+                .setPositiveButton(R.string.school_grade_dialog_pos, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(mGradeChoice == -1){
+                            return;
+                        }
+                        PrefUtility.setSchoolGrade(HomeActivity.this,mGradeChoice);
+                        Analytics.setUserSchoolGrade(HomeActivity.this,mGradeChoice);
+                    }
+                })
+                .setNegativeButton(R.string.cancel_dialog_option, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    /**Fragment for front of card*/
     public static class PlayCardFrontFragment extends Fragment {
 
         @Override
@@ -115,8 +174,12 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
             return view;
         }
     }
-
+    /**Fragment for back of card*/
     public static class PlayCardBackFragment extends Fragment {
+
+        private int amount24 = 5;
+        private int amount48 = 7;
+        private int amount72 = 9;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -132,10 +195,11 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PlayActivity.class);
-                    Utility.setSelectedAmount(getActivity(),24);
-                    Utility.setRemainingQuestions(getActivity(),24);
-                    Utility.setSelectedTable(getActivity(),"24");
-                    Utility.setSelectedAsset(getActivity(),getString(R.string.letsplay_json));
+                    PrefUtility.setSelectedAmount(getActivity(),amount24);
+                    PrefUtility.setRemainingQuestions(getActivity(),amount24);
+                    PrefUtility.setSelectedTable(getActivity(),Integer.toString(amount24));
+                    PrefUtility.setSelectedAsset(getActivity(),getString(R.string.letsplay_json));
+                    getActivity().finish();
                     startActivity(intent);
                 }
             });
@@ -144,10 +208,11 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PlayActivity.class);
-                    Utility.setSelectedAmount(getActivity(),48);
-                    Utility.setRemainingQuestions(getActivity(),48);
-                    Utility.setSelectedTable(getActivity(),"48");
-                    Utility.setSelectedAsset(getActivity(),getString(R.string.letsplay_json));
+                    PrefUtility.setSelectedAmount(getActivity(),amount48);
+                    PrefUtility.setRemainingQuestions(getActivity(),amount48);
+                    PrefUtility.setSelectedTable(getActivity(),Integer.toString(amount48));
+                    PrefUtility.setSelectedAsset(getActivity(),getString(R.string.letsplay_json));
+                    getActivity().finish();
                     startActivity(intent);
                 }
             });
@@ -156,10 +221,11 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PlayActivity.class);
-                    Utility.setSelectedAmount(getActivity(),72);
-                    Utility.setRemainingQuestions(getActivity(),72);
-                    Utility.setSelectedTable(getActivity(),"72");
-                    Utility.setSelectedAsset(getActivity(),getString(R.string.letsplay_json));
+                    PrefUtility.setSelectedAmount(getActivity(),amount72);
+                    PrefUtility.setRemainingQuestions(getActivity(),amount72);
+                    PrefUtility.setSelectedTable(getActivity(),Integer.toString(amount72));
+                    PrefUtility.setSelectedAsset(getActivity(),getString(R.string.letsplay_json));
+                    getActivity().finish();
                     startActivity(intent);
                 }
             });

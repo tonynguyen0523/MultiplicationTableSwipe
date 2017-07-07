@@ -41,7 +41,7 @@ public class PlayFragment extends Fragment {
     private static final String REMAINING_QUESTIONS_KEY = "remainingList";
     private static final String CORRECTIONS_KEY = "correctionsList";
     private static final String CURRENT_QUESTION = "currentQuestion";
-    private static final int DELAY = 500;
+    private static final int DELAY = 250;
     private static final int CORRECTIONS_DELAY = 1000;
     private ArrayList<Integer> mRemainingQuestionsIDs;
     private ArrayList<String> mCorrections;
@@ -109,9 +109,9 @@ public class PlayFragment extends Fragment {
         final TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
 
         // Check if corrections mode
-        mIsCorrection = Utility.getIsCorrections(getContext());
+        mIsCorrection = PrefUtility.getIsCorrections(getContext());
         // Check which asset to display
-        mSelectedAsset = Utility.getSelectedAsset(getContext());
+        mSelectedAsset = PrefUtility.getSelectedAsset(getContext());
 
         if (savedInstanceState == null) {
             // Retrieve available questions
@@ -147,9 +147,9 @@ public class PlayFragment extends Fragment {
     private void nextQuestion(final TextView[] choicesTV, final int choiceTVID, int userAnswer) {
 
         // Get current score and remaining question
-        boolean correct = Utility.userCorrect(mCorrectAnswer, userAnswer);
-        int mCurrentScore = Utility.getCurrentScore(getContext());
-        int mRemainingQuestions = Utility.getRemainingQuestions(getContext());
+        boolean correct = PrefUtility.userCorrect(mCorrectAnswer, userAnswer);
+        int mCurrentScore = PrefUtility.getCurrentScore(getContext());
+        int mRemainingQuestions = PrefUtility.getRemainingQuestions(getContext());
         int delay;
 
         // If user chose correct answer, increase score by 1,
@@ -173,8 +173,8 @@ public class PlayFragment extends Fragment {
         mRemainingQuestions--;
 
         // Update preferences
-        Utility.setCurrentScore(getContext(), mCurrentScore);
-        Utility.setRemainingQuestions(getContext(), mRemainingQuestions);
+        PrefUtility.setCurrentScore(getContext(), mCurrentScore);
+        PrefUtility.setRemainingQuestions(getContext(), mRemainingQuestions);
 
         // Remove question so no repeat
         mRemainingQuestionsIDs.remove(Integer.valueOf(mQuestionID));
@@ -208,7 +208,7 @@ public class PlayFragment extends Fragment {
     private void generateQuestion(ArrayList<Integer> remainingQuestions, TextView[] choicesTV, boolean reCreated) {
 
         if(!reCreated){
-            mQuestionID = Utility.chooseQuestionID(remainingQuestions);
+            mQuestionID = PrefUtility.chooseQuestionID(remainingQuestions);
         }
         QuestionSample qs = QuestionSample.getQuestionByID(getContext(),mSelectedAsset,mQuestionID);
 
@@ -245,12 +245,12 @@ public class PlayFragment extends Fragment {
             choices[i] = currentChoice;
             currentChoice.setText(Integer.toString(chosenChoice));
             setAnimation(currentChoice);
-            if(Utility.userCorrect(mCorrectAnswer,chosenChoice)){
+            if(PrefUtility.userCorrect(mCorrectAnswer,chosenChoice)){
                 mCorrectTextViewID = i;
             }
         }
     }
-
+    
     /**
      * Show results dialog
      */

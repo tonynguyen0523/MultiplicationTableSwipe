@@ -32,6 +32,7 @@ public class PracticeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        // Load Ad
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -44,11 +45,13 @@ public class PracticeActivity extends AppCompatActivity {
         practiceAdapter.setOnItemClickListener(new PracticeAdapter.ItemClickListener() {
             @Override
             public void onItemClicked(View view, int position) {
+                // Prep for practice mode
                 String assetSelected = getResources().getStringArray(R.array.assets)[position];
-                Utility.setSelectedAsset(getApplicationContext(),assetSelected);
-                Utility.setRemainingQuestions(getApplicationContext(),12);
-                Utility.setSelectedAmount(getApplicationContext(),12);
+                PrefUtility.setSelectedAsset(getApplicationContext(),assetSelected);
+                PrefUtility.setRemainingQuestions(getApplicationContext(),12);
+                PrefUtility.setSelectedAmount(getApplicationContext(),12);
                 Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
+                finish();
                 startActivity(intent);
             }
         });

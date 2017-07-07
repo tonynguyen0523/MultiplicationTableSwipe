@@ -2,15 +2,10 @@ package com.swipeacademy.multiplicationtableswipe;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -43,12 +38,14 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
         ButterKnife.bind(this);
 
-        // Get remaining questions
-        int mRemainingQuestion = Utility.getRemainingQuestions(this);
+        // Get remaining questions and date
+        int mRemainingQuestion = PrefUtility.getRemainingQuestions(this);
         date = DateFormat.getDateTimeInstance().format(new Date());
 
+        // Update remaining question text view
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions, mRemainingQuestion));
 
+        // Load Ad
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -59,6 +56,7 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
+        // Show circle animation
         countdownCircle();
     }
 
@@ -74,47 +72,54 @@ public class PlayActivity extends AppCompatActivity {
     }
 
 
+    // Update remaining question text view method
     public void updateNumbers(int remainingQuestions){
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions,remainingQuestions));
     }
 
+    // Method for when game is finished
     public void playFinished(){
 
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions,0));
 
-        String asset = Utility.getSelectedAsset(getApplicationContext());
-        boolean corrections = Utility.getIsCorrections(getApplicationContext());
-        int correct = Utility.getCurrentScore(this);
+        String asset = PrefUtility.getSelectedAsset(getApplicationContext());
+        boolean corrections = PrefUtility.getIsCorrections(getApplicationContext());
+        int correct = PrefUtility.getCurrentScore(this);
 
-        if(asset.contains("letsplay") && !corrections) {
-            String selectedMode = Utility.getSelectedTable(this);
-            Utility.saveResults(this, selectedMode, date, correct);
+        // Make sure game mode is correct and not corrections
+        // before saving results
+        if(asset.contains(getString(R.string.letsplay)) && !corrections) {
+            String selectedMode = PrefUtility.getSelectedTable(this);
+            PrefUtility.saveResults(this, selectedMode, date, correct);
 
-            switch (Utility.getSelectedTable(this)) {
-                case "24":
-                    Utility.setRecent24(this, correct);
+            switch (PrefUtility.getSelectedTable(this)) {
+                case "5":
+                    PrefUtility.setRecent24(this, correct);
                     break;
-                case "48":
-                    Utility.setRecent48(this, correct);
+                case "7":
+                    PrefUtility.setRecent48(this, correct);
                     break;
-                case "72":
-                    Utility.setRecent72(this, correct);
+                case "9":
+                    PrefUtility.setRecent72(this, correct);
                     break;
                 default:
                     break;
             }
 
+            // Update widget
             Intent recentResultsUpdated = new Intent(ACTION_RECENT_RESULTS_UPDATED)
                     .setPackage(getPackageName());
             this.sendBroadcast(recentResultsUpdated);
         }
     }
 
+    // AlertDialog for when user presses back or home button
     public void showAlertDialog(){
         DialogFragment alertDialog = new PlayBackPressDialogFragment();
         alertDialog.show(getSupportFragmentManager(),"backPress");
     }
 
+    // Initiate circle animation method
     public void countdownCircle(){
         CircleAngleAnimation angleAnimation = new CircleAngleAnimation(mCountdownCircle, 370);
         angleAnimation.setDuration(750);
