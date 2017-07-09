@@ -6,5 +6,6 @@
     <color name="colorAccent">#ffa726</color>
     <color name="white">#fff</color>
     <color name="questionBorder">#42a5f5</color>
-    <color name="correct">#42FF33</color>
+    <color name="correct">#00E676</color>
+    <color name="wrong">#D50000</color>
 </resources>

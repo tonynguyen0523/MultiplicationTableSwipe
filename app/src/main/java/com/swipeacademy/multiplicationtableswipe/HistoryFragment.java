@@ -13,18 +13,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.db.chart.view.LineChartView;
 import com.swipeacademy.multiplicationtableswipe.data.TableContract;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
  * Created by tonyn on 6/12/2017.
- *
  */
 
-public class HistoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class HistoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     @BindView(R.id.chart_card)
     CardView mCardView;
@@ -99,7 +100,7 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
         int axisValue = Integer.parseInt(mTable);
-        String emptyView = "Play " + mTable + " three times to view history.";
+        String emptyView = getString(R.string.empty_graph_text);
 
         if (data.getCount() > 2) {
             mEmptyTextView.setVisibility(View.INVISIBLE);

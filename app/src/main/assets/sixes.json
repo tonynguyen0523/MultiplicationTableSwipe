@@ -1,74 +1,170 @@
 [
   {
     "id": 601,
-    "question":[1,6],
-    "choices":[6,12,5,9],
+    "question": [
+      1,
+      6
+    ],
+    "choices": [
+      6,
+      12,
+      5,
+      9
+    ],
     "answer": 6
   },
   {
     "id": 602,
-    "question":[2,6],
-    "choices":[12,8,18,14],
+    "question": [
+      2,
+      6
+    ],
+    "choices": [
+      12,
+      8,
+      18,
+      14
+    ],
     "answer": 12
   },
   {
     "id": 603,
-    "question":[3,6],
-    "choices":[18,24,12,16],
+    "question": [
+      3,
+      6
+    ],
+    "choices": [
+      18,
+      24,
+      12,
+      16
+    ],
     "answer": 18
   },
   {
     "id": 604,
-    "question":[4,6],
-    "choices":[24,22,18,26],
+    "question": [
+      4,
+      6
+    ],
+    "choices": [
+      24,
+      22,
+      18,
+      26
+    ],
     "answer": 24
   },
   {
     "id": 605,
-    "question":[5,6],
-    "choices":[30,35,33,25],
+    "question": [
+      5,
+      6
+    ],
+    "choices": [
+      30,
+      35,
+      33,
+      25
+    ],
     "answer": 30
   },
   {
     "id": 606,
-    "question":[6,6],
-    "choices":[36,33,24,42],
+    "question": [
+      6,
+      6
+    ],
+    "choices": [
+      36,
+      33,
+      24,
+      42
+    ],
     "answer": 36
   },
   {
     "id": 607,
-    "question":[7,6],
-    "choices":[42,36,32,48],
+    "question": [
+      7,
+      6
+    ],
+    "choices": [
+      42,
+      36,
+      32,
+      48
+    ],
     "answer": 42
   },
   {
     "id": 608,
-    "question":[8,6],
-    "choices":[48,54,42,40],
+    "question": [
+      8,
+      6
+    ],
+    "choices": [
+      48,
+      54,
+      42,
+      40
+    ],
     "answer": 48
   },
   {
     "id": 609,
-    "question":[9,6],
-    "choices":[54,48,42,56],
+    "question": [
+      9,
+      6
+    ],
+    "choices": [
+      54,
+      48,
+      42,
+      56
+    ],
     "answer": 54
   },
   {
     "id": 610,
-    "question":[10,6],
-    "choices":[60,55,66,65],
+    "question": [
+      10,
+      6
+    ],
+    "choices": [
+      60,
+      55,
+      66,
+      65
+    ],
     "answer": 60
   },
   {
     "id": 611,
-    "question":[11,6],
-    "choices":[66,11,60,76],
+    "question": [
+      11,
+      6
+    ],
+    "choices": [
+      66,
+      11,
+      60,
+      76
+    ],
     "answer": 66
   },
   {
     "id": 612,
-    "question":[12,6],
-    "choices":[72,54,66,78],
+    "question": [
+      12,
+      6
+    ],
+    "choices": [
+      72,
+      54,
+      66,
+      78
+    ],
     "answer": 72
   }
 ]

@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.swipeacademy.multiplicationtableswipe.data.TableContract;
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class ContractTest {
     private static final String TEST_TABLES = "/ones";
 
     @Test
-    public void testBuildTableTables(){
+    public void testBuildTableTables() {
         Uri tablesUri = TableContract.ResultsEntry.buildTablesResults(TEST_TABLES);
         assertNotNull("Error: Null Uri returned. You must fill-in buildTableTables in TablesContract.", tablesUri);
 

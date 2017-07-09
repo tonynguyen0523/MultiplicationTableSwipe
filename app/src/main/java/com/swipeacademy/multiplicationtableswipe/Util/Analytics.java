@@ -11,13 +11,13 @@ import com.swipeacademy.multiplicationtableswipe.R;
 
 public class Analytics {
 
-    public static void setUserSchoolGrade(Context context, int gradeIndex){
+    public static void setUserSchoolGrade(Context context, int gradeIndex) {
         String userPropertyKey = context.getString(
                 R.string.user_property_key_school_grade);
         String[] userPropertyValues = context.getResources()
                 .getStringArray(R.array.user_school_grade);
         FirebaseAnalytics.getInstance(context).setUserProperty(
-                userPropertyKey,userPropertyValues[gradeIndex]
+                userPropertyKey, userPropertyValues[gradeIndex]
         );
     }
 }

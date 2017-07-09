@@ -8,7 +8,9 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+
 import com.swipeacademy.multiplicationtableswipe.HomeActivity;
+import com.swipeacademy.multiplicationtableswipe.PlayFragment;
 import com.swipeacademy.multiplicationtableswipe.R;
 
 /**
@@ -19,6 +21,8 @@ import com.swipeacademy.multiplicationtableswipe.R;
 public class PlayBackPressDialogFragment extends DialogFragment {
 
 
+    private PlayFragment playFragment;
+
     public PlayBackPressDialogFragment() {
         // Empty constructor required for DialogFragment
     }
@@ -27,15 +31,19 @@ public class PlayBackPressDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        playFragment = (PlayFragment)getFragmentManager().findFragmentById(R.id.play_container);
+        playFragment.pauseTimer();
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle(R.string.go_home_alert);
         alertDialogBuilder.setMessage(R.string.back_press_alert_message);
-        alertDialogBuilder.setPositiveButton(R.string.go_home_option, new DialogInterface.OnClickListener(){
+        alertDialogBuilder.setPositiveButton(R.string.go_home_option, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
                 getActivity().finish();
+                playFragment.cancelTimer();
                 startActivity(intent);
             }
         });
@@ -43,14 +51,19 @@ public class PlayBackPressDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             }
         });
-        return  alertDialogBuilder.create();
+        return alertDialogBuilder.create();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        playFragment.resumeTimer();
+        super.onDismiss(dialog);
     }
 }

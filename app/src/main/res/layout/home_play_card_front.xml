@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/home_play_card_view"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:foreground="?android:attr/selectableItemBackground"
+    android:elevation="4dp"
     android:clickable="true"
     app:cardCornerRadius="0dp">
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,12 +21,12 @@
             android:layout_height="70dp"
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/play_icon"
-            android:src="@drawable/icons8playaccent"/>
+            android:src="@drawable/icons8playaccent" />
 
         <TextView
             style="@style/home_card_text"
             android:layout_marginTop="20dp"
-            android:text="@string/lets_play"/>
+            android:text="@string/lets_play" />
 
     </LinearLayout>
 

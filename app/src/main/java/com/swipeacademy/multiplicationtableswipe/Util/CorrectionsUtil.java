@@ -19,9 +19,10 @@ import java.util.Set;
 
 public final class CorrectionsUtil {
 
-    private CorrectionsUtil(){}
+    private CorrectionsUtil() {
+    }
 
-    public static Set<String> getCorrections(Context context){
+    public static Set<String> getCorrections(Context context) {
         String correctionsKey = context.getString(R.string.pref_corrections_key);
         String correctionsInitializedKey = context.getString(R.string.pref_corrections_initialized_key);
         String[] correctionsList = context.getResources().getStringArray(R.array.correctionsID);
@@ -31,10 +32,10 @@ public final class CorrectionsUtil {
 
         boolean initialized = preferences.getBoolean(correctionsInitializedKey, false);
 
-        if(!initialized){
+        if (!initialized) {
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(correctionsInitializedKey,true);
-            editor.putStringSet(correctionsKey,correctionList);
+            editor.putBoolean(correctionsInitializedKey, true);
+            editor.putStringSet(correctionsKey, correctionList);
             editor.apply();
             return correctionList;
         }
@@ -42,7 +43,7 @@ public final class CorrectionsUtil {
         return preferences.getStringSet(correctionsKey, new HashSet<String>());
     }
 
-    public static void editCorrectionsList(Context context, ArrayList<String> correctionsList){
+    public static void editCorrectionsList(Context context, ArrayList<String> correctionsList) {
         String key = context.getString(R.string.pref_corrections_key);
         Set<String> corrections = getCorrections(context);
 
@@ -54,7 +55,7 @@ public final class CorrectionsUtil {
         editor.apply();
     }
 
-    public static void clearCorrections(Context context){
+    public static void clearCorrections(Context context) {
         String key = context.getString(R.string.pref_corrections_key);
         Set<String> corrections = getCorrections(context);
 

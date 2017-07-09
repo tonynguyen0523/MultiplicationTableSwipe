@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 
 /**
  * Created by tonyn on 6/23/2017.
- *
  */
 
 class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHolder> {
@@ -24,32 +23,34 @@ class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHolder> {
     private ItemClickListener listener;
     private int lastPosition = -1;
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.practice_recycler_item_textView)TextView mTableTV;
-        @BindView(R.id.practice_recycler_item_title_textView)TextView mTableTitleTV;
+        @BindView(R.id.practice_recycler_item_textView)
+        TextView mTableTV;
+        @BindView(R.id.practice_recycler_item_title_textView)
+        TextView mTableTitleTV;
 
         ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         @Override
         public void onClick(View v) {
-            listener.onItemClicked(v,getAdapterPosition());
+            listener.onItemClicked(v, getAdapterPosition());
         }
     }
 
-    void setOnItemClickListener(final ItemClickListener listener){
+    void setOnItemClickListener(final ItemClickListener listener) {
         this.listener = listener;
     }
 
-    interface ItemClickListener{
+    interface ItemClickListener {
         void onItemClicked(View view, int position);
     }
 
-    PracticeAdapter(Context context, String[] dataSet){
+    PracticeAdapter(Context context, String[] dataSet) {
         mDataSet = dataSet;
         mContext = context;
     }
@@ -67,14 +68,12 @@ class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHolder> {
         holder.mTableTV.setText(mDataSet[position]);
         holder.mTableTitleTV.setText(mContext.getResources().getStringArray(R.array.table_title)[position]);
 
-        setAnimation(holder.itemView,position);
+        setAnimation(holder.itemView, position);
     }
 
-    private void setAnimation(View viewToAnimate, int position)
-    {
+    private void setAnimation(View viewToAnimate, int position) {
         // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition)
-        {
+        if (position > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.grow);
             viewToAnimate.startAnimation(animation);
             lastPosition = position;

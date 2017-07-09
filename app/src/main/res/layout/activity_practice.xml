@@ -13,22 +13,22 @@
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/practice_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:layout_alignParentTop="true">
-
-        <TextView
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/practice_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="#FFF"
-            android:text="@string/choose_a_table_to_practice"/>
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentTop="true">
 
-    </android.support.v7.widget.Toolbar>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#FFF"
+                android:text="@string/choose_a_table_to_practice" />
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -39,13 +39,13 @@
         android:layout_alignParentBottom="true"
         android:background="#FFFFFFFF"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"/>
+        ads:adUnitId="@string/banner_ad_unit_id" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/practice_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/practice_appBarLayout"
-        android:layout_above="@id/practice_adView"/>
+        android:layout_above="@id/practice_adView" />
 
 </RelativeLayout>

@@ -74,5 +74,10 @@
     <string translatable="false" name="_widget48">/48</string>
     <string translatable="false" name="_widget72">/72</string>
     <string name="recent_play_results">Recent Play Results</string>
+    <string name="profile">Profile</string>
+    <string name="empty_graph_text">Play this mode three times to view history.</string>
+    <string name="_5_secs_question">5 secs/question</string>
+    <string name="_4_secs_question">4 secs/question</string>
+    <string name="_3_secs_question">3 secs/question</string>
 
 </resources>

@@ -18,10 +18,13 @@ import butterknife.ButterKnife;
 
 public class PracticeActivity extends AppCompatActivity {
 
-    @BindView(R.id.practice_recycler_view)RecyclerView mRecyclerView;
-    @BindView(R.id.practice_adView)AdView mAdView;
-    @BindView(R.id.practice_toolbar)Toolbar mToolbar;
-    private String[] tableSets = {"1","2","3","4","5","6","7","8","9","10","11","12"};
+    @BindView(R.id.practice_recycler_view)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.practice_adView)
+    AdView mAdView;
+    @BindView(R.id.practice_toolbar)
+    Toolbar mToolbar;
+    private String[] tableSets = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +39,10 @@ public class PracticeActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        PracticeAdapter practiceAdapter = new PracticeAdapter(this,tableSets);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        PracticeAdapter practiceAdapter = new PracticeAdapter(this, tableSets);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3,GridSpacingItemDecoration.dpToPx(this, 10),true));
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3, GridSpacingItemDecoration.dpToPx(this, 10), true));
         mRecyclerView.setAdapter(practiceAdapter);
 
         practiceAdapter.setOnItemClickListener(new PracticeAdapter.ItemClickListener() {
@@ -47,9 +50,9 @@ public class PracticeActivity extends AppCompatActivity {
             public void onItemClicked(View view, int position) {
                 // Prep for practice mode
                 String assetSelected = getResources().getStringArray(R.array.assets)[position];
-                PrefUtility.setSelectedAsset(getApplicationContext(),assetSelected);
-                PrefUtility.setRemainingQuestions(getApplicationContext(),12);
-                PrefUtility.setSelectedAmount(getApplicationContext(),12);
+                PrefUtility.setSelectedAsset(getApplicationContext(), assetSelected);
+                PrefUtility.setRemainingQuestions(getApplicationContext(), 12);
+                PrefUtility.setSelectedAmount(getApplicationContext(), 12);
                 Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
                 finish();
                 startActivity(intent);
@@ -59,7 +62,7 @@ public class PracticeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
             default:

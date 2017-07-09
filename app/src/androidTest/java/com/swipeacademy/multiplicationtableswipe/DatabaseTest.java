@@ -28,13 +28,13 @@ public class DatabaseTest {
 
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         getTargetContext().deleteDatabase(TableDbHelper.DATABASE_NAME);
     }
 
 
     @Test
-    public void testCreateDb() throws Throwable{
+    public void testCreateDb() throws Throwable {
 
         final HashSet<String> tableNameHashSet = new HashSet<>();
         tableNameHashSet.add(TableContract.TableEntry.TABLE_NAME);
@@ -53,7 +53,7 @@ public class DatabaseTest {
         // verify that the tables have been created
         do {
             tableNameHashSet.remove(c.getString(0));
-        } while( c.moveToNext() );
+        } while (c.moveToNext());
 
         // if this fails, it means that your database doesn't contain both the tables entry
         // and movie entry tables
@@ -73,10 +73,10 @@ public class DatabaseTest {
         tableNameHashSet.add(TableContract.TableEntry.COLUMN_TABLES);
 
         int columnNameIndex = c.getColumnIndex("name");
-        do{
+        do {
             String columnName = c.getString(columnNameIndex);
             tableNameHashSet.remove(columnName);
-        }while (c.moveToNext());
+        } while (c.moveToNext());
 
         // if this fails, it means that your database doesn't contain all of the required tables
         // entry columns
@@ -87,12 +87,12 @@ public class DatabaseTest {
     }
 
     @Test
-    public void testTablesTable(){
+    public void testTablesTable() {
         insertTables();
     }
 
     @Test
-    public void testResultsTable(){
+    public void testResultsTable() {
         long tablesId = insertTables();
 
         assertFalse("Error: tables not inserted correctly.", tablesId == -1L);
@@ -115,26 +115,26 @@ public class DatabaseTest {
                 null
         );
 
-        assertTrue( "Error: No Records returned from results query", resultsCursor.moveToFirst() );
+        assertTrue("Error: No Records returned from results query", resultsCursor.moveToFirst());
 
         TestUtilities.validateCurrentRecord("testInsertReadDb resultsEntry failed to validate",
                 resultsCursor, resultsValues);
 
-        assertFalse( "Error: More than one record returned from results query",
-                resultsCursor.moveToNext() );
+        assertFalse("Error: More than one record returned from results query",
+                resultsCursor.moveToNext());
 
         resultsCursor.close();
         dbHelper.close();
     }
 
-    public long insertTables(){
+    public long insertTables() {
         TableDbHelper dbHelper = new TableDbHelper(getTargetContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues textValues = TestUtilities.createOnesTablesValues();
 
         long tablesId;
-        tablesId = db.insert(TableContract.TableEntry.TABLE_NAME,null,textValues);
+        tablesId = db.insert(TableContract.TableEntry.TABLE_NAME, null, textValues);
 
         assertTrue(tablesId != -1);
 
@@ -150,7 +150,7 @@ public class DatabaseTest {
 
         assertTrue(" Error: No records returned from tables query", cursor.moveToFirst());
 
-        TestUtilities.validateCurrentRecord("Error: tables Query Validation Failed",cursor, textValues);
+        TestUtilities.validateCurrentRecord("Error: tables Query Validation Failed", cursor, textValues);
 
         assertFalse("Error: More than one record returned from tables query", cursor.moveToNext());
 

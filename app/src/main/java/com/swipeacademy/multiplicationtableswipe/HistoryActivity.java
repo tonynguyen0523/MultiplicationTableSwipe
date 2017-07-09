@@ -23,10 +23,14 @@ import butterknife.ButterKnife;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    @BindView(R.id.history_viewPager)ViewPager mViewPager;
-    @BindView(R.id.history_toolbar)Toolbar mToolbar;
-    @BindView(R.id.tabs)TabLayout mTabLayout;
-    @BindView(R.id.history_adView)AdView mAdView;
+    @BindView(R.id.history_viewPager)
+    ViewPager mViewPager;
+    @BindView(R.id.history_toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.tabs)
+    TabLayout mTabLayout;
+    @BindView(R.id.history_adView)
+    AdView mAdView;
 
     FragmentPagerAdapter pagerAdapter;
 
@@ -49,13 +53,13 @@ public class HistoryActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.history_menu,menu);
+        getMenuInflater().inflate(R.menu.history_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.delete_history_icon:
                 DeleteHistoryAlertDialog();
                 break;
@@ -67,10 +71,10 @@ public class HistoryActivity extends AppCompatActivity {
         return true;
     }
 
-    private static class MyPagerAdapter extends FragmentPagerAdapter{
+    private static class MyPagerAdapter extends FragmentPagerAdapter {
 
         private static int NUM_ITEMS = 3;
-        private String[] tabs = {"24","48","72"};
+        private String[] tabs = {"24", "48", "72"};
 
 
         MyPagerAdapter(FragmentManager fm) {
@@ -84,7 +88,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     return HistoryFragment.newInstance("24");
                 case 1:
@@ -102,11 +106,11 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
-    private class DeleteHistory extends AsyncTask<Void,Void, Object>{
+    private class DeleteHistory extends AsyncTask<Void, Void, Object> {
 
         @Override
         protected Object doInBackground(Void... params) {
-            getContentResolver().delete(TableContract.TableEntry.CONTENT_URI,null,null);
+            getContentResolver().delete(TableContract.TableEntry.CONTENT_URI, null, null);
             return null;
         }
 
@@ -116,7 +120,7 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
-    public void DeleteHistoryAlertDialog(){
+    public void DeleteHistoryAlertDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 

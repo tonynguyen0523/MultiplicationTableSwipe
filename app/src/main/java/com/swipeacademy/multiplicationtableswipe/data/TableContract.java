@@ -7,7 +7,6 @@ import android.provider.BaseColumns;
 
 /**
  * Created by tonyn on 5/5/2017.
- *
  */
 
 public class TableContract {
@@ -22,7 +21,9 @@ public class TableContract {
     static final String PATH_TABLE = "table";
     static final String PATH_RESULTS = "results";
 
-    /** Tables entries */
+    /**
+     * Tables entries
+     */
     public static final class TableEntry implements BaseColumns {
 
         public static final Uri CONTENT_URI =
@@ -38,12 +39,14 @@ public class TableContract {
 
         public static final String COLUMN_TABLES = "numbers_table";
 
-        static Uri buildTablesUri(long id){
-            return ContentUris.withAppendedId(CONTENT_URI,id);
+        static Uri buildTablesUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }
 
-    /** Results entries */
+    /**
+     * Results entries
+     */
     public static final class ResultsEntry implements BaseColumns {
 
         public static final Uri CONTENT_URI =
@@ -62,15 +65,15 @@ public class TableContract {
         public static final String COLUMN_TOTAL_RIGHT = "total_right";
         public static final String COLUMN_TIME = "time";
 
-        static Uri buildResultsUri(long id){
+        static Uri buildResultsUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildTablesResults(String table){
+        public static Uri buildTablesResults(String table) {
             return CONTENT_URI.buildUpon().appendPath(table).build();
         }
 
-        static String getTablesFromUri(Uri uri){
+        static String getTablesFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
     }

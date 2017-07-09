@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        release {
+        config {
             keyAlias 'samtskey'
-            keyPassword 'stargazerkey'
-            storeFile file('/Users/tonynguyen/Documents/Keys/samts.jks')
-            storePassword 'stargazer8669'
+            keyPassword 'mts8669key'
+            storeFile file("$rootDir/samtskeystore.jks")
+            storePassword 'mts8669store'
         }
     }
     compileSdkVersion 25
@@ -23,7 +23,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.config
         }
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/2'] } }

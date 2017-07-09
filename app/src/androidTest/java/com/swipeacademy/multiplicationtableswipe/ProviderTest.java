@@ -22,7 +22,7 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class ProviderTest {
 
-    public void deleteAllRecordFromDB(){
+    public void deleteAllRecordFromDB() {
         TableDbHelper dbHelper = new TableDbHelper(getTargetContext());
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
@@ -31,17 +31,17 @@ public class ProviderTest {
         database.close();
     }
 
-    public void deleteAllRecords(){
+    public void deleteAllRecords() {
         deleteAllRecordFromDB();
     }
 
     @Before
-    public void setUp() throws Exception{
-       deleteAllRecords();
+    public void setUp() throws Exception {
+        deleteAllRecords();
     }
 
     @Test
-    public void testBasicTablesQuery(){
+    public void testBasicTablesQuery() {
         TableDbHelper dbHelper = new TableDbHelper(getTargetContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -50,7 +50,7 @@ public class ProviderTest {
 
         ContentValues resultsValues = TestUtilities.createResultsValues(tablesID);
 
-        long resultsRowID = db.insert(TableContract.ResultsEntry.TABLE_NAME,null,resultsValues);
+        long resultsRowID = db.insert(TableContract.ResultsEntry.TABLE_NAME, null, resultsValues);
         assertTrue("Unable to Insert ResultsEntry into the Database", resultsRowID != -1);
 
         db.close();
@@ -67,8 +67,8 @@ public class ProviderTest {
     }
 
     @Test
-    public void testBasicTableQueries(){
-         TableDbHelper dbHelper = new TableDbHelper(getTargetContext());
+    public void testBasicTableQueries() {
+        TableDbHelper dbHelper = new TableDbHelper(getTargetContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues testValues = TestUtilities.createOnesTablesValues();
@@ -85,7 +85,7 @@ public class ProviderTest {
     }
 
     @Test
-    public void testGetType(){
+    public void testGetType() {
         String type = getTargetContext().getContentResolver().getType(TableContract.ResultsEntry.CONTENT_URI);
         assertEquals("Error: the ResultsEntry CONTENT_URI should return ResultsEntry.CONTENT_TYPE",
                 TableContract.ResultsEntry.CONTENT_TYPE, type);

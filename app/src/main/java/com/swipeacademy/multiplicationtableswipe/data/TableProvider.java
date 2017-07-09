@@ -20,7 +20,6 @@ import static com.swipeacademy.multiplicationtableswipe.data.TableContract.PATH_
 
 /**
  * Created by tonyn on 5/5/2017.
- *
  */
 
 public class TableProvider extends ContentProvider {
@@ -202,10 +201,10 @@ public class TableProvider extends ContentProvider {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int rowsDeleted;
 
-        if(null == selection){
+        if (null == selection) {
             selection = "1";
         }
-        switch (sUriMatcher.match(uri)){
+        switch (sUriMatcher.match(uri)) {
             case TABLES:
                 rowsDeleted = db.delete(
                         ResultsEntry.TABLE_NAME,
@@ -217,10 +216,10 @@ public class TableProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown URI:" + uri);
         }
 
-        if (rowsDeleted != 0){
+        if (rowsDeleted != 0) {
             Context context = getContext();
-            if(context != null){
-                context.getContentResolver().notifyChange(uri,null);
+            if (context != null) {
+                context.getContentResolver().notifyChange(uri, null);
             }
         }
         return rowsDeleted;

@@ -82,7 +82,7 @@
                         android:paddingLeft="10dp"
                         android:paddingStart="10dp"
                         android:contentDescription="@string/equals_description"
-                        android:text="@string/equals"/>
+                        android:text="@string/equals" />
 
                 </LinearLayout>
 
@@ -93,88 +93,88 @@
                 android:id="@+id/question_border_4"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/play_question_border"
-                android:background="@color/questionBorder"  />
+                android:background="@color/questionBorder" />
 
         </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/choice1"
-                style="@style/question"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="10dp"
-                tools:text="1" />
+        <TextView
+            android:id="@+id/choice1"
+            style="@style/question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            tools:text="1" />
 
-            <TextView
-                android:id="@+id/choice2"
-                style="@style/question"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
-                tools:text="2" />
+        <TextView
+            android:id="@+id/choice2"
+            style="@style/question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            tools:text="2" />
 
-            <TextView
-                android:id="@+id/choice3"
-                style="@style/question"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="10dp"
-                tools:text="3" />
+        <TextView
+            android:id="@+id/choice3"
+            style="@style/question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            tools:text="3" />
 
-            <TextView
-                android:id="@+id/choice4"
-                style="@style/question"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="10dp"
-                tools:text="4" />
+        <TextView
+            android:id="@+id/choice4"
+            style="@style/question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            tools:text="4" />
 
-            <ImageView
-                android:id="@+id/swipe_arrow_1"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/swipe_arrow"
-                android:layout_centerInParent="true"
-                android:layout_toEndOf="@id/question_container"
-                android:layout_toRightOf="@id/question_container"/>
+        <ImageView
+            android:id="@+id/swipe_arrow_1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/swipe_arrow"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@id/question_container"
+            android:layout_toRightOf="@id/question_container" />
 
-            <ImageView
-                android:id="@+id/swipe_arrow_2"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/swipe_arrow"
-                android:layout_centerInParent="true"
-                android:layout_below="@id/question_container"
-                android:rotation="90"/>
+        <ImageView
+            android:id="@+id/swipe_arrow_2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/swipe_arrow"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/question_container"
+            android:rotation="90" />
 
-            <ImageView
-                android:id="@+id/swipe_arrow_3"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/swipe_arrow"
-                android:rotation="180"
-                android:layout_centerInParent="true"
-                android:layout_toStartOf="@id/question_container"
-                android:layout_toLeftOf="@id/question_container"/>
+        <ImageView
+            android:id="@+id/swipe_arrow_3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/swipe_arrow"
+            android:rotation="180"
+            android:layout_centerInParent="true"
+            android:layout_toStartOf="@id/question_container"
+            android:layout_toLeftOf="@id/question_container" />
 
-            <ImageView
-                android:id="@+id/swipe_arrow_4"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/swipe_arrow"
-                android:rotation="270"
-                android:layout_centerInParent="true"
-                android:layout_above="@id/question_container"/>
+        <ImageView
+            android:id="@+id/swipe_arrow_4"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/swipe_arrow"
+            android:rotation="270"
+            android:layout_centerInParent="true"
+            android:layout_above="@id/question_container" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 </LinearLayout>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer-array translatable="false" name="correctionsID">
-    </integer-array>
+    <integer-array translatable="false" name="correctionsID"></integer-array>
 
     <string-array translatable="false" name="assets">
         <item>ones.json</item>

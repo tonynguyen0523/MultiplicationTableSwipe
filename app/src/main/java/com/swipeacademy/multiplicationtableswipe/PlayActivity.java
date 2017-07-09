@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -23,14 +24,21 @@ import butterknife.ButterKnife;
 
 public class PlayActivity extends AppCompatActivity {
 
-    @BindView(R.id.remaining_questions)TextView mRemainingQuestionTV;
-    @BindView(R.id.adView)AdView mAdView;
-    @BindView(R.id.play_home_button)ImageButton mHomeButton;
-    @BindView(R.id.remaining_circle)Circle mCountdownCircle;
+    @BindView(R.id.remaining_questions)
+    TextView mRemainingQuestionTV;
+    @BindView(R.id.adView)
+    AdView mAdView;
+    @BindView(R.id.play_home_button)
+    ImageButton mHomeButton;
+    @BindView(R.id.remaining_circle)
+    Circle mCountdownCircle;
+    CircleAngleAnimation angleAnimation;
 
     public static final String ACTION_RECENT_RESULTS_UPDATED =
             "com.example.android.sunshine.app.ACTION_RECENT_RESULTS_UPDATED";
     private String date;
+    private float angle;
+    private boolean mPaused = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +64,13 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
-        // Show circle animation
-        countdownCircle();
     }
 
     @Override
     public void onBackPressed() {
         showAlertDialog();
 
-        if(getResources().getBoolean(R.bool.is_portrait)){
+        if (getResources().getBoolean(R.bool.is_portrait)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -73,34 +79,35 @@ public class PlayActivity extends AppCompatActivity {
 
 
     // Update remaining question text view method
-    public void updateNumbers(int remainingQuestions){
-        mRemainingQuestionTV.setText(getString(R.string.remaining_questions,remainingQuestions));
+    public void updateNumbers(int remainingQuestions) {
+        mRemainingQuestionTV.setText(getString(R.string.remaining_questions, remainingQuestions));
     }
 
     // Method for when game is finished
-    public void playFinished(){
+    public void playFinished() {
 
-        mRemainingQuestionTV.setText(getString(R.string.remaining_questions,0));
+        mRemainingQuestionTV.setText(getString(R.string.remaining_questions, 0));
 
         String asset = PrefUtility.getSelectedAsset(getApplicationContext());
         boolean corrections = PrefUtility.getIsCorrections(getApplicationContext());
-        int correct = PrefUtility.getCurrentScore(this);
+        int score = PrefUtility.getCurrentScore(this);
 
         // Make sure game mode is correct and not corrections
         // before saving results
-        if(asset.contains(getString(R.string.letsplay)) && !corrections) {
+        if (asset.contains(getString(R.string.letsplay)) && !corrections) {
             String selectedMode = PrefUtility.getSelectedTable(this);
-            PrefUtility.saveResults(this, selectedMode, date, correct);
+            PrefUtility.saveResults(this, selectedMode, date, score);
 
+            // Update recent results for widget
             switch (PrefUtility.getSelectedTable(this)) {
                 case "24":
-                    PrefUtility.setRecent24(this, correct);
+                    PrefUtility.setRecent24(this, score);
                     break;
                 case "48":
-                    PrefUtility.setRecent48(this, correct);
+                    PrefUtility.setRecent48(this, score);
                     break;
                 case "72":
-                    PrefUtility.setRecent72(this, correct);
+                    PrefUtility.setRecent72(this, score);
                     break;
                 default:
                     break;
@@ -114,16 +121,45 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     // AlertDialog for when user presses back or home button
-    public void showAlertDialog(){
+    public void showAlertDialog() {
         DialogFragment alertDialog = new PlayBackPressDialogFragment();
-        alertDialog.show(getSupportFragmentManager(),"backPress");
+        alertDialog.show(getSupportFragmentManager(), "backPress");
     }
 
     // Initiate circle animation method
-    public void countdownCircle(){
-        CircleAngleAnimation angleAnimation = new CircleAngleAnimation(mCountdownCircle, 370);
-        angleAnimation.setDuration(750);
+    public void countdownCircle() {
+        mCountdownCircle.clearAnimation();
         mCountdownCircle.setAngle(0);
+        angleAnimation = new CircleAngleAnimation(mCountdownCircle, 365);
+        angleAnimation.setDuration(5000);
         mCountdownCircle.startAnimation(angleAnimation);
+        mPaused = false;
+        Log.d("COUNTDOWNCIRCLE", "START");
     }
+
+    public void pauseCountdownCircle(){
+        angle = mCountdownCircle.getAngle();
+        mCountdownCircle.clearAnimation();
+        mCountdownCircle.setAngle(angle);
+        mPaused = true;
+        Log.d("COUNTDOWNCIRCLE", "PAUSE" + Float.toString(angle));
+    }
+
+    public void resumeCountdownCircle(long timeLeft){
+        if (mPaused) {
+            mCountdownCircle.clearAnimation();
+            mCountdownCircle.setAngle(angle);
+            angleAnimation = new CircleAngleAnimation(mCountdownCircle, 365);
+            angleAnimation.setDuration(timeLeft);
+            mCountdownCircle.startAnimation(angleAnimation);
+            mPaused = false;
+            Log.d("COUNTDOWNCIRCLE", "RESTART" + Float.toString(angle));
+
+        } else {
+            countdownCircle();
+            Log.d("COUNTDOWNCIRCLE", "START2");
+
+        }
+    }
+
 }

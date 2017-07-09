@@ -12,7 +12,6 @@ import java.util.Collections;
 
 /**
  * Created by tonyn on 5/17/2017.
- *
  */
 
 class QuestionSample {
@@ -29,11 +28,13 @@ class QuestionSample {
         mAnswer = answer;
     }
 
-    /**Find single question using its question ID*/
-    static QuestionSample getQuestionByID(Context context,String assetJson, int questionID) {
+    /**
+     * Find single question using its question ID
+     */
+    static QuestionSample getQuestionByID(Context context, String assetJson, int questionID) {
         JsonReader reader;
         try {
-            reader = readJsonFile(context,assetJson);
+            reader = readJsonFile(context, assetJson);
             reader.beginArray();
             while (reader.hasNext()) {
                 QuestionSample currentQuestion = readEntry(reader);
@@ -49,16 +50,18 @@ class QuestionSample {
         return null;
     }
 
-    /**Retrieve all question from correct asset Json*/
-    static ArrayList<Integer> getAllQuestionsIDs(Context context,String assetJson) {
+    /**
+     * Retrieve all question from correct asset Json
+     */
+    static ArrayList<Integer> getAllQuestionsIDs(Context context, String assetJson) {
         JsonReader reader;
         ArrayList<Integer> questionIDs = new ArrayList<>();
         try {
             reader = readJsonFile(context, assetJson);
             reader.beginArray();
-                while (reader.hasNext()) {
-                    questionIDs.add(readEntry(reader).getQuestionID());
-                }
+            while (reader.hasNext()) {
+                questionIDs.add(readEntry(reader).getQuestionID());
+            }
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,18 +72,22 @@ class QuestionSample {
         return questionIDs;
     }
 
-    /**Get all questions ID from corrections arrayList*/
-    static ArrayList<Integer> getAllCorrectionsIDs(ArrayList<String> correctionIDs){
+    /**
+     * Get all questions ID from corrections arrayList
+     */
+    static ArrayList<Integer> getAllCorrectionsIDs(ArrayList<String> correctionIDs) {
         ArrayList<Integer> correctionsIDs = new ArrayList<>();
 
-        for(String stringValue : correctionIDs){
+        for (String stringValue : correctionIDs) {
             correctionsIDs.add(Integer.parseInt(stringValue.trim()));
         }
 
         return correctionsIDs;
     }
 
-    /**Create question object*/
+    /**
+     * Create question object
+     */
     private static QuestionSample readEntry(JsonReader reader) {
 
         ArrayList<Integer> questions = null;
@@ -117,7 +124,9 @@ class QuestionSample {
         return new QuestionSample(id, questions, choices, answer);
     }
 
-    /**Retrieve question choices*/
+    /**
+     * Retrieve question choices
+     */
     private static ArrayList<Integer> readChoices(JsonReader reader) throws IOException {
 
         ArrayList<Integer> choices = new ArrayList<>();
@@ -130,7 +139,9 @@ class QuestionSample {
         return choices;
     }
 
-    /**JsonReader*/
+    /**
+     * JsonReader
+     */
     private static JsonReader readJsonFile(Context context, String assetJson) throws IOException {
         AssetManager assetManager = context.getAssets();
 
@@ -155,7 +166,9 @@ class QuestionSample {
         return mChoices;
     }
 
-    ArrayList<Integer> getQuestions() {return mQuestions;}
+    ArrayList<Integer> getQuestions() {
+        return mQuestions;
+    }
 
     private int getQuestionID() {
         return mQuestionID;

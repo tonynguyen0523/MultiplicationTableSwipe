@@ -13,7 +13,7 @@
 
         <TextView
             style="@style/home_toolbar_text"
-            android:text="@string/multiplication_table_swipe"/>
+            android:text="@string/multiplication_table_swipe" />
 
     </android.support.v7.widget.Toolbar>
 
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"/>
+        ads:adUnitId="@string/banner_ad_unit_id" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:id="@+id/home_play_card_container"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"/>
+            android:layout_weight="2" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -47,8 +47,7 @@
             android:layout_marginStart="10dp"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/home_practice_card_view"
                 android:layout_marginBottom="10dp"
                 style="@style/home_card_view_horizontal"
@@ -61,12 +60,12 @@
                     <ImageView
                         style="@style/home_icon"
                         android:contentDescription="@string/practice_icon"
-                        android:src="@drawable/icons8tableaccent"/>
+                        android:src="@drawable/icons8tableaccent" />
 
                     <TextView
                         style="@style/home_card_text"
                         android:layout_marginTop="20dp"
-                        android:text="@string/practice"/>
+                        android:text="@string/practice" />
 
                 </LinearLayout>
 
@@ -84,12 +83,12 @@
                     <ImageView
                         style="@style/home_icon"
                         android:contentDescription="@string/history_icon"
-                        android:src="@drawable/icons8museumaccent"/>
+                        android:src="@drawable/icons8museumaccent" />
 
                     <TextView
                         style="@style/home_card_text"
                         android:layout_marginTop="20dp"
-                        android:text="@string/history"/>
+                        android:text="@string/history" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
