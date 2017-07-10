@@ -11,12 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/countdown_timer_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            tools:text="5"/>
+        <!--<TextView-->
+            <!--android:id="@+id/countdown_timer_text_view"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--tools:text="5"/>-->
 
         <LinearLayout
             android:id="@+id/question_container"
@@ -106,6 +106,17 @@
                 android:background="@color/questionBorder" />
 
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/play_pause_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@id/question_container"
+            android:layout_toEndOf="@id/question_container"
+            android:background="@color/white"
+            android:src="@drawable/ic_pause_black_36dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

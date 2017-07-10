@@ -63,18 +63,12 @@ public class PlayActivity extends AppCompatActivity {
                 showAlertDialog();
             }
         });
-
     }
 
     @Override
     public void onBackPressed() {
-        showAlertDialog();
-
-        if (getResources().getBoolean(R.bool.is_portrait)) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }
+        Intent intent = new Intent(PlayActivity.this,PlayPauseActivity.class);
+        startActivity(intent);
     }
 
 

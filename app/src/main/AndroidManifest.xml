@@ -20,7 +20,7 @@
             android:name=".PlayActivity"
             android:label="play"
             android:parentActivityName=".HomeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HistoryActivity"
             android:label="@string/history"
@@ -35,8 +35,8 @@
             android:name=".PracticeActivity"
             android:label="practice"
             android:parentActivityName=".HomeActivity"
-            android:screenOrientation="portrait"/>
-        <!--Widget-->
+            android:screenOrientation="portrait" />
+        <!-- Widget -->
         <receiver
             android:name=".WidgetProvider"
             android:label="Recent Play Results">
@@ -44,12 +44,17 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.example.android.sunshine.app.ACTION_RECENT_RESULTS_UPDATED" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
         </receiver>
-        <service android:name=".WidgetIntentService" />
-    </application>
 
+        <service android:name=".WidgetIntentService" />
+
+        <activity android:name=".PlayPauseActivity"
+            android:screenOrientation="portrait">
+        </activity>
+    </application>
 
 </manifest>

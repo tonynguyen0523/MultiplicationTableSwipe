@@ -1,5 +1,6 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
@@ -51,8 +53,10 @@ public class PlayFragment extends Fragment {
     View mBorder3;
     @BindView(R.id.question_border_4)
     View mBorder4;
-    @BindView(R.id.countdown_timer_text_view)
-    TextView mCountdownTimerTV;
+//    @BindView(R.id.countdown_timer_text_view)
+//    TextView mCountdownTimerTV;
+    @BindView(R.id.play_pause_button)
+    ImageButton mPauseButton;
 
     private static final String REMAINING_QUESTIONS_KEY = "remainingList";
     private static final String CORRECTIONS_KEY = "correctionsList";
@@ -68,6 +72,7 @@ public class PlayFragment extends Fragment {
     private int mCorrectTextViewID;
     private long mTimeLeft;
     private boolean mIsCorrection;
+    private boolean mIsFinished;
     private Unbinder unbinder;
 
     public PlayFragment() {
@@ -80,10 +85,17 @@ public class PlayFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_play, container, false);
         unbinder = ButterKnife.bind(this, view);
-        setRetainInstance(true);
 
         // Create array with choicesTV and generate questions and answers
         final TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
+
+        mPauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),PlayPauseActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Set click listener for textViews
         mChoice1.setOnClickListener(new View.OnClickListener() {
@@ -173,22 +185,24 @@ public class PlayFragment extends Fragment {
         // Check which asset to display
         mSelectedAsset = PrefUtility.getSelectedAsset(getContext());
 
-        if (savedInstanceState == null) {
-            // Retrieve available questions
-            if (mIsCorrection) {
-                mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
-                mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
-                generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
+        if(!mIsFinished) {
+            if (savedInstanceState == null) {
+                // Retrieve available questions
+                if (mIsCorrection) {
+                    mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
+                    mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
+                    generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
+                } else {
+                    mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(), mSelectedAsset);
+                    mCorrections = new ArrayList<>();
+                    generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
+                }
             } else {
-                mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(), mSelectedAsset);
-                mCorrections = new ArrayList<>();
-                generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
+                mRemainingQuestionsIDs = savedInstanceState.getIntegerArrayList(REMAINING_QUESTIONS_KEY);
+                mCorrections = savedInstanceState.getStringArrayList(CORRECTIONS_KEY);
+                mQuestionID = savedInstanceState.getInt(CURRENT_QUESTION);
+                generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, true);
             }
-        } else {
-            mRemainingQuestionsIDs = savedInstanceState.getIntegerArrayList(REMAINING_QUESTIONS_KEY);
-            mCorrections = savedInstanceState.getStringArrayList(CORRECTIONS_KEY);
-            mQuestionID = savedInstanceState.getInt(CURRENT_QUESTION);
-            generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, true);
         }
         super.onActivityCreated(savedInstanceState);
     }
@@ -248,6 +262,8 @@ public class PlayFragment extends Fragment {
             public void run() {
                 // Check if there is any questions left, if not end game
                 if (finalMRemainingQuestions == 0) {
+                    mIsFinished = true;
+                    countdownTimer.cancel();
                     ((PlayActivity) getActivity()).playFinished();
                     CorrectionsUtil.editCorrectionsList(getContext(), mCorrections);
                     resultsDialog();
@@ -319,8 +335,8 @@ public class PlayFragment extends Fragment {
     private void resultsDialog() {
         DialogFragment dialogFragment = new PlayResultsDialog();
         dialogFragment.setCancelable(false);
+        dialogFragment.setRetainInstance(true);
         dialogFragment.show(getFragmentManager(), "resultsdialog");
-        countdownTimer.cancel();
     }
 
     /**
@@ -353,7 +369,6 @@ public class PlayFragment extends Fragment {
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimeLeft = millisUntilFinished;
-                mCountdownTimerTV.setText(Long.toString(millisUntilFinished));
             }
 
             @Override
@@ -361,7 +376,6 @@ public class PlayFragment extends Fragment {
                 nextQuestion(mChoicesIDs, 5, -1);
             }
         }.start();
-
         ((PlayActivity)getActivity()).countdownCircle();
     }
 
@@ -371,13 +385,12 @@ public class PlayFragment extends Fragment {
     }
 
     public void resumeTimer(){
-        countdownTimer.resume();
-        ((PlayActivity)getActivity()).resumeCountdownCircle(mTimeLeft);
-        Log.d("COUNTDOWN","ONRESUME");
+            countdownTimer.resume();
+            ((PlayActivity) getActivity()).resumeCountdownCircle(mTimeLeft);
+            Log.d("COUNTDOWN", "ONRESUME");
     }
 
     public void cancelTimer(){
         countdownTimer.cancel();
     }
-
 }

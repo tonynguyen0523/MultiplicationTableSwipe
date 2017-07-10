@@ -22,6 +22,7 @@ public class PlayBackPressDialogFragment extends DialogFragment {
 
 
     private PlayFragment playFragment;
+    private boolean isGoingHome = false;
 
     public PlayBackPressDialogFragment() {
         // Empty constructor required for DialogFragment
@@ -42,14 +43,17 @@ public class PlayBackPressDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
-                getActivity().finish();
                 playFragment.cancelTimer();
+                isGoingHome = true;
+                getActivity().finish();
+                getActivity().getSupportFragmentManager().beginTransaction().remove(playFragment).commit();
                 startActivity(intent);
             }
         });
         alertDialogBuilder.setNegativeButton(R.string.cancel_dialog_option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                isGoingHome = false;
                 dialog.dismiss();
             }
         });
@@ -63,7 +67,11 @@ public class PlayBackPressDialogFragment extends DialogFragment {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        playFragment.resumeTimer();
+        if(!isGoingHome) {
+            playFragment.resumeTimer();
+        } else {
+            isGoingHome = true;
+        }
         super.onDismiss(dialog);
     }
 }

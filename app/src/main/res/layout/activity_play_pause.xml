@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.swipeacademy.multiplicationtableswipe.PlayPauseActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/pause_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/pause_toolbar_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFF"
+            tools:text="@string/_24"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+    <TextView
+        android:id="@+id/pause"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Base.TextAppearance.AppCompat.Display2"
+        android:gravity="center_horizontal"
+        android:fontFamily="cursive"
+        android:textColor="@color/colorAccent"
+        android:text="@string/paused"/>
+
+        <LinearLayout
+            android:id="@+id/button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/pause">
+
+            <Button
+                android:id="@+id/pause_replay_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_replay_white_24dp"
+                android:drawableStart="@drawable/ic_replay_white_24dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:text="Replay"/>
+
+            <Button
+                android:id="@+id/pause_resume_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:drawableRight="@drawable/ic_keyboard_return_white_24dp"
+                android:drawableEnd="@drawable/ic_keyboard_return_white_24dp"
+                android:textColor="@color/white"
+                android:text="Resume"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/pause_home_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button_layout"
+            android:layout_centerHorizontal="true"
+            android:drawableStart="@drawable/ic_home_white_24dp"
+            android:drawableLeft="@drawable/ic_home_white_24dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:text="Home"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
