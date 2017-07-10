@@ -1,14 +1,15 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.IntentCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -266,7 +267,10 @@ public class PlayFragment extends Fragment {
                     countdownTimer.cancel();
                     ((PlayActivity) getActivity()).playFinished();
                     CorrectionsUtil.editCorrectionsList(getContext(), mCorrections);
-                    resultsDialog();
+                    Intent intent = new Intent(getContext(),PlayResultActivity.class);
+                    ComponentName cn = intent.getComponent();
+                    Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+                    startActivity(mainIntent);
                 } else {
                     // Generate new question
                     choicesTV[mCorrectTextViewID].setTextColor(Color.BLACK);

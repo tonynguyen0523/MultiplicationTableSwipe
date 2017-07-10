@@ -62,8 +62,8 @@
     <string name="history_icon">history icon</string>
     <string name="practice_icon">practice icon</string>
     <string name="choose_a_table_to_practice">Choose a table to practice!</string>
-    <string name="home_button">home button</string>
-    <string name="replay_button">replay button</string>
+    <string name="home_button">Home</string>
+    <string name="replay_button">Replay</string>
     <string name="_24">24</string>
     <string name="_48">48</string>
     <string name="_72">72</string>

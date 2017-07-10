@@ -104,6 +104,7 @@ class HistoryLineChart {
                 .setDotsColor(ContextCompat.getColor(mContext, R.color.colorAccent))
                 .setThickness(8);
         mChart.addData(dataSet);
+        mChart.setStep(1);
 
         mChart.setAxisBorderValues(0, mAxisBorderValue + 1)
                 .setYLabels(AxisRenderer.LabelPosition.NONE)

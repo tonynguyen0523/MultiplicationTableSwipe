@@ -1,7 +1,6 @@
 package com.swipeacademy.multiplicationtableswipe;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -94,13 +93,13 @@ public class PlayActivity extends AppCompatActivity {
 
             // Update recent results for widget
             switch (PrefUtility.getSelectedTable(this)) {
-                case "24":
+                case "3":
                     PrefUtility.setRecent24(this, score);
                     break;
-                case "48":
+                case "4":
                     PrefUtility.setRecent48(this, score);
                     break;
-                case "72":
+                case "5":
                     PrefUtility.setRecent72(this, score);
                     break;
                 default:

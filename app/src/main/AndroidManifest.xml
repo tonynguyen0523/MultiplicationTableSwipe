@@ -52,9 +52,10 @@
 
         <service android:name=".WidgetIntentService" />
 
-        <activity android:name=".PlayPauseActivity"
-            android:screenOrientation="portrait">
-        </activity>
+        <activity
+            android:name=".PlayPauseActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".PlayResultActivity"></activity>
     </application>
 
 </manifest>
