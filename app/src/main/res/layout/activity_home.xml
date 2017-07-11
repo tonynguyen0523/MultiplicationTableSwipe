@@ -21,14 +21,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:id="@+id/app_title"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:text="Multiplication Table"
+                android:fontFamily="cursive"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:paddingRight="50dp"
                 android:layout_centerHorizontal="true"/>
 
             <TextView
@@ -36,10 +40,19 @@
                 android:layout_width="wrap_content"
                 android:fontFamily="cursive"
                 android:textStyle="bold"
-                android:textSize="35sp"
+                android:textSize="50sp"
                 android:text="Swipe!"
+                android:textColor="@color/colorAccent"
+                android:layout_marginTop="-20dp"
+                android:paddingLeft="135dp"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/app_title" />
+
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:src="@drawable/mtslogo"-->
+                <!--android:layout_centerInParent="true"/>-->
 
         </RelativeLayout>
     </android.support.design.widget.AppBarLayout>

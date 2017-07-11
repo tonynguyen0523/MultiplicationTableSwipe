@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
@@ -31,30 +32,25 @@ import butterknife.Unbinder;
 
 public class PlayFragment extends Fragment {
 
-    @BindView(R.id.play_answer_choices_area)
-    View mChoiceArea;
-    @BindView(R.id.play_question1)
-    TextView mQuestion1;
-    @BindView(R.id.play_question2)
-    TextView mQuestion2;
-    @BindView(R.id.choice1)
-    TextView mChoice1;
-    @BindView(R.id.choice2)
-    TextView mChoice2;
-    @BindView(R.id.choice3)
-    TextView mChoice3;
-    @BindView(R.id.choice4)
-    TextView mChoice4;
-    @BindView(R.id.question_border_1)
-    View mBorder1;
-    @BindView(R.id.question_border_2)
-    View mBorder2;
-    @BindView(R.id.question_border_3)
-    View mBorder3;
-    @BindView(R.id.question_border_4)
-    View mBorder4;
-    //    @BindView(R.id.countdown_timer_text_view)
-//    TextView mCountdownTimerTV;
+    @BindView(R.id.play_answer_choices_area) View mChoiceArea;
+    @BindView(R.id.play_question1) TextView mQuestion1;
+    @BindView(R.id.play_question2) TextView mQuestion2;
+    @BindView(R.id.choice1) TextView mChoice1;
+    @BindView(R.id.choice2) TextView mChoice2;
+    @BindView(R.id.choice3) TextView mChoice3;
+    @BindView(R.id.choice4) TextView mChoice4;
+    @BindView(R.id.swipe_arrow_1)
+    ImageView mSwipeArrow1;
+    @BindView(R.id.swipe_arrow_2)
+    ImageView mSwipeArrow2;
+    @BindView(R.id.swipe_arrow_3)
+    ImageView mSwipeArrow3;
+    @BindView(R.id.swipe_arrow_4)
+    ImageView mSwipeArrow4;
+    @BindView(R.id.question_border_1) View mBorder1;
+    @BindView(R.id.question_border_2) View mBorder2;
+    @BindView(R.id.question_border_3) View mBorder3;
+    @BindView(R.id.question_border_4) View mBorder4;
     @BindView(R.id.play_pause_button)
     ImageButton mPauseButton;
 
@@ -72,7 +68,7 @@ public class PlayFragment extends Fragment {
     private int mCorrectTextViewID;
     private long mTimeLeft;
     private boolean mIsCorrection;
-    private boolean mIsFinished;
+    private boolean mIsPractice;
     private boolean mNoTimer;
     private Unbinder unbinder;
 
@@ -187,7 +183,8 @@ public class PlayFragment extends Fragment {
         // Check which asset to display
         mSelectedAsset = PrefUtility.getSelectedAsset(getContext());
         // Check if practice mode
-        mNoTimer = PrefUtility.getIsPractice(getContext());
+        mIsPractice = PrefUtility.getIsPractice(getContext());
+//        mNoTimer = PrefUtility.getIsPractice(getContext());
         Log.d("PREF", "practice is " + Boolean.toString(mNoTimer));
         Log.d("PREF", "correction is " + Boolean.toString(mIsCorrection));
 
@@ -237,7 +234,8 @@ public class PlayFragment extends Fragment {
             mCurrentScore++;
             changeSelectedColor(choicesTV, choiceTVID, ContextCompat.getColor(getContext(), R.color.correct), ContextCompat.getColor(getContext(), R.color.correct));
             delay = DELAY;
-        } else if (mIsCorrection || mNoTimer) {
+//        } else if (mIsCorrection || mIsPractice) {
+        } else if (noTimer()) {
             mCorrections.add(Integer.toString(mQuestionID));
             changeSelectedColor(choicesTV, choiceTVID, ContextCompat.getColor(getContext(), R.color.wrong), ContextCompat.getColor(getContext(), R.color.wrong));
             choicesTV[mCorrectTextViewID].setTextColor(ContextCompat.getColor(getContext(), R.color.correct));
@@ -300,7 +298,7 @@ public class PlayFragment extends Fragment {
         mCorrectAnswer = qs != null ? qs.getAnswer() : 0;
         initializeChoices(qs != null ? qs.getChoices() : null, choicesTV);
 
-        if (!mNoTimer) {
+        if (!noTimer()) {
             startTimer();
         }
     }
@@ -380,8 +378,6 @@ public class PlayFragment extends Fragment {
         }.start();
 
         ((PlayActivity) getActivity()).countdownCircle();
-        Log.d("START TIMER", "timer started");
-
     }
 
     public void pauseTimer() {
@@ -395,7 +391,6 @@ public class PlayFragment extends Fragment {
         if (countdownTimer != null) {
             countdownTimer.resume();
             ((PlayActivity) getActivity()).resumeCountdownCircle(mTimeLeft);
-            Log.d("COUNTDOWN", "ONRESUME");
         }
     }
 
@@ -403,5 +398,17 @@ public class PlayFragment extends Fragment {
         if (countdownTimer != null) {
             countdownTimer.cancel();
         }
+    }
+
+    public boolean noTimer(){
+        if (mIsCorrection){
+            mNoTimer = true;
+        } else if (mIsPractice){
+            mNoTimer = true;
+        } else {
+            mNoTimer = false;
+        }
+
+        return mNoTimer;
     }
 }

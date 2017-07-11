@@ -4,9 +4,9 @@ import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
+import android.widget.FrameLayout;
 
 import com.db.chart.animation.Animation;
 import com.db.chart.model.LineSet;
@@ -30,7 +30,7 @@ class HistoryLineChart {
     private Cursor cursor;
     private int mAxisBorderValue;
 
-    HistoryLineChart(CardView card, Context context, Cursor data, int axisBorderValue) {
+    HistoryLineChart(FrameLayout card, Context context, Cursor data, int axisBorderValue) {
         mContext = context;
         cursor = data;
         mAxisBorderValue = axisBorderValue;

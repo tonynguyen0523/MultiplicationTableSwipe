@@ -204,7 +204,6 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PlayActivity.class);
                     PlayUtility.startPlay(getActivity(),amount24);
-                    PrefUtility.setIsPractice(getActivity(),false);
                     getActivity().finish();
                     startActivity(intent);
 
@@ -216,7 +215,6 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PlayActivity.class);
                     PlayUtility.startPlay(getActivity(),amount48);
-                    PrefUtility.setIsPractice(getActivity(),false);
                     getActivity().finish();
                     startActivity(intent);
                 }
@@ -227,7 +225,6 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PlayActivity.class);
                     PlayUtility.startPlay(getActivity(),amount72);
-                    PrefUtility.setIsPractice(getActivity(),false);
                     getActivity().finish();
                     startActivity(intent);
                 }

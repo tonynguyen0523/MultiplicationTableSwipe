@@ -22,7 +22,6 @@ public class PlayResultActivity extends AppCompatActivity {
     TextView mResultComment;
     @BindView(R.id.results_score)
     TextView mFinalScore;
-    //    @BindView(R.id.results_replay)Button mReplayButton;
     @BindView(R.id.results_home)
     Button mHomeButton;
     @BindView(R.id.do_corrections)
@@ -31,6 +30,9 @@ public class PlayResultActivity extends AppCompatActivity {
     FrameLayout mContainer;
 
     private int backPressCount;
+    private boolean mIsCorrections;
+    private boolean mIsPractice;
+    private boolean mNoTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,8 @@ public class PlayResultActivity extends AppCompatActivity {
         int mCurrentScore = PrefUtility.getCurrentScore(this);
         final int selectedAmount = PrefUtility.getSelectedAmount(this);
         double resultPercentage = (double) mCurrentScore / selectedAmount * 100;
-        boolean isCorrection = PrefUtility.getIsCorrections(this);
-        boolean isNoTimer = PrefUtility.getIsPractice(this);
+        mIsCorrections = PrefUtility.getIsCorrections(this);
+        mIsPractice = PrefUtility.getIsPractice(this);
         backPressCount = 0;
 
         String resultsComment;
@@ -62,9 +64,9 @@ public class PlayResultActivity extends AppCompatActivity {
 
         // Display correction button if correction are available &
         // is not already doing corrections
-        if (!CorrectionsUtil.getCorrections(this).isEmpty() && !isNoTimer) {
+        if (!CorrectionsUtil.getCorrections(this).isEmpty() && !mIsCorrections) {
             mCorrectionsButton.setVisibility(View.VISIBLE);
-        } else if (isNoTimer) {
+        } else if (mIsCorrections) {
             mCorrectionsButton.setVisibility(View.GONE);
         } else {
             mCorrectionsButton.setVisibility(View.GONE);
@@ -94,7 +96,7 @@ public class PlayResultActivity extends AppCompatActivity {
             }
         });
 
-        if (!isNoTimer) {
+        if (!noTimer()) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.result_fragment_container, HistoryFragment.newInstance(Integer.toString(selectedAmount)))
                     .addToBackStack(null)
@@ -114,5 +116,17 @@ public class PlayResultActivity extends AppCompatActivity {
             Toast.makeText(this, "Press back again to go home", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public boolean noTimer(){
+        if (mIsCorrections){
+            mNoTimer = true;
+        } else if (mIsPractice){
+            mNoTimer = true;
+        } else {
+            mNoTimer = false;
+        }
+
+        return mNoTimer;
     }
 }

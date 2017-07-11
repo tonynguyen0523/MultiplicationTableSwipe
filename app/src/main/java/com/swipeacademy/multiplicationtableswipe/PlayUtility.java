@@ -1,8 +1,6 @@
 package com.swipeacademy.multiplicationtableswipe;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 
@@ -12,13 +10,20 @@ import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 
 public class PlayUtility {
 
+    /**
+     * Reset everything back to default
+     * */
     public static void resetPlay(Context context){
 
         PrefUtility.setCurrentScore(context, 0);
         CorrectionsUtil.clearCorrections(context);
         PrefUtility.setIsCorrections(context, false);
+        PrefUtility.setIsPractice(context,false);
     }
 
+    /**
+     * Start Lets Play option
+     * */
     public static void startPlay(Context context, int amount){
 
         PrefUtility.setSelectedAmount(context, amount);

@@ -12,6 +12,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.db.chart.view.LineChartView;
@@ -28,7 +29,7 @@ import butterknife.Unbinder;
 public class HistoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     @BindView(R.id.chart_card)
-    CardView mCardView;
+    FrameLayout mCardView;
     @BindView(R.id.history_lineChart)
     LineChartView mLineChartView;
     @BindView(R.id.chart_empty_textView)

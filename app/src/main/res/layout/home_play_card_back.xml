@@ -27,6 +27,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
+            android:clickable="true"
             app:cardCornerRadius="0dp">
 
             <TextView
@@ -55,6 +56,7 @@
             android:layout_height="@dimen/home_play_back_option_card_height"
             android:layout_weight="1"
             android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
             app:cardCornerRadius="0dp">
 
             <TextView
@@ -85,6 +87,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
+            android:clickable="true"
             app:cardCornerRadius="0dp">
 
             <TextView

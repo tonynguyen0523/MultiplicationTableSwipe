@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.swipeacademy.multiplicationtableswipe.PlayPauseActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/pause_toolbar"
         android:layout_width="match_parent"
@@ -22,6 +28,8 @@
             tools:text="@string/_24"/>
 
     </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -42,30 +50,32 @@
             android:id="@+id/button_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_below="@id/pause">
 
             <Button
-                android:id="@+id/pause_replay_button"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:id="@+id/pause_resume_button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colorPrimary"
+                android:drawableLeft="@drawable/ic_keyboard_return_white_24dp"
+                android:drawableStart="@drawable/ic_keyboard_return_white_24dp"
+                android:textColor="@color/white"
+                android:text="Resume"/>
+
+            <Button
+                android:id="@+id/pause_replay_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:drawableLeft="@drawable/ic_replay_white_24dp"
                 android:drawableStart="@drawable/ic_replay_white_24dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:textColor="@color/white"
                 android:text="Replay"/>
 
-            <Button
-                android:id="@+id/pause_resume_button"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:drawableRight="@drawable/ic_keyboard_return_white_24dp"
-                android:drawableEnd="@drawable/ic_keyboard_return_white_24dp"
-                android:textColor="@color/white"
-                android:text="Resume"/>
+
 
         </LinearLayout>
 
