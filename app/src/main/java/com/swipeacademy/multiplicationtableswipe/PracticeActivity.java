@@ -49,12 +49,12 @@ public class PracticeActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(View view, int position) {
                 // Prep for practice mode
+                Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
                 String assetSelected = getResources().getStringArray(R.array.assets)[position];
                 PrefUtility.setSelectedAsset(getApplicationContext(), assetSelected);
                 PrefUtility.setRemainingQuestions(getApplicationContext(), 12);
                 PrefUtility.setSelectedAmount(getApplicationContext(), 12);
-                Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
-                finish();
+                PrefUtility.setIsPractice(getApplicationContext(),true);
                 startActivity(intent);
             }
         });

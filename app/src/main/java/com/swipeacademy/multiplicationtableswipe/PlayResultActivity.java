@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 
@@ -17,12 +18,19 @@ import butterknife.ButterKnife;
 
 public class PlayResultActivity extends AppCompatActivity {
 
-    @BindView(R.id.results_comment)TextView mResultComment;
-    @BindView(R.id.results_score)TextView mFinalScore;
-//    @BindView(R.id.results_replay)Button mReplayButton;
-    @BindView(R.id.results_home)Button mHomeButton;
-    @BindView(R.id.do_corrections)Button mCorrectionsButton;
-    @BindView(R.id.result_fragment_container)FrameLayout mContainer;
+    @BindView(R.id.results_comment)
+    TextView mResultComment;
+    @BindView(R.id.results_score)
+    TextView mFinalScore;
+    //    @BindView(R.id.results_replay)Button mReplayButton;
+    @BindView(R.id.results_home)
+    Button mHomeButton;
+    @BindView(R.id.do_corrections)
+    Button mCorrectionsButton;
+    @BindView(R.id.result_fragment_container)
+    FrameLayout mContainer;
+
+    private int backPressCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +38,13 @@ public class PlayResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play_result);
         ButterKnife.bind(this);
 
+
         int mCurrentScore = PrefUtility.getCurrentScore(this);
         final int selectedAmount = PrefUtility.getSelectedAmount(this);
         double resultPercentage = (double) mCurrentScore / selectedAmount * 100;
         boolean isCorrection = PrefUtility.getIsCorrections(this);
+        boolean isNoTimer = PrefUtility.getIsPractice(this);
+        backPressCount = 0;
 
         String resultsComment;
         if (resultPercentage == 100) {
@@ -51,11 +62,10 @@ public class PlayResultActivity extends AppCompatActivity {
 
         // Display correction button if correction are available &
         // is not already doing corrections
-        if (!CorrectionsUtil.getCorrections(this).isEmpty() && !isCorrection) {
+        if (!CorrectionsUtil.getCorrections(this).isEmpty() && !isNoTimer) {
             mCorrectionsButton.setVisibility(View.VISIBLE);
-        } else if (isCorrection) {
+        } else if (isNoTimer) {
             mCorrectionsButton.setVisibility(View.GONE);
-//            mReplayButton.setVisibility(View.GONE);
         } else {
             mCorrectionsButton.setVisibility(View.GONE);
         }
@@ -73,39 +83,36 @@ public class PlayResultActivity extends AppCompatActivity {
         mCorrectionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
+                Intent intent = new Intent(PlayResultActivity.this, PlayActivity.class);
                 // Prep for correction mode
-                PrefUtility.setIsCorrections(getApplicationContext(), true);
-                PrefUtility.setCurrentScore(getApplicationContext(), 0);
-                PrefUtility.setRemainingQuestions(getApplicationContext(), CorrectionsUtil.getCorrections(getApplicationContext()).size());
-                PrefUtility.setSelectedAmount(getApplicationContext(), CorrectionsUtil.getCorrections(getApplicationContext()).size());
-                finish();
+                PrefUtility.setIsCorrections(PlayResultActivity.this, true);
+                PrefUtility.setIsPractice(PlayResultActivity.this,true);
+                PrefUtility.setCurrentScore(PlayResultActivity.this, 0);
+                PrefUtility.setRemainingQuestions(PlayResultActivity.this, CorrectionsUtil.getCorrections(getApplicationContext()).size());
+                PrefUtility.setSelectedAmount(PlayResultActivity.this, CorrectionsUtil.getCorrections(getApplicationContext()).size());
                 startActivity(intent);
             }
         });
 
-//        mReplayButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
-//                // Make sure results are cleared for fresh replay
-//                PrefUtility.setIsCorrections(getApplicationContext(), false);
-//                PrefUtility.setCurrentScore(getApplicationContext(), 0);
-//                PrefUtility.setRemainingQuestions(getApplicationContext(), selectedAmount);
-//                PlayUtility.resetPlay(getApplicationContext());
-//                PlayUtility.startPlay(getApplicationContext(),selectedAmount);
-//                CorrectionsUtil.clearCorrections(getApplicationContext());
-//                ComponentName cn = intent.getComponent();
-//                Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
-//                startActivity(mainIntent);
-//            }
-//        });
-
-        if(!isCorrection) {
+        if (!isNoTimer) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.result_fragment_container, HistoryFragment.newInstance(Integer.toString(selectedAmount)))
                     .addToBackStack(null)
                     .commit();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        backPressCount++;
+        if (backPressCount == 2) {
+            Intent intent = new Intent(PlayResultActivity.this, HomeActivity.class);
+            ComponentName cn = intent.getComponent();
+            Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+            startActivity(mainIntent);
+        } else {
+            Toast.makeText(this, "Press back again to go home", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

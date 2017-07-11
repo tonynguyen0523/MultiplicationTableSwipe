@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.IntentCompat;
@@ -54,7 +53,7 @@ public class PlayFragment extends Fragment {
     View mBorder3;
     @BindView(R.id.question_border_4)
     View mBorder4;
-//    @BindView(R.id.countdown_timer_text_view)
+    //    @BindView(R.id.countdown_timer_text_view)
 //    TextView mCountdownTimerTV;
     @BindView(R.id.play_pause_button)
     ImageButton mPauseButton;
@@ -74,6 +73,7 @@ public class PlayFragment extends Fragment {
     private long mTimeLeft;
     private boolean mIsCorrection;
     private boolean mIsFinished;
+    private boolean mNoTimer;
     private Unbinder unbinder;
 
     public PlayFragment() {
@@ -93,7 +93,7 @@ public class PlayFragment extends Fragment {
         mPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),PlayPauseActivity.class);
+                Intent intent = new Intent(getActivity(), PlayPauseActivity.class);
                 startActivity(intent);
             }
         });
@@ -176,6 +176,7 @@ public class PlayFragment extends Fragment {
         super.onResume();
     }
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
@@ -185,25 +186,28 @@ public class PlayFragment extends Fragment {
         mIsCorrection = PrefUtility.getIsCorrections(getContext());
         // Check which asset to display
         mSelectedAsset = PrefUtility.getSelectedAsset(getContext());
+        // Check if practice mode
+        mNoTimer = PrefUtility.getIsPractice(getContext());
+        Log.d("PREF", "practice is " + Boolean.toString(mNoTimer));
+        Log.d("PREF", "correction is " + Boolean.toString(mIsCorrection));
 
-        if(!mIsFinished) {
-            if (savedInstanceState == null) {
-                // Retrieve available questions
-                if (mIsCorrection) {
-                    mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
-                    mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
-                    generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
-                } else {
-                    mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(), mSelectedAsset);
-                    mCorrections = new ArrayList<>();
-                    generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
-                }
+        if (savedInstanceState == null) {
+            // Retrieve available questions
+            if (mIsCorrection) {
+                mCorrections = new ArrayList<>(CorrectionsUtil.getCorrections(getContext()));
+                mRemainingQuestionsIDs = QuestionSample.getAllCorrectionsIDs(mCorrections);
+                generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
             } else {
-                mRemainingQuestionsIDs = savedInstanceState.getIntegerArrayList(REMAINING_QUESTIONS_KEY);
-                mCorrections = savedInstanceState.getStringArrayList(CORRECTIONS_KEY);
-                mQuestionID = savedInstanceState.getInt(CURRENT_QUESTION);
-                generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, true);
+                mRemainingQuestionsIDs = QuestionSample.getAllQuestionsIDs(getContext(), mSelectedAsset);
+                mCorrections = new ArrayList<>();
+                generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, false);
             }
+        } else {
+            mRemainingQuestionsIDs = savedInstanceState.getIntegerArrayList(REMAINING_QUESTIONS_KEY);
+            mCorrections = savedInstanceState.getStringArrayList(CORRECTIONS_KEY);
+            mQuestionID = savedInstanceState.getInt(CURRENT_QUESTION);
+            generateQuestion(mRemainingQuestionsIDs, mChoicesIDs, true);
+
         }
         super.onActivityCreated(savedInstanceState);
     }
@@ -231,12 +235,12 @@ public class PlayFragment extends Fragment {
         // else add questionId to correctionsList
         if (correct) {
             mCurrentScore++;
-            changeSelectedColor(choicesTV, choiceTVID, ContextCompat.getColor(getContext(),R.color.correct), ContextCompat.getColor(getContext(),R.color.correct));
+            changeSelectedColor(choicesTV, choiceTVID, ContextCompat.getColor(getContext(), R.color.correct), ContextCompat.getColor(getContext(), R.color.correct));
             delay = DELAY;
-        } else if (mIsCorrection) {
+        } else if (mIsCorrection || mNoTimer) {
             mCorrections.add(Integer.toString(mQuestionID));
-            changeSelectedColor(choicesTV, choiceTVID, ContextCompat.getColor(getContext(),R.color.wrong), ContextCompat.getColor(getContext(),R.color.wrong));
-            choicesTV[mCorrectTextViewID].setTextColor(ContextCompat.getColor(getContext(),R.color.correct));
+            changeSelectedColor(choicesTV, choiceTVID, ContextCompat.getColor(getContext(), R.color.wrong), ContextCompat.getColor(getContext(), R.color.wrong));
+            choicesTV[mCorrectTextViewID].setTextColor(ContextCompat.getColor(getContext(), R.color.correct));
             delay = CORRECTIONS_DELAY;
         } else {
             mCorrections.add(Integer.toString(mQuestionID));
@@ -246,7 +250,7 @@ public class PlayFragment extends Fragment {
 
         // Reduce remaining question by 1
         mRemainingQuestions--;
-        countdownTimer.cancel();
+        cancelTimer();
 
         // Update preferences
         PrefUtility.setCurrentScore(getContext(), mCurrentScore);
@@ -263,11 +267,10 @@ public class PlayFragment extends Fragment {
             public void run() {
                 // Check if there is any questions left, if not end game
                 if (finalMRemainingQuestions == 0) {
-                    mIsFinished = true;
-                    countdownTimer.cancel();
+                    cancelTimer();
                     ((PlayActivity) getActivity()).playFinished();
                     CorrectionsUtil.editCorrectionsList(getContext(), mCorrections);
-                    Intent intent = new Intent(getContext(),PlayResultActivity.class);
+                    Intent intent = new Intent(getContext(), PlayResultActivity.class);
                     ComponentName cn = intent.getComponent();
                     Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
                     startActivity(mainIntent);
@@ -296,7 +299,10 @@ public class PlayFragment extends Fragment {
         setUpQuestion(qs);
         mCorrectAnswer = qs != null ? qs.getAnswer() : 0;
         initializeChoices(qs != null ? qs.getChoices() : null, choicesTV);
-        startTimer();
+
+        if (!mNoTimer) {
+            startTimer();
+        }
     }
 
     /**
@@ -310,6 +316,8 @@ public class PlayFragment extends Fragment {
         mQuestion1.setText(Integer.toString(questions.get(0)));
         setAnimation(mQuestion1);
         mQuestion2.setText(Integer.toString(questions.get(1)));
+
+
         setAnimation(mQuestion2);
     }
 
@@ -334,16 +342,6 @@ public class PlayFragment extends Fragment {
     }
 
     /**
-     * Show results dialog
-     */
-    private void resultsDialog() {
-        DialogFragment dialogFragment = new PlayResultsDialog();
-        dialogFragment.setCancelable(false);
-        dialogFragment.setRetainInstance(true);
-        dialogFragment.show(getFragmentManager(), "resultsdialog");
-    }
-
-    /**
      * Change question border color
      */
     private void changeSelectedColor(TextView[] choicesTV, int choiceTVID, int choiceColor, int borderColor) {
@@ -364,11 +362,11 @@ public class PlayFragment extends Fragment {
         viewToAnimate.startAnimation(animation);
     }
 
-    private void startTimer(){
+    private void startTimer() {
 
         final TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
 
-        countdownTimer = new MyCountdownTimer(5000,1000) {
+        countdownTimer = new MyCountdownTimer(5000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -380,21 +378,30 @@ public class PlayFragment extends Fragment {
                 nextQuestion(mChoicesIDs, 5, -1);
             }
         }.start();
-        ((PlayActivity)getActivity()).countdownCircle();
+
+        ((PlayActivity) getActivity()).countdownCircle();
+        Log.d("START TIMER", "timer started");
+
     }
 
-    public void pauseTimer(){
-        countdownTimer.pause();
-        ((PlayActivity)getActivity()).pauseCountdownCircle();
+    public void pauseTimer() {
+        if (countdownTimer != null) {
+            countdownTimer.pause();
+            ((PlayActivity) getActivity()).pauseCountdownCircle();
+        }
     }
 
-    public void resumeTimer(){
+    public void resumeTimer() {
+        if (countdownTimer != null) {
             countdownTimer.resume();
             ((PlayActivity) getActivity()).resumeCountdownCircle(mTimeLeft);
             Log.d("COUNTDOWN", "ONRESUME");
+        }
     }
 
-    public void cancelTimer(){
-        countdownTimer.cancel();
+    public void cancelTimer() {
+        if (countdownTimer != null) {
+            countdownTimer.cancel();
+        }
     }
 }

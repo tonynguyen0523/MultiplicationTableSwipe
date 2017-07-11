@@ -26,6 +26,7 @@ class PrefUtility {
     private static final String AMOUNT_SELECTED = "amount_selected";
     private static final String TABLE_SELECTED = "table_selected";
     private static final String ASSET_SELECTED = "asset_selected";
+    private static final String IS_PRACTICE = "is_practice";
     private static final String IS_CORRECTIONS = "is_corrections";
     private static final String USER_SCHOOL_GRADE = "school_grade";
     private static final String RECENT_24 = "recent_24";
@@ -183,6 +184,20 @@ class PrefUtility {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.pref_is_corrections), Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(IS_CORRECTIONS, false);
+    }
+
+    static void setIsPractice(Context context, boolean bool) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_is_practice), Context.MODE_PRIVATE);
+        SharedPreferences.Editor spe = sharedPreferences.edit();
+        spe.putBoolean(IS_PRACTICE, bool);
+        spe.apply();
+    }
+
+    static boolean getIsPractice(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.pref_is_practice), Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(IS_PRACTICE, false);
     }
 
     static int getSchoolGrade(Context context) {

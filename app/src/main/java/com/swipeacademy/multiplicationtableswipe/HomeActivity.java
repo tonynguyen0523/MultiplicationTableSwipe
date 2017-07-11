@@ -1,10 +1,10 @@
 package com.swipeacademy.multiplicationtableswipe;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -19,7 +19,6 @@ import android.widget.FrameLayout;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.swipeacademy.multiplicationtableswipe.Util.Analytics;
-import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -205,6 +204,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PlayActivity.class);
                     PlayUtility.startPlay(getActivity(),amount24);
+                    PrefUtility.setIsPractice(getActivity(),false);
                     getActivity().finish();
                     startActivity(intent);
 
@@ -216,6 +216,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PlayActivity.class);
                     PlayUtility.startPlay(getActivity(),amount48);
+                    PrefUtility.setIsPractice(getActivity(),false);
                     getActivity().finish();
                     startActivity(intent);
                 }
@@ -226,6 +227,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PlayActivity.class);
                     PlayUtility.startPlay(getActivity(),amount72);
+                    PrefUtility.setIsPractice(getActivity(),false);
                     getActivity().finish();
                     startActivity(intent);
                 }

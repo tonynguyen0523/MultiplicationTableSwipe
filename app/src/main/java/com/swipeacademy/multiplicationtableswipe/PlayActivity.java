@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -127,7 +126,6 @@ public class PlayActivity extends AppCompatActivity {
         angleAnimation.setDuration(5000);
         mCountdownCircle.startAnimation(angleAnimation);
         mPaused = false;
-        Log.d("COUNTDOWNCIRCLE", "START");
     }
 
     public void pauseCountdownCircle(){
@@ -135,7 +133,6 @@ public class PlayActivity extends AppCompatActivity {
         mCountdownCircle.clearAnimation();
         mCountdownCircle.setAngle(angle);
         mPaused = true;
-        Log.d("COUNTDOWNCIRCLE", "PAUSE" + Float.toString(angle));
     }
 
     public void resumeCountdownCircle(long timeLeft){
@@ -146,11 +143,8 @@ public class PlayActivity extends AppCompatActivity {
             angleAnimation.setDuration(timeLeft);
             mCountdownCircle.startAnimation(angleAnimation);
             mPaused = false;
-            Log.d("COUNTDOWNCIRCLE", "RESTART" + Float.toString(angle));
-
         } else {
             countdownCircle();
-            Log.d("COUNTDOWNCIRCLE", "START2");
 
         }
     }

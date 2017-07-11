@@ -28,6 +28,7 @@ public abstract class MyCountdownTimer {
 
     private boolean mPaused = false;
 
+
     /**
      * @param millisInFuture The number of millis in the future from the call
      *   to {@link #start()} until the countdown is done and {@link #onFinish()}
@@ -46,8 +47,8 @@ public abstract class MyCountdownTimer {
      * Do not call it from inside CountDownTimer threads
      */
     public final void cancel() {
-        mHandler.removeMessages(MSG);
-        mCancelled = true;
+            mHandler.removeMessages(MSG);
+            mCancelled = true;
     }
 
     /**
