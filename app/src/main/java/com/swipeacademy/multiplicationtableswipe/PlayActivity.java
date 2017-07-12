@@ -119,11 +119,11 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     // Initiate circle animation method
-    public void countdownCircle() {
+    public void countdownCircle(long duration) {
         mCountdownCircle.clearAnimation();
         mCountdownCircle.setAngle(0);
         angleAnimation = new CircleAngleAnimation(mCountdownCircle, 365);
-        angleAnimation.setDuration(5000);
+        angleAnimation.setDuration(duration);
         mCountdownCircle.startAnimation(angleAnimation);
         mPaused = false;
     }
@@ -135,7 +135,7 @@ public class PlayActivity extends AppCompatActivity {
         mPaused = true;
     }
 
-    public void resumeCountdownCircle(long timeLeft){
+    public void resumeCountdownCircle(long timeLeft,long duration){
         if (mPaused) {
             mCountdownCircle.clearAnimation();
             mCountdownCircle.setAngle(angle);
@@ -144,8 +144,7 @@ public class PlayActivity extends AppCompatActivity {
             mCountdownCircle.startAnimation(angleAnimation);
             mPaused = false;
         } else {
-            countdownCircle();
-
+            countdownCircle(duration);
         }
     }
 

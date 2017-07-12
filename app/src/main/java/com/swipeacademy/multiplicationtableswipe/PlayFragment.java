@@ -364,7 +364,7 @@ public class PlayFragment extends Fragment {
 
         final TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
 
-        countdownTimer = new MyCountdownTimer(5000, 1000) {
+        countdownTimer = new MyCountdownTimer(timerDuration(), 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -377,7 +377,7 @@ public class PlayFragment extends Fragment {
             }
         }.start();
 
-        ((PlayActivity) getActivity()).countdownCircle();
+        ((PlayActivity) getActivity()).countdownCircle(timerDuration());
     }
 
     public void pauseTimer() {
@@ -390,7 +390,7 @@ public class PlayFragment extends Fragment {
     public void resumeTimer() {
         if (countdownTimer != null) {
             countdownTimer.resume();
-            ((PlayActivity) getActivity()).resumeCountdownCircle(mTimeLeft);
+            ((PlayActivity) getActivity()).resumeCountdownCircle(mTimeLeft,timerDuration());
         }
     }
 
@@ -410,5 +410,24 @@ public class PlayFragment extends Fragment {
         }
 
         return mNoTimer;
+    }
+
+    public long timerDuration(){
+        int selectedAmount = PrefUtility.getSelectedAmount(getContext());
+        long duration = 0;
+        switch (selectedAmount){
+            case 3:
+                duration = 5000;
+                break;
+            case 4:
+                duration = 4000;
+                break;
+            case 5:
+                duration = 3000;
+                break;
+            default:
+                Log.d("DURATION", "No duration");
+        }
+        return duration;
     }
 }

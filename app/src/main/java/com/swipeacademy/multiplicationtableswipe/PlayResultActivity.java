@@ -66,7 +66,7 @@ public class PlayResultActivity extends AppCompatActivity {
         // is not already doing corrections
         if (!CorrectionsUtil.getCorrections(this).isEmpty() && !mIsCorrections) {
             mCorrectionsButton.setVisibility(View.VISIBLE);
-        } else if (mIsCorrections) {
+        } else if (mNoTimer) {
             mCorrectionsButton.setVisibility(View.GONE);
         } else {
             mCorrectionsButton.setVisibility(View.GONE);
