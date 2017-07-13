@@ -57,7 +57,7 @@ public class PlayFragment extends Fragment {
     private static final String REMAINING_QUESTIONS_KEY = "remainingList";
     private static final String CORRECTIONS_KEY = "correctionsList";
     private static final String CURRENT_QUESTION = "currentQuestion";
-    private static final int DELAY = 250;
+    private static final int DELAY = 200;
     private static final int CORRECTIONS_DELAY = 1000;
     private MyCountdownTimer countdownTimer;
     private ArrayList<Integer> mRemainingQuestionsIDs;
@@ -184,7 +184,6 @@ public class PlayFragment extends Fragment {
         mSelectedAsset = PrefUtility.getSelectedAsset(getContext());
         // Check if practice mode
         mIsPractice = PrefUtility.getIsPractice(getContext());
-//        mNoTimer = PrefUtility.getIsPractice(getContext());
         Log.d("PREF", "practice is " + Boolean.toString(mNoTimer));
         Log.d("PREF", "correction is " + Boolean.toString(mIsCorrection));
 
@@ -416,13 +415,13 @@ public class PlayFragment extends Fragment {
         int selectedAmount = PrefUtility.getSelectedAmount(getContext());
         long duration = 0;
         switch (selectedAmount){
-            case 3:
+            case 24:
                 duration = 5000;
                 break;
-            case 4:
+            case 36:
                 duration = 4000;
                 break;
-            case 5:
+            case 48:
                 duration = 3000;
                 break;
             default:

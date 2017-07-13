@@ -35,21 +35,21 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
 
-        <com.swipeacademy.multiplicationtableswipe.Util.Circle
-            android:id="@+id/remaining_circle"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerInParent="true" />
+            <com.swipeacademy.multiplicationtableswipe.Util.Circle
+                android:id="@+id/remaining_circle"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerInParent="true" />
 
-        <TextView
-            android:id="@+id/remaining_questions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="35sp"
-            android:textColor="#000"
-            android:text="@string/remaining_questions"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/remaining_questions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="50sp"
+                android:textColor="#000"
+                android:text="@string/remaining_questions"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
 
     </RelativeLayout>
 

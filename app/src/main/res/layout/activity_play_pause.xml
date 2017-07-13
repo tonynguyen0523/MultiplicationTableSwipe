@@ -55,7 +55,7 @@
 
             <Button
                 android:id="@+id/pause_resume_button"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/colorPrimary"
@@ -66,7 +66,7 @@
 
             <Button
                 android:id="@+id/pause_replay_button"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:drawableLeft="@drawable/ic_replay_white_24dp"
@@ -74,8 +74,6 @@
                 android:backgroundTint="@color/colorPrimary"
                 android:textColor="@color/white"
                 android:text="Replay"/>
-
-
 
         </LinearLayout>
 

@@ -2,20 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="400dp">
 
     <TextView
         android:id="@+id/select_mode_text_view"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:gravity="center_horizontal"
+        android:textSize="30sp"
         android:text="@string/select_amount_of_questions"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="360dp"
         android:layout_below="@id/select_mode_text_view"
         android:orientation="horizontal">
 
@@ -97,7 +98,7 @@
                 android:background="@color/colorAccent"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:text="48" />
+                android:text="@string/_48" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -105,7 +106,6 @@
                 android:layout_gravity="bottom"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="5dp"
-
                 android:textSize="12sp"
                 android:text="@string/_3_secs_question"/>
 

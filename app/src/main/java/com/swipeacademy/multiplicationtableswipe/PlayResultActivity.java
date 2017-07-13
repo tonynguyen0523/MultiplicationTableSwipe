@@ -11,6 +11,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 
 import butterknife.BindView;
@@ -33,12 +36,27 @@ public class PlayResultActivity extends AppCompatActivity {
     private boolean mIsCorrections;
     private boolean mIsPractice;
     private boolean mNoTimer;
+    private InterstitialAd interstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_result);
         ButterKnife.bind(this);
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                ComponentName cn = intent.getComponent();
+                Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+                startActivity(mainIntent);
+            }
+        });
 
 
         int mCurrentScore = PrefUtility.getCurrentScore(this);
@@ -75,10 +93,14 @@ public class PlayResultActivity extends AppCompatActivity {
         mHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                ComponentName cn = intent.getComponent();
-                Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
-                startActivity(mainIntent);
+                if(interstitialAd.isLoaded()){
+                    interstitialAd.show();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    ComponentName cn = intent.getComponent();
+                    Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+                    startActivity(mainIntent);
+                }
             }
         });
 

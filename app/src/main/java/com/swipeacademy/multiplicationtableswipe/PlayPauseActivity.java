@@ -34,7 +34,7 @@ public class PlayPauseActivity extends AppCompatActivity {
 
         final int gameMode = PrefUtility.getSelectedAmount(this);
         boolean isCorrections = PrefUtility.getIsCorrections(this);
-        final boolean isPractice = PrefUtility.getIsPractice(this);
+
         mToolbarTitle.setText(Integer.toString(gameMode));
 
 
@@ -47,10 +47,8 @@ public class PlayPauseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
                 // Make sure results are cleared for fresh replay
-//                PrefUtility.setIsCorrections(PlayPauseActivity.this, false);
                 PrefUtility.setCurrentScore(PlayPauseActivity.this, 0);
                 PrefUtility.setRemainingQuestions(PlayPauseActivity.this, gameMode);
-//                PrefUtility.setIsPractice(PlayPauseActivity.this,isPractice);
                 CorrectionsUtil.clearCorrections(PlayPauseActivity.this);
                 ComponentName cn = intent.getComponent();
                 Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
