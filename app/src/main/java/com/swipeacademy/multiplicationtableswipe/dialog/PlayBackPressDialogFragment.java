@@ -32,8 +32,8 @@ public class PlayBackPressDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        playFragment = (PlayFragment)getFragmentManager().findFragmentById(R.id.play_container);
-        playFragment.pauseTimer();
+//        playFragment = (PlayFragment)getFragmentManager().findFragmentById(R.id.play_container);
+//        playFragment.pauseTimer();
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle(R.string.go_home_alert);
@@ -43,7 +43,7 @@ public class PlayBackPressDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
-                playFragment.cancelTimer();
+//                playFragment.cancelTimer();
                 isGoingHome = true;
                 getActivity().finish();
                 getActivity().getSupportFragmentManager().beginTransaction().remove(playFragment).commit();
@@ -68,7 +68,8 @@ public class PlayBackPressDialogFragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         if(!isGoingHome) {
-            playFragment.resumeTimer();
+//            playFragment.resumeTimer();
+            isGoingHome = false;
         } else {
             isGoingHome = true;
         }

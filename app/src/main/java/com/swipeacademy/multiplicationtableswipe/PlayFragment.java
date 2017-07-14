@@ -17,8 +17,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.serhatsurguvec.continuablecirclecountdownview.ContinuableCircleCountDownView;
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
 import com.swipeacademy.multiplicationtableswipe.Util.MyCountdownTimer;
 import com.swipeacademy.multiplicationtableswipe.Util.OnSwipeTouchListener;
@@ -53,6 +55,8 @@ public class PlayFragment extends Fragment {
     @BindView(R.id.question_border_4) View mBorder4;
     @BindView(R.id.play_pause_button)
     ImageButton mPauseButton;
+    @BindView(R.id.circleCountdown)
+    ContinuableCircleCountDownView mCircleCountdown;
 
     private static final String REMAINING_QUESTIONS_KEY = "remainingList";
     private static final String CORRECTIONS_KEY = "correctionsList";
@@ -98,28 +102,28 @@ public class PlayFragment extends Fragment {
         mChoice1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextQuestion(mChoicesIDs, 0, Integer.valueOf(mChoice1.getText().toString()));
+                nextQuestion(mChoicesIDs, 0, Integer.valueOf(mChoice1.getText().toString()),false);
 
             }
         });
         mChoice2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextQuestion(mChoicesIDs, 1, Integer.valueOf(mChoice2.getText().toString()));
+                nextQuestion(mChoicesIDs, 1, Integer.valueOf(mChoice2.getText().toString()),false);
 
             }
         });
         mChoice3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextQuestion(mChoicesIDs, 2, Integer.valueOf(mChoice3.getText().toString()));
+                nextQuestion(mChoicesIDs, 2, Integer.valueOf(mChoice3.getText().toString()),false);
 
             }
         });
         mChoice4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextQuestion(mChoicesIDs, 3, Integer.valueOf(mChoice4.getText().toString()));
+                nextQuestion(mChoicesIDs, 3, Integer.valueOf(mChoice4.getText().toString()),false);
             }
         });
 
@@ -129,25 +133,25 @@ public class PlayFragment extends Fragment {
             @Override
             public void onSwipeTop() {
                 super.onSwipeTop();
-                nextQuestion(mChoicesIDs, 1, Integer.valueOf(mChoice2.getText().toString()));
+                nextQuestion(mChoicesIDs, 1, Integer.valueOf(mChoice2.getText().toString()),false);
             }
 
             @Override
             public void onSwipeRight() {
                 super.onSwipeRight();
-                nextQuestion(mChoicesIDs, 2, Integer.valueOf(mChoice3.getText().toString()));
+                nextQuestion(mChoicesIDs, 2, Integer.valueOf(mChoice3.getText().toString()),false);
             }
 
             @Override
             public void onSwipeLeft() {
                 super.onSwipeLeft();
-                nextQuestion(mChoicesIDs, 0, Integer.valueOf(mChoice1.getText().toString()));
+                nextQuestion(mChoicesIDs, 0, Integer.valueOf(mChoice1.getText().toString()),false);
             }
 
             @Override
             public void onSwipeBottom() {
                 super.onSwipeBottom();
-                nextQuestion(mChoicesIDs, 3, Integer.valueOf(mChoice4.getText().toString()));
+                nextQuestion(mChoicesIDs, 3, Integer.valueOf(mChoice4.getText().toString()),false);
             }
         });
         return view;
@@ -162,13 +166,13 @@ public class PlayFragment extends Fragment {
 
     @Override
     public void onPause() {
-        pauseTimer();
+//        pauseTimer();
         super.onPause();
     }
 
     @Override
     public void onResume() {
-        resumeTimer();
+//        resumeTimer();
         super.onResume();
     }
 
@@ -219,7 +223,7 @@ public class PlayFragment extends Fragment {
     /**
      * Get next question method
      */
-    private void nextQuestion(final TextView[] choicesTV, final int choiceTVID, int userAnswer) {
+    public void nextQuestion(final TextView[] choicesTV, final int choiceTVID, int userAnswer, boolean timerEnd) {
 
         // Get current score and remaining question
         boolean correct = PrefUtility.userCorrect(mCorrectAnswer, userAnswer);
@@ -233,8 +237,8 @@ public class PlayFragment extends Fragment {
             mCurrentScore++;
             changeSelectedColor(choicesTV, choiceTVID, ContextCompat.getColor(getContext(), R.color.correct), ContextCompat.getColor(getContext(), R.color.correct));
             delay = DELAY;
-//        } else if (mIsCorrection || mIsPractice) {
-        } else if (noTimer()) {
+        } else if (mIsCorrection) {
+//        } else if (noTimer()) {
             mCorrections.add(Integer.toString(mQuestionID));
             changeSelectedColor(choicesTV, choiceTVID, ContextCompat.getColor(getContext(), R.color.wrong), ContextCompat.getColor(getContext(), R.color.wrong));
             choicesTV[mCorrectTextViewID].setTextColor(ContextCompat.getColor(getContext(), R.color.correct));
@@ -247,7 +251,10 @@ public class PlayFragment extends Fragment {
 
         // Reduce remaining question by 1
         mRemainingQuestions--;
-        cancelTimer();
+        if(!timerEnd) {
+            mCircleCountdown.cancel();
+        }
+//        cancelTimer();
 
         // Update preferences
         PrefUtility.setCurrentScore(getContext(), mCurrentScore);
@@ -264,7 +271,8 @@ public class PlayFragment extends Fragment {
             public void run() {
                 // Check if there is any questions left, if not end game
                 if (finalMRemainingQuestions == 0) {
-                    cancelTimer();
+//                    cancelTimer();
+//                    mCircleCountdown.cancel();
                     ((PlayActivity) getActivity()).playFinished();
                     CorrectionsUtil.editCorrectionsList(getContext(), mCorrections);
                     Intent intent = new Intent(getContext(), PlayResultActivity.class);
@@ -297,9 +305,10 @@ public class PlayFragment extends Fragment {
         mCorrectAnswer = qs != null ? qs.getAnswer() : 0;
         initializeChoices(qs != null ? qs.getChoices() : null, choicesTV);
 
-        if (!noTimer()) {
-            startTimer();
-        }
+//        if (!noTimer()) {
+//            startTimer();
+//        }
+        startTimer();
     }
 
     /**
@@ -313,8 +322,6 @@ public class PlayFragment extends Fragment {
         mQuestion1.setText(Integer.toString(questions.get(0)));
         setAnimation(mQuestion1);
         mQuestion2.setText(Integer.toString(questions.get(1)));
-
-
         setAnimation(mQuestion2);
     }
 
@@ -362,55 +369,73 @@ public class PlayFragment extends Fragment {
     private void startTimer() {
 
         final TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
+//
+//        countdownTimer = new MyCountdownTimer(timerDuration(), 1000) {
+//
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//                mTimeLeft = millisUntilFinished;
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//                nextQuestion(mChoicesIDs, 5, -1);
+//            }
+//        }.start();
+//
+//        ((PlayActivity) getActivity()).countdownCircle(timerDuration());
 
-        countdownTimer = new MyCountdownTimer(timerDuration(), 1000) {
+        mCircleCountdown.setTimer(timerDuration());
 
+        mCircleCountdown.setListener(new ContinuableCircleCountDownView.OnCountDownCompletedListener() {
             @Override
-            public void onTick(long millisUntilFinished) {
-                mTimeLeft = millisUntilFinished;
+            public void onTick(long passedMillis) {
+
             }
 
             @Override
-            public void onFinish() {
-                nextQuestion(mChoicesIDs, 5, -1);
+            public void onCompleted() {
+                mCircleCountdown.cancel();
+                nextQuestion(mChoicesIDs, 5, -1, true);
             }
-        }.start();
+        });
 
-        ((PlayActivity) getActivity()).countdownCircle(timerDuration());
+        mCircleCountdown.start();
     }
-
-    public void pauseTimer() {
-        if (countdownTimer != null) {
-            countdownTimer.pause();
-            ((PlayActivity) getActivity()).pauseCountdownCircle();
-        }
-    }
-
-    public void resumeTimer() {
-        if (countdownTimer != null) {
-            countdownTimer.resume();
-            ((PlayActivity) getActivity()).resumeCountdownCircle(mTimeLeft,timerDuration());
-        }
-    }
-
-    public void cancelTimer() {
-        if (countdownTimer != null) {
-            countdownTimer.cancel();
-        }
-    }
-
-    public boolean noTimer(){
-        if (mIsCorrection){
-            mNoTimer = true;
-        } else if (mIsPractice){
-            mNoTimer = true;
-        } else {
-            mNoTimer = false;
-        }
-
-        return mNoTimer;
-    }
-
+//
+//    public void pauseTimer() {
+//        if (countdownTimer != null) {
+//            countdownTimer.pause();
+//            ((PlayActivity) getActivity()).pauseCountdownCircle();
+//        }
+//    }
+//
+//    public void resumeTimer() {
+//
+//        if (countdownTimer != null) {
+//            countdownTimer.resume();
+//            ((PlayActivity) getActivity()).resumeCountdownCircle(mTimeLeft,timerDuration());
+//        }
+//    }
+//
+//    public void cancelTimer() {
+//        if (countdownTimer != null) {
+//            countdownTimer.cancel();
+//        }
+//    }
+//
+//    public boolean noTimer(){
+//        if (mIsCorrection){
+//            mNoTimer = true;
+//        } else if (mIsPractice){
+//            mNoTimer = true;
+//        } else {
+//            mNoTimer = false;
+//        }
+//
+//        return mNoTimer;
+//    }
+//
     public long timerDuration(){
         int selectedAmount = PrefUtility.getSelectedAmount(getContext());
         long duration = 0;

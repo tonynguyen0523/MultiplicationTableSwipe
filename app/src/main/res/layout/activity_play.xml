@@ -35,11 +35,11 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
 
-        <com.swipeacademy.multiplicationtableswipe.Util.Circle
-            android:id="@+id/remaining_circle"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerInParent="true" />
+        <!--<com.swipeacademy.multiplicationtableswipe.Util.Circle-->
+            <!--android:id="@+id/remaining_circle"-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:layout_centerInParent="true" />-->
 
         <TextView
             android:id="@+id/remaining_questions"

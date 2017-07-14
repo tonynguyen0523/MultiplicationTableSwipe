@@ -28,9 +28,9 @@ public class PlayActivity extends AppCompatActivity {
     AdView mAdView;
     @BindView(R.id.play_home_button)
     ImageButton mHomeButton;
-    @BindView(R.id.remaining_circle)
-    Circle mCountdownCircle;
-    CircleAngleAnimation angleAnimation;
+//    @BindView(R.id.remaining_circle)
+//    Circle mCountdownCircle;
+//    CircleAngleAnimation angleAnimation;
 
     public static final String ACTION_RECENT_RESULTS_UPDATED =
             "com.example.android.sunshine.app.ACTION_RECENT_RESULTS_UPDATED";
@@ -44,7 +44,7 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
         ButterKnife.bind(this);
 
-        // Get remaining questions and date
+        // Get remaining questions and date4
         int mRemainingQuestion = PrefUtility.getRemainingQuestions(this);
         date = DateFormat.getDateTimeInstance().format(new Date());
 
@@ -119,33 +119,32 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     // Initiate circle animation method
-    public void countdownCircle(long duration) {
-        mCountdownCircle.clearAnimation();
-        mCountdownCircle.setAngle(0);
-        angleAnimation = new CircleAngleAnimation(mCountdownCircle, 365);
-        angleAnimation.setDuration(duration);
-        mCountdownCircle.startAnimation(angleAnimation);
-        mPaused = false;
-    }
-
-    public void pauseCountdownCircle(){
-        angle = mCountdownCircle.getAngle();
-        mCountdownCircle.clearAnimation();
-        mCountdownCircle.setAngle(angle);
-        mPaused = true;
-    }
-
-    public void resumeCountdownCircle(long timeLeft,long duration){
-        if (mPaused) {
-            mCountdownCircle.clearAnimation();
-            mCountdownCircle.setAngle(angle);
-            angleAnimation = new CircleAngleAnimation(mCountdownCircle, 365);
-            angleAnimation.setDuration(timeLeft);
-            mCountdownCircle.startAnimation(angleAnimation);
-            mPaused = false;
-        } else {
-            countdownCircle(duration);
-        }
-    }
-
+//    public void countdownCircle(long duration) {
+//        mCountdownCircle.clearAnimation();
+//        mCountdownCircle.setAngle(0);
+//        angleAnimation = new CircleAngleAnimation(mCountdownCircle, 365);
+//        angleAnimation.setDuration(duration);
+//        mCountdownCircle.startAnimation(angleAnimation);
+//        mPaused = false;
+//    }
+//
+//    public void pauseCountdownCircle(){
+//        angle = mCountdownCircle.getAngle();
+//        mCountdownCircle.clearAnimation();
+//        mCountdownCircle.setAngle(angle);
+//        mPaused = true;
+//    }
+//
+//    public void resumeCountdownCircle(long timeLeft,long duration){
+//        if (mPaused) {
+//            mCountdownCircle.clearAnimation();
+//            mCountdownCircle.setAngle(angle);
+//            angleAnimation = new CircleAngleAnimation(mCountdownCircle, 360);
+//            angleAnimation.setDuration(timeLeft);
+//            mCountdownCircle.startAnimation(angleAnimation);
+//            mPaused = false;
+//        } else {
+//            countdownCircle(duration);
+//        }
+//    }
 }
