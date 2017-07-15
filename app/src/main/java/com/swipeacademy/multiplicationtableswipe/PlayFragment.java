@@ -273,6 +273,8 @@ public class PlayFragment extends Fragment {
 
         // Reduce remaining question by 1
         mRemainingQuestions--;
+        if (!noTimer()) {mCircleCountdown.stop();}
+
 
 
         // Update preferences

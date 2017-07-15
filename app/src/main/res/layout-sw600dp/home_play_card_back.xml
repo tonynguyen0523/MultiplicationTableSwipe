@@ -46,7 +46,7 @@
                 android:layout_gravity="bottom"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="5dp"
-                android:textSize="12sp"
+                android:textSize="20sp"
                 android:text="@string/_5_secs_question"/>
 
         </android.support.v7.widget.CardView>
@@ -75,7 +75,7 @@
                 android:layout_gravity="bottom"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="5dp"
-                android:textSize="12sp"
+                android:textSize="20sp"
                 android:text="@string/_4_secs_question"/>
 
         </android.support.v7.widget.CardView>
@@ -98,7 +98,7 @@
                 android:background="@color/colorAccent"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:text="@string/_48" />
+                android:text="@string/_72" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -106,7 +106,7 @@
                 android:layout_gravity="bottom"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="5dp"
-                android:textSize="12sp"
+                android:textSize="20sp"
                 android:text="@string/_3_secs_question"/>
 
         </android.support.v7.widget.CardView>
