@@ -17,12 +17,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.serhatsurguvec.continuablecirclecountdownview.ContinuableCircleCountDownView;
 import com.swipeacademy.multiplicationtableswipe.Util.CorrectionsUtil;
-import com.swipeacademy.multiplicationtableswipe.Util.MyCountdownTimer;
 import com.swipeacademy.multiplicationtableswipe.Util.OnSwipeTouchListener;
 
 import java.util.ArrayList;
@@ -63,14 +61,13 @@ public class PlayFragment extends Fragment {
     private static final String CURRENT_QUESTION = "currentQuestion";
     private static final int DELAY = 200;
     private static final int CORRECTIONS_DELAY = 1000;
-    private MyCountdownTimer countdownTimer;
     private ArrayList<Integer> mRemainingQuestionsIDs;
     private ArrayList<String> mCorrections;
     private String mSelectedAsset;
     private int mQuestionID;
+    private int mSelectedAmount;
     private int mCorrectAnswer;
     private int mCorrectTextViewID;
-    private long mTimeLeft;
     private boolean mIsCorrection;
     private boolean mIsPractice;
     private boolean mNoTimer;
@@ -110,14 +107,12 @@ public class PlayFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 nextQuestion(mChoicesIDs, 1, Integer.valueOf(mChoice2.getText().toString()),false);
-
             }
         });
         mChoice3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 nextQuestion(mChoicesIDs, 2, Integer.valueOf(mChoice3.getText().toString()),false);
-
             }
         });
         mChoice4.setOnClickListener(new View.OnClickListener() {
@@ -166,13 +161,13 @@ public class PlayFragment extends Fragment {
 
     @Override
     public void onPause() {
-//        pauseTimer();
+        pauseTimer();
         super.onPause();
     }
 
     @Override
     public void onResume() {
-//        resumeTimer();
+        resumeTimer();
         super.onResume();
     }
 
@@ -186,10 +181,10 @@ public class PlayFragment extends Fragment {
         mIsCorrection = PrefUtility.getIsCorrections(getContext());
         // Check which asset to display
         mSelectedAsset = PrefUtility.getSelectedAsset(getContext());
+        // Check selected amount
+        mSelectedAmount = PrefUtility.getSelectedAmount(getContext());
         // Check if practice mode
         mIsPractice = PrefUtility.getIsPractice(getContext());
-        Log.d("PREF", "practice is " + Boolean.toString(mNoTimer));
-        Log.d("PREF", "correction is " + Boolean.toString(mIsCorrection));
 
         if (savedInstanceState == null) {
             // Retrieve available questions
@@ -237,24 +232,20 @@ public class PlayFragment extends Fragment {
             mCurrentScore++;
             changeSelectedColor(choicesTV, choiceTVID, ContextCompat.getColor(getContext(), R.color.correct), ContextCompat.getColor(getContext(), R.color.correct));
             delay = DELAY;
-        } else if (mIsCorrection) {
-//        } else if (noTimer()) {
+        } else if (noTimer()) {
             mCorrections.add(Integer.toString(mQuestionID));
             changeSelectedColor(choicesTV, choiceTVID, ContextCompat.getColor(getContext(), R.color.wrong), ContextCompat.getColor(getContext(), R.color.wrong));
             choicesTV[mCorrectTextViewID].setTextColor(ContextCompat.getColor(getContext(), R.color.correct));
             delay = CORRECTIONS_DELAY;
         } else {
             mCorrections.add(Integer.toString(mQuestionID));
-            changeSelectedColor(choicesTV, choiceTVID, Color.RED, Color.RED);
+            changeSelectedColor(choicesTV, choiceTVID, ContextCompat.getColor(getContext(), R.color.wrong),
+                    ContextCompat.getColor(getContext(), R.color.wrong));
             delay = DELAY;
         }
 
         // Reduce remaining question by 1
         mRemainingQuestions--;
-        if(!timerEnd) {
-            mCircleCountdown.cancel();
-        }
-//        cancelTimer();
 
         // Update preferences
         PrefUtility.setCurrentScore(getContext(), mCurrentScore);
@@ -271,8 +262,7 @@ public class PlayFragment extends Fragment {
             public void run() {
                 // Check if there is any questions left, if not end game
                 if (finalMRemainingQuestions == 0) {
-//                    cancelTimer();
-//                    mCircleCountdown.cancel();
+                    if(!noTimer()) {cancelTimer();}
                     ((PlayActivity) getActivity()).playFinished();
                     CorrectionsUtil.editCorrectionsList(getContext(), mCorrections);
                     Intent intent = new Intent(getContext(), PlayResultActivity.class);
@@ -281,6 +271,7 @@ public class PlayFragment extends Fragment {
                     startActivity(mainIntent);
                 } else {
                     // Generate new question
+                    if(!noTimer()) {cancelTimer();}
                     choicesTV[mCorrectTextViewID].setTextColor(Color.BLACK);
                     generateQuestion(mRemainingQuestionsIDs, choicesTV, false);
                     changeSelectedColor(choicesTV, choiceTVID, Color.BLACK, ContextCompat.getColor(getContext(), R.color.colorPrimary));
@@ -305,10 +296,7 @@ public class PlayFragment extends Fragment {
         mCorrectAnswer = qs != null ? qs.getAnswer() : 0;
         initializeChoices(qs != null ? qs.getChoices() : null, choicesTV);
 
-//        if (!noTimer()) {
-//            startTimer();
-//        }
-        startTimer();
+        if(!noTimer()) {startTimer();}
     }
 
     /**
@@ -355,10 +343,7 @@ public class PlayFragment extends Fragment {
             choiceID.setTextColor(choiceColor);
         }
 
-        mBorder1.setBackgroundColor(borderColor);
-        mBorder2.setBackgroundColor(borderColor);
-        mBorder3.setBackgroundColor(borderColor);
-        mBorder4.setBackgroundColor(borderColor);
+        mCircleCountdown.setOUTER_COLOR(borderColor);
     }
 
     private void setAnimation(View viewToAnimate) {
@@ -369,77 +354,46 @@ public class PlayFragment extends Fragment {
     private void startTimer() {
 
         final TextView[] mChoicesIDs = {mChoice1, mChoice2, mChoice3, mChoice4};
-//
-//        countdownTimer = new MyCountdownTimer(timerDuration(), 1000) {
-//
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                mTimeLeft = millisUntilFinished;
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                nextQuestion(mChoicesIDs, 5, -1);
-//            }
-//        }.start();
-//
-//        ((PlayActivity) getActivity()).countdownCircle(timerDuration());
 
         mCircleCountdown.setTimer(timerDuration());
 
         mCircleCountdown.setListener(new ContinuableCircleCountDownView.OnCountDownCompletedListener() {
             @Override
-            public void onTick(long passedMillis) {
-
-            }
+            public void onTick(long passedMillis) {}
 
             @Override
             public void onCompleted() {
-                mCircleCountdown.cancel();
                 nextQuestion(mChoicesIDs, 5, -1, true);
             }
         });
-
         mCircleCountdown.start();
     }
-//
-//    public void pauseTimer() {
-//        if (countdownTimer != null) {
-//            countdownTimer.pause();
-//            ((PlayActivity) getActivity()).pauseCountdownCircle();
-//        }
-//    }
-//
-//    public void resumeTimer() {
-//
-//        if (countdownTimer != null) {
-//            countdownTimer.resume();
-//            ((PlayActivity) getActivity()).resumeCountdownCircle(mTimeLeft,timerDuration());
-//        }
-//    }
-//
-//    public void cancelTimer() {
-//        if (countdownTimer != null) {
-//            countdownTimer.cancel();
-//        }
-//    }
-//
-//    public boolean noTimer(){
-//        if (mIsCorrection){
-//            mNoTimer = true;
-//        } else if (mIsPractice){
-//            mNoTimer = true;
-//        } else {
-//            mNoTimer = false;
-//        }
-//
-//        return mNoTimer;
-//    }
-//
+
+    public void pauseTimer() {
+        if(mCircleCountdown.isStarted()){mCircleCountdown.stop();}
+    }
+
+    public void resumeTimer() {
+        if(mCircleCountdown.isStopped()) {mCircleCountdown.continueE();}
+    }
+
+    public void cancelTimer() {mCircleCountdown.cancel();}
+
+    public boolean noTimer(){
+        if (mIsCorrection){
+            mNoTimer = true;
+        } else if (mIsPractice){
+            mNoTimer = true;
+        } else {
+            mNoTimer = false;
+        }
+
+        return mNoTimer;
+    }
+
     public long timerDuration(){
-        int selectedAmount = PrefUtility.getSelectedAmount(getContext());
         long duration = 0;
-        switch (selectedAmount){
+        switch (mSelectedAmount){
             case 24:
                 duration = 5000;
                 break;

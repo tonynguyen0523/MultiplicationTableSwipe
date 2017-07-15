@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.swipeacademy.multiplicationtableswipe.Util.Circle;
-import com.swipeacademy.multiplicationtableswipe.Util.CircleAngleAnimation;
 import com.swipeacademy.multiplicationtableswipe.dialog.PlayBackPressDialogFragment;
 
 import java.text.DateFormat;
@@ -28,15 +26,10 @@ public class PlayActivity extends AppCompatActivity {
     AdView mAdView;
     @BindView(R.id.play_home_button)
     ImageButton mHomeButton;
-//    @BindView(R.id.remaining_circle)
-//    Circle mCountdownCircle;
-//    CircleAngleAnimation angleAnimation;
 
     public static final String ACTION_RECENT_RESULTS_UPDATED =
             "com.example.android.sunshine.app.ACTION_RECENT_RESULTS_UPDATED";
     private String date;
-    private float angle;
-    private boolean mPaused = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,34 +110,4 @@ public class PlayActivity extends AppCompatActivity {
         DialogFragment alertDialog = new PlayBackPressDialogFragment();
         alertDialog.show(getSupportFragmentManager(), "backPress");
     }
-
-    // Initiate circle animation method
-//    public void countdownCircle(long duration) {
-//        mCountdownCircle.clearAnimation();
-//        mCountdownCircle.setAngle(0);
-//        angleAnimation = new CircleAngleAnimation(mCountdownCircle, 365);
-//        angleAnimation.setDuration(duration);
-//        mCountdownCircle.startAnimation(angleAnimation);
-//        mPaused = false;
-//    }
-//
-//    public void pauseCountdownCircle(){
-//        angle = mCountdownCircle.getAngle();
-//        mCountdownCircle.clearAnimation();
-//        mCountdownCircle.setAngle(angle);
-//        mPaused = true;
-//    }
-//
-//    public void resumeCountdownCircle(long timeLeft,long duration){
-//        if (mPaused) {
-//            mCountdownCircle.clearAnimation();
-//            mCountdownCircle.setAngle(angle);
-//            angleAnimation = new CircleAngleAnimation(mCountdownCircle, 360);
-//            angleAnimation.setDuration(timeLeft);
-//            mCountdownCircle.startAnimation(angleAnimation);
-//            mPaused = false;
-//        } else {
-//            countdownCircle(duration);
-//        }
-//    }
 }

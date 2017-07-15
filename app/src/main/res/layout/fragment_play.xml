@@ -172,12 +172,11 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerInParent="true"
-                app:shapeRate="10"
-                app:shadowEnabled="true"
+                app:shapeRate="6"
+                app:shadowEnabled="false"
                 app:innerColor="@color/colorAccent"
                 app:outerColor="@color/colorPrimary"
                 app:progressColor="@color/colorPrimaryDark"
-                app:progress="0"
                 app:textSize="0sp"/>
 
             <ImageView
