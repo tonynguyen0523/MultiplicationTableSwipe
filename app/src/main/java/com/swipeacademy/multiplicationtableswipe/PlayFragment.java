@@ -59,7 +59,7 @@ public class PlayFragment extends Fragment {
     private static final String REMAINING_QUESTIONS_KEY = "remainingList";
     private static final String CORRECTIONS_KEY = "correctionsList";
     private static final String CURRENT_QUESTION = "currentQuestion";
-    private static final int DELAY = 200;
+    private static final int DELAY = 500;
     private static final int CORRECTIONS_DELAY = 1000;
     private ArrayList<Integer> mRemainingQuestionsIDs;
     private ArrayList<String> mCorrections;
@@ -71,6 +71,8 @@ public class PlayFragment extends Fragment {
     private boolean mIsCorrection;
     private boolean mIsPractice;
     private boolean mNoTimer;
+    private boolean mSwiped;
+    private boolean mDelay;
     private Unbinder unbinder;
 
     public PlayFragment() {
@@ -99,26 +101,38 @@ public class PlayFragment extends Fragment {
         mChoice1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextQuestion(mChoicesIDs, 0, Integer.valueOf(mChoice1.getText().toString()),false);
+//                mSwiped = true;
+                if(!mDelay) {
+                    nextQuestion(mChoicesIDs, 0, Integer.valueOf(mChoice1.getText().toString()), false);
+                }
 
             }
         });
         mChoice2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextQuestion(mChoicesIDs, 1, Integer.valueOf(mChoice2.getText().toString()),false);
+//                mSwiped = true;
+                if(!mDelay) {
+                    nextQuestion(mChoicesIDs, 1, Integer.valueOf(mChoice2.getText().toString()), false);
+                }
             }
         });
         mChoice3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextQuestion(mChoicesIDs, 2, Integer.valueOf(mChoice3.getText().toString()),false);
+//                mSwiped = true;
+                if(!mDelay) {
+                    nextQuestion(mChoicesIDs, 2, Integer.valueOf(mChoice3.getText().toString()), false);
+                }
             }
         });
         mChoice4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextQuestion(mChoicesIDs, 3, Integer.valueOf(mChoice4.getText().toString()),false);
+//                mSwiped = true;
+                if(!mDelay) {
+                    nextQuestion(mChoicesIDs, 3, Integer.valueOf(mChoice4.getText().toString()), false);
+                }
             }
         });
 
@@ -128,25 +142,37 @@ public class PlayFragment extends Fragment {
             @Override
             public void onSwipeTop() {
                 super.onSwipeTop();
-                nextQuestion(mChoicesIDs, 1, Integer.valueOf(mChoice2.getText().toString()),false);
+//                mSwiped = true;
+                if(!mDelay) {
+                    nextQuestion(mChoicesIDs, 1, Integer.valueOf(mChoice2.getText().toString()), false);
+                }
             }
 
             @Override
             public void onSwipeRight() {
                 super.onSwipeRight();
-                nextQuestion(mChoicesIDs, 2, Integer.valueOf(mChoice3.getText().toString()),false);
+//                mSwiped = true;
+                if(!mDelay) {
+                    nextQuestion(mChoicesIDs, 2, Integer.valueOf(mChoice3.getText().toString()), false);
+                }
             }
 
             @Override
             public void onSwipeLeft() {
                 super.onSwipeLeft();
-                nextQuestion(mChoicesIDs, 0, Integer.valueOf(mChoice1.getText().toString()),false);
+//                mSwiped = true;
+                if(!mDelay) {
+                    nextQuestion(mChoicesIDs, 0, Integer.valueOf(mChoice1.getText().toString()), false);
+                }
             }
 
             @Override
             public void onSwipeBottom() {
                 super.onSwipeBottom();
-                nextQuestion(mChoicesIDs, 3, Integer.valueOf(mChoice4.getText().toString()),false);
+//                mSwiped = true;
+                if(!mDelay) {
+                    nextQuestion(mChoicesIDs, 3, Integer.valueOf(mChoice4.getText().toString()), false);
+                }
             }
         });
         return view;
@@ -225,6 +251,7 @@ public class PlayFragment extends Fragment {
         int mCurrentScore = PrefUtility.getCurrentScore(getContext());
         int mRemainingQuestions = PrefUtility.getRemainingQuestions(getContext());
         int delay;
+        mDelay = true;
 
         // If user chose correct answer, increase score by 1,
         // else add questionId to correctionsList
@@ -246,6 +273,7 @@ public class PlayFragment extends Fragment {
 
         // Reduce remaining question by 1
         mRemainingQuestions--;
+
 
         // Update preferences
         PrefUtility.setCurrentScore(getContext(), mCurrentScore);
@@ -295,6 +323,9 @@ public class PlayFragment extends Fragment {
         setUpQuestion(qs);
         mCorrectAnswer = qs != null ? qs.getAnswer() : 0;
         initializeChoices(qs != null ? qs.getChoices() : null, choicesTV);
+
+        mSwiped = false;
+        mDelay = false;
 
         if(!noTimer()) {startTimer();}
     }
@@ -363,7 +394,9 @@ public class PlayFragment extends Fragment {
 
             @Override
             public void onCompleted() {
+                if(!mSwiped){
                 nextQuestion(mChoicesIDs, 5, -1, true);
+                }
             }
         });
         mCircleCountdown.start();
@@ -377,7 +410,11 @@ public class PlayFragment extends Fragment {
         if(mCircleCountdown.isStopped()) {mCircleCountdown.continueE();}
     }
 
-    public void cancelTimer() {mCircleCountdown.cancel();}
+    public void cancelTimer() {
+        if (mCircleCountdown.isStarted() || mCircleCountdown.isStopped() || mCircleCountdown.isFinished()) {
+            mCircleCountdown.cancel();
+        }
+    }
 
     public boolean noTimer(){
         if (mIsCorrection){
@@ -393,14 +430,27 @@ public class PlayFragment extends Fragment {
 
     public long timerDuration(){
         long duration = 0;
+//        switch (mSelectedAmount){
+//            case 24:
+//                duration = 5000;
+//                break;
+//            case 36:
+//                duration = 4000;
+//                break;
+//            case 48:
+//                duration = 3000;
+//                break;
+//            default:
+//                Log.d("DURATION", "No duration");
+//        }
         switch (mSelectedAmount){
-            case 24:
+            case 5:
                 duration = 5000;
                 break;
-            case 36:
+            case 6:
                 duration = 4000;
                 break;
-            case 48:
+            case 7:
                 duration = 3000;
                 break;
             default:

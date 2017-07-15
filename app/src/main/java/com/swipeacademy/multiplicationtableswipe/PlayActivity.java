@@ -85,13 +85,13 @@ public class PlayActivity extends AppCompatActivity {
 
             // Update recent results for widget
             switch (PrefUtility.getSelectedTable(this)) {
-                case "24":
+                case "5":
                     PrefUtility.setRecent24(this, score);
                     break;
-                case "48":
+                case "6":
                     PrefUtility.setRecent48(this, score);
                     break;
-                case "72":
+                case "7":
                     PrefUtility.setRecent72(this, score);
                     break;
                 default:

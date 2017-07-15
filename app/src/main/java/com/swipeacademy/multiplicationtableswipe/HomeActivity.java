@@ -185,9 +185,9 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
      */
     public static class PlayCardBackFragment extends Fragment {
 
-        private int amount24 = 24;
-        private int amount48 = 36;
-        private int amount72 = 48;
+        private int amount24 = 5;
+        private int amount36 = 6;
+        private int amount48 = 7;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -214,7 +214,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PlayActivity.class);
-                    PlayUtility.startPlay(getActivity(),amount48);
+                    PlayUtility.startPlay(getActivity(),amount36);
                     getActivity().finish();
                     startActivity(intent);
                 }
@@ -224,7 +224,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), PlayActivity.class);
-                    PlayUtility.startPlay(getActivity(),amount72);
+                    PlayUtility.startPlay(getActivity(),amount48);
                     getActivity().finish();
                     startActivity(intent);
                 }

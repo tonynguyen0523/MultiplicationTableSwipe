@@ -118,6 +118,7 @@ public class PlayResultActivity extends AppCompatActivity {
             }
         });
 
+        // Only display graph if not corrections or practice mode
         if (!noTimer()) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.result_fragment_container, HistoryFragment.newInstance(Integer.toString(selectedAmount)))

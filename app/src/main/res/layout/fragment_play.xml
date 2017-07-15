@@ -109,6 +109,7 @@
             android:layout_alignParentEnd="true"
             android:layout_toRightOf="@id/question_container"
             android:layout_toEndOf="@id/question_container"
+            android:layout_marginTop="30dp"
             android:background="@color/white"
             android:src="@drawable/ic_pause_black_36dp"/>
 
