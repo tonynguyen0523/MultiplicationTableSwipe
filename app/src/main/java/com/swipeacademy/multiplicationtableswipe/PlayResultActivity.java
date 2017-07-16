@@ -45,8 +45,8 @@ public class PlayResultActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         interstitialAd = new InterstitialAd(this);
-        interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        interstitialAd.loadAd(new AdRequest.Builder().build());
+        interstitialAd.setAdUnitId(getString(R.string.admob_ad_unit_id_interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().addTestDevice(getString(R.string.admob_test_device_id)).build());
         interstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {

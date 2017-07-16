@@ -45,7 +45,7 @@ public class PlayActivity extends AppCompatActivity {
         mRemainingQuestionTV.setText(getString(R.string.remaining_questions, mRemainingQuestion));
 
         // Load Ad
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(getString(R.string.admob_test_device_id)).build();
         mAdView.loadAd(adRequest);
 
         mHomeButton.setOnClickListener(new View.OnClickListener() {
@@ -85,13 +85,13 @@ public class PlayActivity extends AppCompatActivity {
 
             // Update recent results for widget
             switch (PrefUtility.getSelectedTable(this)) {
-                case "5":
+                case "24":
                     PrefUtility.setRecent24(this, score);
                     break;
-                case "6":
+                case "36":
                     PrefUtility.setRecent48(this, score);
                     break;
-                case "7":
+                case "48":
                     PrefUtility.setRecent72(this, score);
                     break;
                 default:

@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Multiplication Table Swipe</string>
 
-    <!--Testing ad banner-->
-    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-
     <!-- Play pref keys -->
     <string name="current_score" translatable="false">Current score: %1$d / %2$d</string>
     <string name="final_score" translatable="false">Score: %1$d / %2$d</string>
@@ -31,14 +28,19 @@
     <!--User grade Analytics-->
     <string name="user_property_key_school_grade" translatable="false">user_school_grade</string>
 
+    <!--Admob ID-->
+    <string name="admob_test_device_id" translatable="false">"A271A7B2AA910F13DB3C3BE1C4D6BE67"</string>
+    <string name="admob_ad_unit_id_interstitial" translatable="false">ca-app-pub-4821437728287645/8725755812</string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-4821437728287645/7249022616</string>
+
     <string name="letsplay_json" translatable="false">letsplay.json</string>
     <string name="letsplay" translatable="false">letsplay</string>
     <string translatable="false" name="first_table_amount">24</string>
     <string translatable="false" name="second_table_amount">36</string>
     <string translatable="false" name="third_table_amount">48</string>
     <string name="_widget24" translatable="false">/24</string>
-    <string name="_widget48" translatable="false">/48</string>
-    <string name="_widget72" translatable="false">/72</string>
+    <string name="_widget48" translatable="false">/36</string>
+    <string name="_widget72" translatable="false">/48</string>
 
     <string name="go_home_alert">Go Home?</string>
     <string name="back_press_alert_message">Current results will reset.</string>

@@ -76,7 +76,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
         PlayUtility.resetPlay(this);
 
         // Load ad
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(getString(R.string.admob_test_device_id)).build();
         mAdView.loadAd(adRequest);
 
         getFragmentManager().addOnBackStackChangedListener(this);
@@ -185,9 +185,9 @@ public class HomeActivity extends AppCompatActivity implements FragmentManager.O
      */
     public static class PlayCardBackFragment extends Fragment {
 
-        private int amount24 = 5;
-        private int amount36 = 6;
-        private int amount48 = 7;
+        private int amount24 = 24;
+        private int amount36 = 36;
+        private int amount48 = 48;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,

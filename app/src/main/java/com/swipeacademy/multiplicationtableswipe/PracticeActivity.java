@@ -36,7 +36,7 @@ public class PracticeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         // Load Ad
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(getString(R.string.admob_test_device_id)).build();
         mAdView.loadAd(adRequest);
 
         PracticeAdapter practiceAdapter = new PracticeAdapter(this, tableSets);

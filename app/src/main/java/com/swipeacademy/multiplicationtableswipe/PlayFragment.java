@@ -432,32 +432,32 @@ public class PlayFragment extends Fragment {
 
     public long timerDuration(){
         long duration = 0;
-//        switch (mSelectedAmount){
-//            case 24:
-//                duration = 5000;
-//                break;
-//            case 36:
-//                duration = 4000;
-//                break;
-//            case 48:
-//                duration = 3000;
-//                break;
-//            default:
-//                Log.d("DURATION", "No duration");
-//        }
         switch (mSelectedAmount){
-            case 5:
+            case 24:
                 duration = 5000;
                 break;
-            case 6:
+            case 36:
                 duration = 4000;
                 break;
-            case 7:
+            case 48:
                 duration = 3000;
                 break;
             default:
                 Log.d("DURATION", "No duration");
         }
+//        switch (mSelectedAmount){
+//            case 5:
+//                duration = 5000;
+//                break;
+//            case 6:
+//                duration = 4000;
+//                break;
+//            case 7:
+//                duration = 3000;
+//                break;
+//            default:
+//                Log.d("DURATION", "No duration");
+//        }
         return duration;
     }
 }

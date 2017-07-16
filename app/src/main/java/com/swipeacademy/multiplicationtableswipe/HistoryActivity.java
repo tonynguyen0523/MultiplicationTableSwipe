@@ -47,7 +47,7 @@ public class HistoryActivity extends AppCompatActivity {
         mViewPager.setAdapter(pagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(getString(R.string.admob_test_device_id)).build();
         mAdView.loadAd(adRequest);
     }
 
@@ -74,8 +74,8 @@ public class HistoryActivity extends AppCompatActivity {
     private static class MyPagerAdapter extends FragmentPagerAdapter {
 
         private static int NUM_ITEMS = 3;
-//        private String[] tabs = {"24", "36", "48"};
-        private String[] tabs = {"5", "6", "7"};
+        private String[] tabs = {"24", "36", "48"};
+//        private String[] tabs = {"5", "6", "7"};
 
 
 
@@ -90,24 +90,24 @@ public class HistoryActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-//            switch (position) {
-//                case 0:
-//                    return HistoryFragment.newInstance("24");
-//                case 1:
-//                    return HistoryFragment.newInstance("36");
-//                case 2:
-//                    return HistoryFragment.newInstance("48");
-//                default:
-//                    return null;
             switch (position) {
                 case 0:
-                    return HistoryFragment.newInstance("5");
+                    return HistoryFragment.newInstance("24");
                 case 1:
-                    return HistoryFragment.newInstance("6");
+                    return HistoryFragment.newInstance("36");
                 case 2:
-                    return HistoryFragment.newInstance("7");
+                    return HistoryFragment.newInstance("48");
                 default:
                     return null;
+//            switch (position) {
+//                case 0:
+//                    return HistoryFragment.newInstance("5");
+//                case 1:
+//                    return HistoryFragment.newInstance("6");
+//                case 2:
+//                    return HistoryFragment.newInstance("7");
+//                default:
+//                    return null;
             }
         }
 
